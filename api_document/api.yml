@@ -1,0 +1,286 @@
+openapi: "3.0.0"
+info:
+  title: VphereAPI
+  version: "1.0"
+  description: Vphere后端api文档
+servers:
+  - url: "http://{domain}/{basePath}"
+    description: Vphere api
+    variables:
+      domain:
+        description: API服务器域名
+        default: vphere.yanmy.top
+        enum:
+          - vphere.yanmy.top
+          - vpheretest.yanmy.top
+      basePath:
+        description: API服务器地址
+        default: api
+tags:
+  - name: user
+    description: 用户 API
+  - name: group
+    description: 集体 API
+  - name: signin
+    description: 签到 API
+paths:
+  /user/login:
+    post:
+      tags: 
+        - user
+      summary: 登录
+      description: 微信code登录
+      requestBody:
+        description: 请求参数
+        required: true
+        content: 
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                code:
+                  description: 微信小程序code
+                  type: string
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/Userinfo"          
+        "403":
+          description: 登录失败
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /group/create:
+    post:
+      tags: 
+        - group
+      summary: 创建集体
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CreatGroup"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/success"
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+        "403":
+          $ref: "#/components/responses/InvalidProperties"
+  /group/join:
+    post:
+      tags: 
+        - group
+      summary: 加入集体
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/JoinGroup"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/success"
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+        "403":
+          $ref: "#/components/responses/InvalidProperties"       
+  /group/joined:
+    get:
+      tags:
+        - group
+      summary: 加入了的集体
+      requestBody:
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    type: object
+                    properties:
+                      list:
+                        type: object
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+  /group/situation:
+    get:
+      tags:
+        - group
+      summary: 集体签到情况
+      parameters: 
+        - name: groupid
+          description: 集体id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    type: object
+                    properties:
+                      list:
+                        type: object
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+        
+  /sign/in:
+    post:
+      tags:
+       - signin
+      summary: 签到
+      requestBody:
+        content: 
+            multipart/form-data:
+              schema:
+                properties:
+                  groupid: 
+                    type: integer
+                    description: 集体id
+                  vfile: 
+                    type: string
+                    format: binary
+                    description: 录音文件
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    type: string
+                 
+components:
+  schemas:
+    code:
+      description: 状态码
+      type: integer
+    status:
+      description: 状态信息
+      type: string
+    Error:
+      description: 错误返回信息
+      type: object
+      properties:
+        error:
+          description: 详细错误信息
+          type: string
+    Userinfo:
+      type: object
+      properties:
+        nickname:
+          description: 用户名
+          type: string
+        head_portrait:
+          description: 头像
+          type: string
+        session:
+          description: 登录态维护session
+          type: string
+    CreatGroup:
+      type: object
+      properties:
+        name:
+          description: 集体名称
+          type: string
+        belong:
+          description: 所属大集体,0就是大集体,1-n为集体
+          type: integer
+    JoinGroup:
+      type: object
+      properties:
+        groupid:
+          description: 集体id
+          type: integer
+
+
+  responses:
+    #200
+    success:
+      type: object
+      properties:
+        code:
+          $ref: "#/components/schemas/code"
+        status:
+          $ref: "#/components/schemas/status"
+        data:
+          type: string
+    # 401
+    NotAuthorization:
+      description: 未登录
+    # 403
+    InvalidProperties:
+      description: 参数不满足
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error: "参数【xxx】无效"
+    IllegalContent:
+      description: 内容非法
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error: 内容包含敏感词“xxx”
+    NoPermission:
+      description: 当前用户无权限
+    # 404
+    NotFound:
+      description: 指定数据不存在   
+
+
+
+
+
+externalDocs:
+  url: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md
+  description: OpenApi 3.0.2 文档
