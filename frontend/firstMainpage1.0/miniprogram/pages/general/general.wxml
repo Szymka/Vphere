@@ -1,0 +1,14 @@
+<view class="container">
+    <view class="table">
+        <view class="tr">
+            <view class="th">编号</view>
+            <view class="th">集体名称</view>
+            <view class="th">缺勤次数</view>
+        </view>
+        <view class="tr" wx:for="{{list}}" wx:for-item="item" wx:key="{{list}}">
+            <view class="td">{{item.Id}}</view>
+            <view class="td">{{item.Name}}</view>
+            <view class="td">{{item.Num}}</view>
+        </view>
+    </view>
+</view>

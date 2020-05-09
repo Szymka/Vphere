@@ -1,0 +1,24 @@
+.table{
+border-right: 0;
+border-bottom: 0;
+width: 90%;
+border: 1px solid #dadada
+}
+.tr{
+  width: 100%;
+  display: flex;
+  justify-content: space-between
+}
+
+.td {
+padding: 10px;
+border-bottom: 1px solid #dadada;
+border-right: 1px solid #dadada;
+text-align: center;
+width:100%
+}
+
+.th {
+font-weight: 400;
+background-color: #dadada
+}
