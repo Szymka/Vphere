@@ -1,0 +1,54 @@
+version: "3"
+services:
+  web:
+    networks:
+      - vphere_bridge
+    image: "nginx:1.17.5"
+    container_name: "vphere_nginx"
+    ports:
+      - "12345:80"
+    restart: always
+    volumes:
+      - ./html:/var/www/html/
+      - ./dockercnf/nginx/default.conf:/etc/nginx/conf.d/default.conf
+  php:
+    networks:
+      - vphere_bridge
+    build: ./dockercnf/php-fpm/
+    image: "lnmp_php:7.3-fpm"
+    container_name: "vphere_php"
+    restart: always
+    privileged: true
+    volumes:
+      - ./html:/var/www/html/
+      - ./dockercnf/php-fpm/conf/www.conf:/usr/local/php/etc/php-fpm.d/www.conf
+      - ./dockercnf/php-fpm/conf/php-fpm.conf:/usr/local/php/etc/php-fpm.conf
+  mysql:
+    networks:
+      - vphere_bridge
+    image: "mysql:8"
+    container_name: "vphere_mysql"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    privileged: true
+    volumes:
+      - ./dockercnf/mysql/:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: yourpassword
+      MYSQL_DATABASE: vphere
+  phpmyadmin:
+    networks:
+      - vphere_bridge
+    restart: always
+    image: "phpmyadmin/phpmyadmin:latest"
+    container_name: "vphere_phpadmin"
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: yourpassword
+      MYSQL_ROOT_PASSWORD: yourpassword
+      PMA_HOST: mysql
+networks:
+  vphere_bridge:
+    driver: bridge
