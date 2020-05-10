@@ -60,12 +60,20 @@
 					"id": -1,
 					"name": "tips",
 					"pathName": "pages/tips/tips",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "register",
 					"pathName": "pages/register/register",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "manage",
+					"pathName": "pages/manage/manage",
 					"scene": null
 				}
 			]
