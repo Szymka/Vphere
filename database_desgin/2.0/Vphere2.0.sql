@@ -53,7 +53,7 @@ CREATE TABLE `users`  (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL COMMENT '用户名',
   `open_id` varchar(100) NOT NULL COMMENT '微信open_id',
-  `head portrait` varchar(500) CHARACTER SET utf8mb4 NOT NULL COMMENT '头像',
+  `head portrait` varchar(500)  NOT NULL COMMENT '头像',
   `join_group` json NOT NULL COMMENT '加入的集体',
   PRIMARY KEY (`id`)
 );
