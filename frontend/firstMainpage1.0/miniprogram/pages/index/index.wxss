@@ -29,17 +29,35 @@
     margin: 70rpx 50rpx;
     font-size: 35rpx;
 }
+
+/* 上面都是授权页面的代码 */
+
+.card-demo{
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}
 .card-demo image {
   border-radius: 50%;
+  margin-right: 15rpx;
 }
+
 .distance{
-  margin-bottom: 30rpx
-}
-.distance01{
-  margin-bottom: 50rpx
-}
-.en{
+  margin-top: 38rpx;
   margin-bottom: 30rpx;
-  margin-left: 33rpx;
-  margin-right: 33rpx
+  /* margin: 0 auto;
+  width: 93vw; */
 }
+.distance.footer navigator{
+  height: 10vh;
+}
+.distance.footer navigator .weui-cell__bd{
+  font-size: 3vh;
+}
+
+
+.en{
+  margin: 0 auto;
+  width: 91%;
+}
+
+/* 上面都是主页面的代码 */
