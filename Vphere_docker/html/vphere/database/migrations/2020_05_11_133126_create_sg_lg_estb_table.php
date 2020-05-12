@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUSGEstbTable extends Migration
+class CreateSGLGEstbTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateUSGEstbTable extends Migration
      */
     public function up()
     {
-        Schema::create('_u__s_g_estb', function (Blueprint $table) {
+        Schema::create('sg_lg_estb', function (Blueprint $table) {
             $table->engine='InnoDB';
             $table->id();
-            $table->integer("user_id")->comment("用户id");
-            $table->integer("sg_id")->comment("remark");
-            $table->string("remark",50)->comment("集体内备注");
-            $table->integer("status")->default("0");
+            $table->integer("sg_id")->comment("小集体id");
+            $table->integer("lg_id")->comment("大集体id");
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateUSGEstbTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_u__s_g_estb');
+        Schema::dropIfExists('_s_g__l_g_estb');
     }
 }

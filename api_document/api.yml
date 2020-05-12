@@ -16,6 +16,9 @@ servers:
       basePath:
         description: API服务器地址
         default: api
+# 全局认证
+security:
+  - cookieAuth: []
 tags:
   - name: user
     description: 用户 API
@@ -30,6 +33,7 @@ paths:
         - user
       summary: 登录
       description: 微信code登录
+      security: []
       requestBody:
         description: 请求参数
         required: true
@@ -41,9 +45,21 @@ paths:
                 code:
                   description: 微信小程序code
                   type: string
+                nick_name:
+                  description: 微信昵称
+                  type: string
+                avatarUrl:
+                  description: 微信头像地址
+                  type: string
       responses:
         "200":
-          description: 成功
+          description: 登录成功,返回cookies名为vphere,你需要在后续请求中添加cookies字段,填入该返回值
+          headers: 
+            Set-Cookie:
+              description: 设置cookies
+              schema: 
+                type: string
+                example: vphere=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
@@ -54,10 +70,7 @@ paths:
                   status:
                     $ref: "#/components/schemas/status"
                   data:
-                    type: object
-                    properties:
-                      user:
-                        $ref: "#/components/schemas/Userinfo"          
+                    type: string        
         "403":
           description: 登录失败
           content:
@@ -76,11 +89,7 @@ paths:
               $ref: "#/components/schemas/CreatGroup"
       responses:
         "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/responses/success"
+          $ref: "#/components/responses/success"
         "401":
           $ref: "#/components/responses/NotAuthorization"
         "403":
@@ -97,11 +106,7 @@ paths:
               $ref: "#/components/schemas/JoinGroup"
       responses:
         "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/responses/success"
+          $ref: "#/components/responses/success"
         "401":
           $ref: "#/components/responses/NotAuthorization"
         "403":
@@ -111,7 +116,6 @@ paths:
       tags:
         - group
       summary: 加入了的集体
-      requestBody:
       responses:
         "200":
           description: 成功
@@ -197,6 +201,11 @@ paths:
                     type: string
                  
 components:
+  securitySchemes:
+    cookieAuth:         # arbitrary name for the security scheme; will be used in the "security" key later
+      type: apiKey
+      in: cookie
+      name: vphere  # cookie name
   schemas:
     code:
       description: 状态码
@@ -211,18 +220,7 @@ components:
         error:
           description: 详细错误信息
           type: string
-    Userinfo:
-      type: object
-      properties:
-        nickname:
-          description: 用户名
-          type: string
-        head_portrait:
-          description: 头像
-          type: string
-        session:
-          description: 登录态维护session
-          type: string
+    
     CreatGroup:
       type: object
       properties:
@@ -243,14 +241,18 @@ components:
   responses:
     #200
     success:
-      type: object
-      properties:
-        code:
-          $ref: "#/components/schemas/code"
-        status:
-          $ref: "#/components/schemas/status"
-        data:
-          type: string
+      description: 成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                $ref: "#/components/schemas/code"
+              status:
+                $ref: "#/components/schemas/status"
+              data:
+                type: string
     # 401
     NotAuthorization:
       description: 未登录
