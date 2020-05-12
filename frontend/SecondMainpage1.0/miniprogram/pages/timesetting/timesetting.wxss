@@ -1,0 +1,56 @@
+.box2{
+ width: 680rpx;
+ min-height: 90rpx;
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ border-bottom: solid 2rpx #D7D7D7;
+}
+.box2_left{
+ width: 180rpx;
+ font-size: 15px;
+ color: #000000;
+}
+.box2_right{
+ width: 406rpx;
+ min-height: 90rpx;
+ display: flex;
+ align-items: center;
+ font-size: 14px;
+}
+.fuhao{
+ width: 70rpx;
+ height:90rpx;
+ font-size: 25px;
+ display: flex;
+ flex-direction: row-reverse;
+ align-items: center;
+}
+.container{
+    padding: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    border-shadow: 1px 1px #0099CC;
+}
+.row{
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+.row text{
+    flex-grow: 1;
+    text-align: right;
+}
+.row input{
+    font-size: 0.7rem;
+    color: #ccc;
+    flex-grow: 3;
+    border: 1px solid #0099CC;
+    display: inline-block;
+    border-radius: 0.3rem;
+    box-shadow: 0 0 0.15rem #aaa;
+    padding: 0.3rem;
+}
+.row button{
+    padding: 0 2rem;
+}

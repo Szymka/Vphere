@@ -1,0 +1,24 @@
+<!--pages/login/login.wxml-->
+<view class="container">
+    <form bindsubmit="formSubmit">
+        <view class="row">
+            <text>考勤起始时间：</text>
+            //麻烦搞个6点到24点的时间选择器
+        </view>
+        <view class="row">
+            <text>考勤终止时间：</text>
+            //麻烦搞个6点到24点的时间选择器
+        </view>
+        <view class="row">
+             <view class="box2">
+  <view class="box2_left">考勤地点：</view>
+  <input type="text" class="box2_right" placeholder="请选择收货地址考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}'></input>
+  <view class="fuhao" bindtap="onChangeAddress">></view>
+ </view>
+        </view>
+        <view class="row">
+            <button type="primary" form-type="submit">确定</button>
+        </view>
+
+    </form>
+</view>

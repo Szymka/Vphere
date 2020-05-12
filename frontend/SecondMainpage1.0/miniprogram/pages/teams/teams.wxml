@@ -1,0 +1,22 @@
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+                    <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                        <icon type="clear" size="14"></icon>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<view>
+  <text>已加入及已创建集体如下：</text>
+  <view wx:for="{{list}}" class="weui-cell weui-cell_access">
+  <view class="weui-cell__bd">{{item.name}}</view>
+  
+  </view>
+</view>

@@ -1,0 +1,6 @@
+
+  <form bindsubmit='test'>
+  <input name="username" placeholder='创建集体名称' maxlength='12' style="margin-bottom:10rpx"></input>
+  <input name="password" placeholder='所属集体名称' maxlength='12'></input>//所属集体这里麻烦搞个选择器
+  <button type="primary" formType="submit">登录</button>
+</form>

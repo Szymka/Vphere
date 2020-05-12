@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/manage/manage",
+    "pages/checkin/checkin",
+    "pages/time/time",
+    "pages/general/general",
+    "pages/register/register",
+    "pages/tips/tips",
+    "pages/join/join",
+    "pages/create/create",
+    "pages/teams/teams",
+    "pages/absence/absence",
+    "pages/timesetting/timesetting"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "Vphere",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "个人中心",
+      "iconPath": "images/index01.png",
+      "selectedIconPath": "images/index02.png"
+    },
+    {
+      "pagePath": "pages/manage/manage",
+      "text": "考勤管理",
+      "iconPath": "images/manage01.png",
+      "selectedIconPath": "images/manage02.png"
+    },
+    {
+      "pagePath": "pages/checkin/checkin",
+      "text": "打卡",
+      "iconPath": "images/checkin01.png",
+      "selectedIconPath": "images/checkin02.png"
+    }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

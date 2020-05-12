@@ -1,0 +1,9 @@
+<view class='distance footer weui-cells weui-cells_after-title' wx:for="{{list}}">
+			<navigator url="{{item.urlpath}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+				<view class="weui-cell__hd">
+					<image src="/images/checkin01.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+				</view>
+				<view class="weui-cell__bd">{{item.text_feature}}</view>
+				<view class="weui-cell__ft weui-cell__ft_in-access"></view>
+			</navigator>
+	</view>
