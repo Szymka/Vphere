@@ -47,8 +47,8 @@ class GroupController extends Controller {
 
         if (intval($this->data['belong']) === 0) {
             $lg_group = large_group::query()->where([["group_name", $this->data['name']], ["create_user", $this->data['user_id']]])->first();
-            if ($lg_group!==null){
-                return error_msg(403,4);
+            if ($lg_group !== null) {
+                return error_msg(403, 4);
             }
             $lg_group = new large_group();
             $lg_group->firstOrCreate([
@@ -70,16 +70,16 @@ class GroupController extends Controller {
             $user_group += array("lgroup" . $numgroup => array("status" => 1, "group_id" => $lg_group->id, "group_name" => $lg_group->group_name));
             $user->join_group = json_encode($user_group);
             $user->save();
-        }else{
-            $lg_group = large_group::query()->where("id",$this->data['belong'])->first();
-            if ($lg_group===null){
-                return error_msg(403,5);
+        } else {
+            $lg_group = large_group::query()->where("id", $this->data['belong'])->first();
+            if ($lg_group === null) {
+                return error_msg(403, 5);
             }
             $sm_group = small_group::query()->where([["group_name", $this->data['name']], ["create_user", $this->data['user_id']]])->first();
-            if ($sm_group!==null){
-                return error_msg(403,4);
+            if ($sm_group !== null) {
+                return error_msg(403, 4);
             }
-            $sm_group=new small_group();
+            $sm_group = new small_group();
             $sm_group->firstOrCreate([
                 "group_name" => $this->data['name'],
                 "create_user" => $this->data['user_id'],
@@ -97,31 +97,75 @@ class GroupController extends Controller {
                 $numgroup = count($user_group) + 1;
             }
             $user_group += array("sgroup" . $numgroup => array("status" => 1, "group_id" => $sm_group->id, "group_name" => $sm_group->group_name));
-            $user->join_group = json_encode($user_group);
+            $user->join_group = json_encode($user_group, JSON_UNESCAPED_UNICODE);
             $user->save();
-            $u_sg_estb=new U_SG_estb([
-                "user_id"=>$user->id,
-                "sg_id"=>$sm_group->id,
-                "remark"=>$user->username,
-                "status"=>1,
+            $u_sg_estb = new U_SG_estb([
+                "user_id" => $user->id,
+                "sg_id" => $sm_group->id,
+                "remark" => $user->username,
+                "status" => 1,
             ]);
             $u_sg_estb->save();
-            $sg_lg_estb=new SG_LG_estb([
-                "sg_id"=>$sm_group->id,
-                "lg_id"=>$lg_group->id,
+            $sg_lg_estb = new SG_LG_estb([
+                "sg_id" => $sm_group->id,
+                "lg_id" => $lg_group->id,
             ]);
             $sg_lg_estb->save();
-            return msg(200,1);
+            return msg(200, 1);
         }
 
     }
 
     public function join (Request $request) {
-        dump($request);
+        $mod = array(
+            'id' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+        );
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $sm_group = small_group::query()->where('id', $this->data['id'])->first();
+        if ($sm_group === null) {
+            return error_msg(403, 6);
+        }
+        $user = User::query()->where('id', $this->data['user_id'])->first();
+        $u_sg_estb = U_SG_estb::query()->where([["user_id", $this->data['user_id']], ["sg_id", $this->data['id']]])->first();
+        if ($u_sg_estb !== null) {
+            return error_msg(403, 7);
+        }
+        if ($user->join_group === null) {
+            $user_group = array();
+            $numgroup = 1;
+        } else {
+            $user_group = json_decode($user->join_group, true);
+            $numgroup = count($user_group) + 1;
+        }
+        $user_group += array("sgroup" . $numgroup => array("status" => 0, "group_id" => $sm_group->id, "group_name" => $sm_group->group_name));
+        $user->join_group = json_encode($user_group, JSON_UNESCAPED_UNICODE);
+        $user->save();
+        $u_sg_estb = new U_SG_estb([
+            "user_id" => $user->id,
+            "sg_id" => $sm_group->id,
+            "remark" => $user->username,
+            "status" => 1,
+        ]);
+        $u_sg_estb->save();
+        return msg(200, 1);
     }
 
     public function joined (Request $request) {
-        dump($request);
+        $mod = array();
+        $this->set_data($mod, $request);
+        $user = User::query()->where('id',$this->data['user_id'])->first();
+        if ($user->join_group === null) {
+            $user_group = array();
+        } else {
+            $user_group = json_decode($user->join_group, true);
+        }
+        return msg(200, $user_group);
     }
 
 
