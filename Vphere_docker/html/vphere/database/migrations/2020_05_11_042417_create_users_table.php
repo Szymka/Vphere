@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('username',50)->comment("用户名");
             $table->string("open_id",100)->comment("微信open_id");
-            $table->string("head portrait",500)->comment("头像");
-            $table->json("join_group")->comment("加入的集体");
+            $table->string("avatarUrl",500)->comment("头像");
+            $table->json("join_group")->nullable()->comment("加入的集体");
             $table->timestamps();
         });
     }
