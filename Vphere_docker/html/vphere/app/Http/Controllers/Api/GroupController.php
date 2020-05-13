@@ -3,12 +3,126 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\large_group;
+use App\Models\SG_LG_estb;
+use App\Models\small_group;
+use App\Models\U_SG_estb;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
-class GroupController extends Controller
-{
+
+class GroupController extends Controller {
     //
-    public function joined(Request $request){
-        
+    protected $data = null;
+    protected $msg = null;
+
+    private function set_data ($mod, Request $request) {
+        $mod += ['user_id' => [
+            'required',
+            'regex:/^\d+$/',
+        ]];
+        if (!$request->has(array_keys($mod))) {
+            return $this->msg = error_msg(403, 0);
+        }
+        $data = $request->only(array_keys($mod));
+        if (Validator::make($data, $mod)->fails()) {
+            return $this->msg = error_msg(403, 2);
+        }
+        return $this->data = $data;
     }
+
+    public function create (Request $request) {
+        $mod = array(
+            'name' => ['required'],
+            'belong' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+        );
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+
+        if (intval($this->data['belong']) === 0) {
+            $lg_group = large_group::query()->where([["group_name", $this->data['name']], ["create_user", $this->data['user_id']]])->first();
+            if ($lg_group!==null){
+                return error_msg(403,4);
+            }
+            $lg_group = new large_group();
+            $lg_group->firstOrCreate([
+                "group_name" => $this->data['name'],
+                "create_user" => $this->data['user_id'],
+            ], [
+                "group_name" => $this->data['name'],
+                "create_user" => $this->data['user_id'],
+            ]);
+            $lg_group = large_group::query()->where([["group_name", $this->data['name']], ["create_user", $this->data['user_id']]])->first();
+            $user = User::query()->where('id', $this->data['user_id'])->first();
+            if ($user->join_group === null) {
+                $user_group = array();
+                $numgroup = 1;
+            } else {
+                $user_group = json_decode($user->join_group, true);
+                $numgroup = count($user_group) + 1;
+            }
+            $user_group += array("lgroup" . $numgroup => array("status" => 1, "group_id" => $lg_group->id, "group_name" => $lg_group->group_name));
+            $user->join_group = json_encode($user_group);
+            $user->save();
+        }else{
+            $lg_group = large_group::query()->where("id",$this->data['belong'])->first();
+            if ($lg_group===null){
+                return error_msg(403,5);
+            }
+            $sm_group = small_group::query()->where([["group_name", $this->data['name']], ["create_user", $this->data['user_id']]])->first();
+            if ($sm_group!==null){
+                return error_msg(403,4);
+            }
+            $sm_group=new small_group();
+            $sm_group->firstOrCreate([
+                "group_name" => $this->data['name'],
+                "create_user" => $this->data['user_id'],
+            ], [
+                "group_name" => $this->data['name'],
+                "create_user" => $this->data['user_id'],
+            ]);
+            $sm_group = small_group::query()->where([["group_name", $this->data['name']], ["create_user", $this->data['user_id']]])->first();
+            $user = User::query()->where('id', $this->data['user_id'])->first();
+            if ($user->join_group === null) {
+                $user_group = array();
+                $numgroup = 1;
+            } else {
+                $user_group = json_decode($user->join_group, true);
+                $numgroup = count($user_group) + 1;
+            }
+            $user_group += array("sgroup" . $numgroup => array("status" => 1, "group_id" => $sm_group->id, "group_name" => $sm_group->group_name));
+            $user->join_group = json_encode($user_group);
+            $user->save();
+            $u_sg_estb=new U_SG_estb([
+                "user_id"=>$user->id,
+                "sg_id"=>$sm_group->id,
+                "remark"=>$user->username,
+                "status"=>1,
+            ]);
+            $u_sg_estb->save();
+            $sg_lg_estb=new SG_LG_estb([
+                "sg_id"=>$sm_group->id,
+                "lg_id"=>$lg_group->id,
+            ]);
+            $sg_lg_estb->save();
+            return msg(200,1);
+        }
+
+    }
+
+    public function join (Request $request) {
+        dump($request);
+    }
+
+    public function joined (Request $request) {
+        dump($request);
+    }
+
+
 }
