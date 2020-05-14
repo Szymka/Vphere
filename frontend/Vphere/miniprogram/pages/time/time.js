@@ -5,7 +5,6 @@ Page({
    */
   data: {
     week: { week: "一" },
-
     colorArrays: ["#85B8CF", "#90C652", "#D8AA5A", "#FC9F9D", "#0A9A84", "#61BC69", "#12AEF3", "#E29AAD"],
     wlist: [
       //上课长度全部默认为两节课
