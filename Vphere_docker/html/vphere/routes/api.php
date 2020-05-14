@@ -20,5 +20,8 @@ Route::namespace('Api')->group(function () {
         Route::post('/group/create','GroupController@create');
         Route::post('/group/join','GroupController@join');
         Route::get('/group/joined','GroupController@joined');
+        Route::post('/sign/in','SignController@in');
+        Route::post('/sign/reg','SignController@reg');
     });
+
 });
