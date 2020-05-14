@@ -5,7 +5,8 @@
   position: relative;
   background: #fff;
   border: 1rpx solid #dddee1;
-  border-radius: 10rpx
+  border-radius: 10rpx;
+  box-shadow: rgba(0, 0, 0, 0.068) 0px 1px 3px 1px;
 }
 
 .i-card-full {

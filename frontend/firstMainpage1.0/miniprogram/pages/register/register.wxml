@@ -1,1 +1,13 @@
-<text>当前剩余修改次数为：{{num}}</text>
+<view class="container">
+	<view class="top">
+		<view class="top-status">您当前的声纹注册状态为</view>
+		<view>已注册</view>
+		<button size="mini " type="primary">立即注册</button>
+	</view>
+
+	<view class="second">
+		<view class="second-status">当前剩余修改次数为</view>
+		<view>2</view>
+		<button size="mini " type="primary">修改</button>
+	</view>
+</view>

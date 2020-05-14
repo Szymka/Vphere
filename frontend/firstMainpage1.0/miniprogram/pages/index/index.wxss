@@ -48,7 +48,7 @@
   width: 93vw; */
 }
 .distance.footer navigator{
-  height: 10vh;
+  height: 10vw;
 }
 .distance.footer navigator .weui-cell__bd{
   font-size: 3vh;
@@ -57,7 +57,7 @@
 
 .en{
   margin: 0 auto;
-  width: 91%;
+  width: 91.5%;
 }
 
 /* 上面都是主页面的代码 */
