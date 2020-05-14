@@ -12,7 +12,7 @@
         <view class="row">
              <view class="box2">
   <view class="box2_left">考勤地点：</view>
-  <input type="text" class="box2_right" placeholder="请选择收货地址考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}'></input>
+  <input type="text" class="box2_right" placeholder="请选择考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}'></input>
   <view class="fuhao" bindtap="onChangeAddress">></view>
  </view>
         </view>

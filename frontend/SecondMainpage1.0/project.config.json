@@ -126,6 +126,12 @@
 					"pathName": "pages/timesetting/timesetting",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "checkin",
+					"pathName": "pages/checkin/checkin",
+					"scene": null
 				}
 			]
 		}
