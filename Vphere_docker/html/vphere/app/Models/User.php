@@ -11,6 +11,7 @@ class User extends Model {
         "username",
         "open_id",
         "avatarUrl",
-        "join_group"
+        "join_group",
+        "vpr_num",
     ];
 }
