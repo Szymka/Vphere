@@ -4,7 +4,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+<<<<<<< HEAD
     week: { week: "一" },
+=======
+    week:{week:"一"},
+>>>>>>> fc2997403f79782c26e55ef5bf49ec45acc1dd24
     colorArrays: ["#85B8CF", "#90C652", "#D8AA5A", "#FC9F9D", "#0A9A84", "#61BC69", "#12AEF3", "#E29AAD"],
     wlist: [
       //上课长度全部默认为两节课
