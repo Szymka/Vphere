@@ -199,6 +199,34 @@ paths:
                     $ref: "#/components/schemas/status"
                   data:
                     type: string
+  /sign/reg:
+    post:
+      tags:
+       - signin
+      summary: 声纹注册
+      requestBody:
+        content: 
+            multipart/form-data:
+              schema:
+                properties:
+                  vfile: 
+                    type: string
+                    format: binary
+                    description: 录音文件
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    type: string
                  
 components:
   securitySchemes:
