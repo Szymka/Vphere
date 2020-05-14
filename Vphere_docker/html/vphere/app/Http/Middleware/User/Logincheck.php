@@ -16,6 +16,8 @@ class Logincheck
     public function handle($request, Closure $next)
     {
         if(session()->has('login') && session('login') === true) {
+            $uid=session('uid');
+            $request->request->set("user_id",$uid);
             return $next($request);
         } else {
             // 未登录返回 未登录
