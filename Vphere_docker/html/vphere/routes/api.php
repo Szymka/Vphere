@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Api')->group(function () {
     Route::post('/user/login','UserController@login');
     Route::group(['middleware'=>'login.check'],function(){
+        Route::post('/group/create','GroupController@create');
+        Route::post('/group/join','GroupController@join');
         Route::get('/group/joined','GroupController@joined');
     });
 });

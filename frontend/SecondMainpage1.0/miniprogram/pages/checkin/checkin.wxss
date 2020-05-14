@@ -1,1 +1,104 @@
-/* pages/checkin/checkin.wxss */
+.box01{
+    border: 1rpx solid;
+    color: black;
+    border-radius: 30%;
+    height: 100rpx;
+    width: 400rpx;
+    margin: 0 auto
+}
+.sound-recording {
+  background-color: rgb(216, 228, 223);
+  margin: 10rpx 30rpx;
+  border-radius: 20rpx;
+  padding: 5rpx 0rpx;
+}
+
+.btn {
+  margin: 0rpx 100rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn .show {
+  padding: 10rpx;
+  width: 200rpx;
+  font-size: 25rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(178, 228, 228);
+  border-radius: 20rpx;
+  border: 5rpx solid rgb(127, 204, 214);
+}
+
+.btn .hide {
+  padding: 10rpx;
+  width: 200rpx;
+  font-size: 25rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20rpx;
+  border: 5rpx solid #eee;
+  pointer-events: none;
+  background-color: rgba(167, 162, 162, 0.445);
+}
+
+.time {
+  line-height: 70rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+
+.progress {
+  margin: 20rpx;
+}
+
+.play {
+  margin: 0rpx 20rpx;
+}
+
+.txt {
+  display: flex;
+  justify-content: center;
+  line-height: 60rpx;
+  font-size: 25rpx;
+}
+
+.anniu {
+  margin: 10rpx 50rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 25rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background-color: rgb(178, 228, 228);
+  border: 5rpx solid rgb(127, 204, 214);
+}
+
+.jump-hover {
+  transform: scale(0.9);
+}
+
+/*禁止点击*/
+
+.anniu .no-clicking {
+  pointer-events: none;
+  background-color: rgba(167, 162, 162, 0.445);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 25rpx;
+  width: 80rpx;
+  height: 80rpx;
+  border: 5rpx solid rgb(241, 244, 245);
+}
