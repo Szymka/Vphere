@@ -158,6 +158,20 @@ class SignController extends Controller {
         }
     }
 
+    public function create(Request $request){
+        $mod = array(
+            'groupid' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+            'start_time' => [
+                'required',
+                'string',
+            ],
+            'end_time' => ['required']
+        );
+    }
+
     protected function vpr ($vpr_mode) {
         $this->sign_time_uuid();
         $url = 'https://aiapi.jd.com/jdai/vpr';

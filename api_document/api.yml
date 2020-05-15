@@ -77,6 +77,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /user/schedule:
+    get:
+      tags: 
+        - user
+      summary: 获取用户考勤表
+      description: 获取用户的考勤时间表
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+        "403":
+          $ref: "#/components/responses/InvalidProperties"
+  /user/attendance:
+    get:
+      tags: 
+        - user
+      summary: 获取用户考勤情况
+      description: 获取用户的考勤情况
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+        "403":
+          $ref: "#/components/responses/InvalidProperties"
+
   /group/create:
     post:
       tags: 
@@ -150,21 +177,7 @@ paths:
             example: 1
       responses:
         "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    $ref: "#/components/schemas/code"
-                  status:
-                    $ref: "#/components/schemas/status"
-                  data:
-                    type: object
-                    properties:
-                      list:
-                        type: object
+          $ref: "#/components/responses/success"
         "401":
           $ref: "#/components/responses/NotAuthorization"
         
@@ -188,20 +201,11 @@ paths:
                     type: string
                     format: binary
                     description: 录音文件
+                  location:
+                    $ref: "#/components/schemas/location"
       responses:
         "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    $ref: "#/components/schemas/code"
-                  status:
-                    $ref: "#/components/schemas/status"
-                  data:
-                    type: string
+          $ref: "#/components/responses/success"
   /sign/reg:
     post:
       tags:
@@ -218,19 +222,32 @@ paths:
                     description: 录音文件
       responses:
         "200":
-          description: 成功
-          content:
-            application/json:
+          $ref: "#/components/responses/success"
+  /sign/create: 
+    post:
+      tags:
+       - signin
+      summary: 添加签到
+      requestBody:
+        content: 
+            application/x-www-form-urlencoded:
               schema:
-                type: object
                 properties:
-                  code:
-                    $ref: "#/components/schemas/code"
-                  status:
-                    $ref: "#/components/schemas/status"
-                  data:
+                  groupid: 
+                    type: integer
+                    description: 集体id
+                  start_time:
                     type: string
-                 
+                    description: 签到开始时间
+                  end_time:
+                    type: string
+                    description: 签到结束时间
+                  location:
+                    $ref: "#/components/schemas/location"
+                      
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
 components:
   securitySchemes:
     cookieAuth:         # arbitrary name for the security scheme; will be used in the "security" key later
@@ -267,7 +284,22 @@ components:
         groupid:
           description: 集体id
           type: integer
-
+    location:
+      type: object
+      description: 签到位置
+      properties:
+        name: 
+          type: string
+          description: 地点名
+        address: 
+          type: string
+          description: 地点
+        latitude: 
+          type: number
+          description: 纬度
+        longitude: 
+          type: number
+          description: 纬度
 
   responses:
     #200

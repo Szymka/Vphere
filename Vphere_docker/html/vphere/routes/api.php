@@ -17,11 +17,17 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Api')->group(function () {
     Route::post('/user/login','UserController@login');
     Route::group(['middleware'=>'login.check'],function(){
+        Route::get('/user/schedule','GroupController@schedule');//
+        Route::get('/user/attendance','GroupController@attendance');//
+
         Route::post('/group/create','GroupController@create');
         Route::post('/group/join','GroupController@join');
         Route::get('/group/joined','GroupController@joined');
+        Route::get('/group/situation','GroupController@situation');//
+
         Route::post('/sign/in','SignController@in');
         Route::post('/sign/reg','SignController@reg');
+        Route::post('/sign/create','SignController@create');//
     });
 
 });
