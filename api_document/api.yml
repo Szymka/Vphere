@@ -103,7 +103,30 @@ paths:
           $ref: "#/components/responses/NotAuthorization"
         "403":
           $ref: "#/components/responses/InvalidProperties"
-
+  /user/manage:
+    get:
+      tags: 
+        - user
+      summary: 获取用户管理的小集体
+      description: 获取用户管理的小集体
+      responses:
+        "200":
+          description: 获取成功
+          content:
+            application/json:
+                schema:
+                  type: object
+                  properties:
+                    code:
+                      $ref: "#/components/schemas/code"
+                    status:
+                      $ref: "#/components/schemas/status"
+                    data:
+                      type: object  
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+        "403":
+          $ref: "#/components/responses/InvalidProperties"
   /group/create:
     post:
       tags: 
@@ -237,11 +260,11 @@ paths:
                     type: integer
                     description: 集体id
                   start_time:
-                    type: string
-                    description: 签到开始时间
+                    type: integer
+                    description: 签到开始时间,时间戳
                   end_time:
-                    type: string
-                    description: 签到结束时间
+                    type: integer
+                    description: 签到结束时间,时间戳
                   location:
                     $ref: "#/components/schemas/location"
                       

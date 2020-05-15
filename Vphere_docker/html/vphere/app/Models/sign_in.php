@@ -13,5 +13,6 @@ class sign_in extends Model
         'group_id',
         'start_time',
         'end_time',
+        'location'
     ];
 }
