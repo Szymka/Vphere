@@ -46,6 +46,8 @@ function message_arr($msg_code){
         15=>"签到已完成,请勿重复签到",
         16=>"签到成功但是已迟到",
         17=>"签到未开始",
+        18=>"没有权限",
+        19=>"集体或用户不存在",
     );
     return $message_arr[$msg_code];
 }

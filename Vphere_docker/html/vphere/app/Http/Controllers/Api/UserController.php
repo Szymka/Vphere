@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\U_SG_estb;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Mockery\Exception;
@@ -15,17 +16,9 @@ class UserController extends Controller {
     protected $wechat_api_status = 1;
     protected $openid_session_key;
 
-    private function set_data (Request $request) {
-        $mod = array(
-            'code' => [
-                'required',
-                'regex:/^[a-zA-Z\d]+$/'//小程序调用验证code
-            ],
-            'nick_name' => ['required'],//昵称
-            'avatarUrl' => ['required'],//头像地址
-        );
+    private function set_data ($mod, Request $request) {
         if (!$request->has(array_keys($mod))) {
-            return $this->msg = error_msg(403,0);
+            return $this->msg = error_msg(403, 0);
         }
         $data = $request->only(array_keys($mod));
         if (Validator::make($data, $mod)->fails()) {
@@ -35,7 +28,15 @@ class UserController extends Controller {
     }
 
     public function login (Request $request) {
-        $this->set_data($request);
+        $mod = array(
+            'code' => [
+                'required',
+                'regex:/^[a-zA-Z\d]+$/'//小程序调用验证code
+            ],
+            'nick_name' => ['required'],//昵称
+            'avatarUrl' => ['required'],//头像地址
+        );
+        $this->set_data($mod, $request);
         if ($this->data === null) {
             return $this->msg;
         }
@@ -47,13 +48,72 @@ class UserController extends Controller {
 //        dump($this->data);
         $user = new User();
         //$this->openid_session_key['openid']
-        $user=$user->firstOrCreate(['open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0"],[
+        $user = $user->firstOrCreate(['open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0"], [
             'username' => $this->data['nick_name'],
             'open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0",//$this->openid_session_key['openid']
             'avatarUrl' => $this->data['avatarUrl']
         ]);
         session(['login' => true, 'uid' => $user->id]);
-        return msg(200,1);
+        return msg(200, 1);
+    }
+
+    public function schedule (Request $request) {
+        $mod = [
+            'user_id' => [
+                'required',
+                'regex:/^\d+$/',
+            ]
+        ];
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        dump($this->data);
+    }
+
+    public function attendance (Request $request) {
+        $mod = [
+            'user_id' => [
+                'required',
+                'regex:/^\d+$/',
+            ]
+        ];
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        dump($this->data);
+    }
+
+    public function manage (Request $request) {
+        $mod = [
+            'user_id' => [
+                'required',
+                'regex:/^\d+$/',
+            ]
+        ];
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $user = User::query()->where('id', $this->data['user_id'])->first();
+        $manage_group = array();
+        if ($user->join_group === null) {
+            return msg(200, $manage_group);
+        }
+        $join_group = json_decode($user->join_group, true);
+        $num = 1;
+        foreach ($join_group as $group) {
+            if ($group['status'] === 1 || $group['status'] === 2) {
+                $manage_group += ['group' . $num => [
+                    'id' => $group['group_id'],
+                    'group_name'=>$group['group_name'],
+                    ]
+                ];
+                $num++;
+            }
+        }
+        return msg(200, $manage_group);
     }
 
     //访问微信服务器接口，根据小程序提供code获取open_id和session_key
@@ -81,6 +141,8 @@ class UserController extends Controller {
                 throw new Exception(9, 403);
         }
     }
+
+
     private function httpWechatGet ($url) {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

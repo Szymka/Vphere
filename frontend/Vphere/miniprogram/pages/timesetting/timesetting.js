@@ -68,9 +68,11 @@ Page({
     var _page = this;
     wx.chooseLocation({
       success: function (res) {
+        console.log(res);
         _page.setData({
           chooseAddress: res.name
         });
+        
       },
       fail: function (err) {
         console.log(err)

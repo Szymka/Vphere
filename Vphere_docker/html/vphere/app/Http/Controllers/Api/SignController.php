@@ -81,7 +81,7 @@ class SignController extends Controller {
         } else {
             return error_msg(403, $vpr_res['message'] . "请通知管理员维护");
         }
-
+        return error_msg(403,9);
     }
 
     public function in (Request $request) {
@@ -156,6 +156,52 @@ class SignController extends Controller {
         } else {
             return error_msg(403, $vpr_res['message'] . "请通知管理员维护");
         }
+        return error_msg(403,9);
+    }
+
+    public function create(Request $request){
+        $mod = array(
+            'groupid' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+            'start_time' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+            'end_time' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+            'location'=>[
+                'required',
+                'string'
+            ]
+        );
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $u_sg_estb=U_SG_estb::query()->where([['user_id',$this->data['user_id']],['sg_id',$this->data['groupid']]])->first();
+        if ($u_sg_estb===null){
+            return error_msg(403,19);
+        }
+        if ($u_sg_estb->status===1||$u_sg_estb->status===2){
+            $location=json_decode($this->data['location'],true);
+            $location=json_encode($location,JSON_UNESCAPED_UNICODE);
+            $sign=new sign_in([
+                'creat_user'=>$this->data['user_id'],
+                'group_id'=>$this->data['groupid'],
+                'start_time'=>date('Y-m-d H:i:s', $this->data['start_time']),
+                'end_time'=>date('Y-m-d H:i:s', $this->data['end_time']),
+                'location'=>$location,
+            ]);
+            $sign->save();
+            return msg(200,1);
+        }else {
+            return error_msg(403,18);
+        }
+        return error_msg(403,9);
     }
 
     protected function vpr ($vpr_mode) {
@@ -197,6 +243,7 @@ class SignController extends Controller {
     }
 
     protected function sign_time_uuid () {
+        //需要添加异常处理
         $this->uuid = Uuid::uuid1()->toString();
         $this->time = (int)(microtime(true) * 1000);
         $this->sign = md5(config('vphere.vpr_secretkey') . $this->time);
