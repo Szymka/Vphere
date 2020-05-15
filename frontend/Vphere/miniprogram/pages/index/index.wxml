@@ -30,7 +30,7 @@
 					<i-grid-icon>
 						<image src="../../images/checkin01.png" />
 					</i-grid-icon>
-					<i-grid-label>考勤时间表</i-grid-label>
+					<i-grid-label>签到事项</i-grid-label>
 				</i-grid-item>
 			</navigator>
 			<navigator url="/pages/general/general">

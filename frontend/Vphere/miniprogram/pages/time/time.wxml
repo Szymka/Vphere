@@ -1,22 +1,8 @@
-<view class="week">学期 第{{week.week}}周</view>
-<view class='top'>
-	<view wx:for="{{['一','二','三','四','五','六','日']}}" class='top-text'>周{{item}}</view>
-</view>
-<scroll-view scroll-y="true" class="scroll">
-	<!-- <view class="timetable-inner"> -->
-	<view class="time-line">
-		<view wx:for="{{[6,8,10,12,14,16,18,20,22,24]}}" class='left-time'>{{item}}</view>
-	</view>
-	<!-- <view wx:for="{{[6,8,10,12,14,16,18,20,22,24]}}" class="half-time" style="width:750rpx;margin-top:{{(index+1)*100}}rpx;  position: absolute;border-bottom:1rpx solid {{index==4?'red':'lightgray'}};">
-    </view> -->
-	<!--课表-->
-	<view wx:for="{{wlist}}" class="timetable-item" style="margin-left:{{(item.xqj-1)*100+45}}rpx; margin-top:{{(item.sksj-1)*111+8}}rpx;">
-		<view class="flex-item kcb-item" bindtap="showCardView" id='0' data-statu="open" data-index="{{index}}" style="height:{{item.skcd*110}}rpx; background-color:{{colorArrays[index%8]}}">
-			<!-- xqj代表星期几上课，sksj是上课时间，skcd上课长度，kcxx课程信息-->
-			<view class="smalltext">{{item.kcxx}}</view>
-		</view>
-	</view>
-	<!-- </view> -->
-
-</scroll-view>
-<!-- <view style="end-blank">这里什么都没有辣~~</view> -->
+<view class="weui-cells__title">签到事项</view>
+        <view class="weui-cells weui-cells_after-title" wx:for="{{list}}" wx:key="list">
+            <!-- <view class="weui-cell">
+                <view class="weui-cell__bd">{{item.group_name}}</view>
+                <view class="weui-cell__ft">{{item.start_time}} {{item.end_time}} {{item.location}} </view>
+                <view class="weui-cell__ft">{{item.status==0?'已签到':'未签到'}}</view>
+            </view> -->
+        </view>
