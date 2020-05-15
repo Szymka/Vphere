@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\si_record;
+use App\Models\sign_in;
+use App\Models\U_SG_estb;
 use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\VarDumper\Tests\Fixture\DumbFoo;
 
 
 class SignController extends Controller {
@@ -57,34 +59,38 @@ class SignController extends Controller {
         }
         $vpr_mode = "enroll";
         $vpr_res = $this->vpr($vpr_mode);
-        $vpr_res=json_decode($vpr_res,true);
-        $vpr_res=$vpr_res['result'];
-        if ($vpr_res['status']===0){
-            $vpr_text=$vpr_res['result'];
-            $vpr_text=$vpr_text[0]['text'];
-            if ($user->vpr_status===2&&$vpr_text==='enrlled'){
-                $user->vpr_status=1;
-                $user->vpr_num=$user->vpr_num-1;
-            }else{
-                $user->vpr_status=2;
+        $vpr_res = json_decode($vpr_res, true);
+        $vpr_res = $vpr_res['result'];
+        if ($vpr_res['status'] === 0) {
+            $vpr_text = $vpr_res['result'];
+            $vpr_text = $vpr_text[0]['text'];
+            if ($user->vpr_status === 2 && $vpr_text === 'enrlled') {
+                $user->vpr_status = 1;
+                $user->vpr_num = $user->vpr_num - 1;
+            } else {
+                $user->vpr_status = 2;
             }
             $user->save();
-            if ($user->vpr_status===2){
-                return msg(200,10);
-            }elseif ($user->vpr_status===1){
-                return msg(200,1);
-            }elseif ($user->vpr_status===0){
-                return msg(200,12);
+            if ($user->vpr_status === 2) {
+                return msg(200, 10);
+            } else if ($user->vpr_status === 1) {
+                return msg(200, 1);
+            } else if ($user->vpr_status === 0) {
+                return msg(200, 12);
             }
-        }else{
-            return error_msg(403,$vpr_res['message']."请通知管理员维护");
+        } else {
+            return error_msg(403, $vpr_res['message'] . "请通知管理员维护");
         }
 
     }
 
-    public function in(Request $request){
+    public function in (Request $request) {
         $mod = array(
             'groupid' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+            'signid' => [
                 'required',
                 'regex:/^\d+$/',
             ],
@@ -103,24 +109,56 @@ class SignController extends Controller {
         $this->uuid = $user->open_id;
         $vpr_mode = "test";
         $vpr_res = $this->vpr($vpr_mode);
-        $vpr_res=json_decode($vpr_res,true);
-        $vpr_res=$vpr_res['result'];
-        if ($vpr_res['status']===0){
-            $vpr_text=$vpr_res['result'];
-            $vpr_text=$vpr_text[0]['text'];
-            if ($vpr_text==="accept"){
+        $vpr_res = json_decode($vpr_res, true);
+        $vpr_res = $vpr_res['result'];
+        if ($vpr_res['status'] === 0) {
+            $vpr_text = $vpr_res['result'];
+            $vpr_text = $vpr_text[0]['text'];
+            if ($vpr_text === "accept") {
+                $u_sg_estb = U_SG_estb::query()->where([['user_id', $this->data['user_id']], ['sg_id', $this->data['groupid']]])->first();
+                if ($u_sg_estb === null) {
+                    return error_msg(403, 13);
+                }
+                $sign = sign_in::query()->where('id', $this->data['signid'])->first();
+                if ($sign === null) {
+                    return error_msg(403, 14);
+                }
+                $u_si_record = si_record::query()->where([['user_id', $this->data['user_id']], ['sign_in_id', $this->data['signid']]])->first();
+                if ($u_si_record !== null) {
+                    return error_msg(403, 15);
+                }
+                $sign_start=strtotime($sign->start_time);
+                $sign_end=strtotime($sign->end_time);
+                $sign_time=time();
+                if ($sign_start<=$sign_time&&$sign_time<=$sign_end){
+                    $u_si_record = new si_record([
+                        'user_id'=>$this->data['user_id'],
+                        'sign_in_id'=>(int)$this->data['signid'],
+                        'status'=>1,
+                    ]);
+                    $u_si_record->save();
+                    return msg(200, 1);
+                }elseif ($sign_time>$sign_end){
+                    $u_si_record = new si_record([
+                        'user_id'=>$this->data['user_id'],
+                        'sign_in_id'=>(int)$this->data['signid'],
+                        'status'=>2,
+                    ]);
+                    $u_si_record->save();
+                    return error_msg(403, 16);
+                }elseif ($sign_time<$sign_start){
+                    return error_msg(403, 17);
+                }
 
-                return msg(200,1);
-            }else{
-                return error_msg(403,$vpr_text);
+            } else {
+                return error_msg(403, $vpr_text);
             }
-        }else{
-            return error_msg(403,$vpr_res['message']."请通知管理员维护");
+        } else {
+            return error_msg(403, $vpr_res['message'] . "请通知管理员维护");
         }
     }
 
     protected function vpr ($vpr_mode) {
-
         $this->sign_time_uuid();
         $url = 'https://aiapi.jd.com/jdai/vpr';
         $encode = [
@@ -158,7 +196,7 @@ class SignController extends Controller {
         return $response->getBody()->getContents();
     }
 
-    public function sign_time_uuid () {
+    protected function sign_time_uuid () {
         $this->uuid = Uuid::uuid1()->toString();
         $this->time = (int)(microtime(true) * 1000);
         $this->sign = md5(config('vphere.vpr_secretkey') . $this->time);

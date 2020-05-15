@@ -181,6 +181,9 @@ paths:
                   groupid: 
                     type: integer
                     description: 集体id
+                  signid: 
+                    type: integer
+                    description: 签到记录id
                   vfile: 
                     type: string
                     format: binary
