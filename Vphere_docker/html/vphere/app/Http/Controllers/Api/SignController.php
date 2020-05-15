@@ -8,7 +8,6 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\VarDumper\Tests\Fixture\DumbFoo;
 
 
 class SignController extends Controller {
