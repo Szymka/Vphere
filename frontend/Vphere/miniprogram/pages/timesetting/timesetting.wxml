@@ -2,6 +2,10 @@
 <view class="container">
     <form bindsubmit="formSubmit">
         <view class="row">
+            <text>所要考勤的集体：</text>
+            //麻烦搞个已创建集体名的选择器
+        </view>
+        <view class="row">
             <text>考勤起始时间：</text>
             //麻烦搞个6点到24点的时间选择器
         </view>
