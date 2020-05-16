@@ -85,7 +85,18 @@ paths:
       description: 获取用户的考勤时间表
       responses:
         "200":
-          $ref: "#/components/responses/success"
+          description: 成功,返回用户考勤表,status为整数,0表示未完成,1表示签到成功,2表示签到成功但是已经迟到
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    type: string
         "401":
           $ref: "#/components/responses/NotAuthorization"
         "403":

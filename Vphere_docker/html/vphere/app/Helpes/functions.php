@@ -48,6 +48,8 @@ function message_arr($msg_code){
         17=>"签到未开始",
         18=>"没有权限",
         19=>"集体或用户不存在",
+        20=>"集体内没有成员",
+        21=>"未加入小组签到已发布,或签到未发布"
     );
     return $message_arr[$msg_code];
 }
