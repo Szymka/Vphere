@@ -1,28 +1,40 @@
 <!--pages/login/login.wxml-->
 <view class="container">
-    <form bindsubmit="formSubmit">
-        <view class="row">
-            <text>所要考勤的集体：</text>
-            //麻烦搞个已创建集体名的选择器
-        </view>
-        <view class="row">
-            <text>考勤起始时间：</text>
-            //麻烦搞个6点到24点的时间选择器
-        </view>
-        <view class="row">
-            <text>考勤终止时间：</text>
-            //麻烦搞个6点到24点的时间选择器
-        </view>
-        <view class="row">
-             <view class="box2">
-  <view class="box2_left">考勤地点：</view>
-  <input type="text" class="box2_right" placeholder="请选择考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}'></input>
-  <view class="fuhao" bindtap="onChangeAddress">></view>
- </view>
-        </view>
-        <view class="row">
-            <button type="primary" form-type="submit">确定</button>
-        </view>
+	<form bindsubmit="formSubmit">
+		<view class="section row">
+			<text>所要考勤的集体</text>
+			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+				<view class="picker">
+					{{array[index]}}
+				</view>
+			</picker>
+		</view>
+		<view class="section row">
+			<view class="section__title">考勤时间</view>
+			<picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+				<view class="picker">
+					{{time}}
+				</view>
+			</picker>
+		</view>
+		<view class="section row">
+			<view class="section__title">考勤终止时间</view>
+			<picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindEndTimeChange">
+				<view class="picker">
+					{{endTime}}
+				</view>
+			</picker>
+		</view>
+		<view class="row">
+			<view class="box2">
+				<view class="box2_left">考勤地点：</view>
+				<input type="text" class="box2_right" placeholder="请选择考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}'></input>
+				<view class="fuhao" bindtap="onChangeAddress">></view>
+			</view>
+		</view>
+		<view class="row">
+			<button type="primary" form-type="submit">确定</button>
+		</view>
 
-    </form>
+	</form>
 </view>
