@@ -214,6 +214,28 @@ paths:
           $ref: "#/components/responses/success"
         "401":
           $ref: "#/components/responses/NotAuthorization"
+  /group/small_group:
+    get:
+      tags:
+        - group
+      summary: 获取系统内已有小集体
+      security: []
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+  /group/large_group:
+    get:
+      tags:
+        - group
+      summary: 获取系统内已有大集体
+      security: []
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
         
   /sign/in:
     post:
@@ -278,7 +300,15 @@ paths:
                     description: 签到结束时间,时间戳
                   location:
                     $ref: "#/components/schemas/location"
-                      
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+  /sign/status:
+    get:
+      tags:
+        - signin
+      summary: 声纹注册信息
+      description: 获取声纹注册状态和剩余修改次数                
       responses:
         "200":
           $ref: "#/components/responses/success"

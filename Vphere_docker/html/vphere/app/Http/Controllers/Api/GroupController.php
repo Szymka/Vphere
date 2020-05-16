@@ -168,5 +168,41 @@ class GroupController extends Controller {
         return msg(200, $user_group);
     }
 
+    public function small_group(){
+        $small_group=small_group::query()->get();
+        $result=array();
+        if ($small_group->isEmpty()){
+            return msg(200,$result);
+        }
+        $small_group=$small_group->toArray();
 
+        $num=1;
+        foreach ($small_group as $group){
+            $result+=[
+              "group".$num++=>[
+                  "group_id"=>$group['id'],
+                  "group_name"=>$group['group_name'],
+              ]
+            ];
+        }
+        return msg(200,$result);
+    }
+    public function large_group(){
+        $large_group=large_group::query()->get();
+        $result=array();
+        if ($large_group->isEmpty()){
+            return msg(200,$result);
+        }
+        $large_group=$large_group->toArray();
+        $num=1;
+        foreach ($large_group as $group){
+            $result+=[
+                "group".$num++=>[
+                    "group_id"=>$group['id'],
+                    "group_name"=>$group['group_name'],
+                ]
+            ];
+        }
+        return msg(200,$result);
+    }
 }

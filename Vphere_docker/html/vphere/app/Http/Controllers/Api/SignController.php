@@ -212,6 +212,26 @@ class SignController extends Controller {
         return error_msg(403, 9);
     }
 
+    public function status(Request $request){
+        $mod=array();
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $user=User::query()->where('id',$this->data['user_id'])->first();
+        $status=$user->vpr_status;
+        $result=array(
+            "status"=>"未注册",
+            "times"=>$user->vpr_num,
+        );
+        if ($status===1){
+            $result['status']="已注册";
+        }elseif ($status===2){
+            $result['status']="注册中";
+        }
+        return msg(200,$result);
+    }
+
     protected function vpr ($vpr_mode) {
         $this->sign_time_uuid();
         $url = 'https://aiapi.jd.com/jdai/vpr';
