@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exports\InvoicesExport;
 use App\Http\Controllers\Controller;
 use App\Models\large_group;
 use App\Models\SG_LG_estb;
+use App\Models\si_record;
 use App\Models\small_group;
 use App\Models\U_SG_estb;
 use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class GroupController extends Controller {
@@ -67,7 +71,7 @@ class GroupController extends Controller {
                 $user_group = json_decode($user->join_group, true);
                 $numgroup = count($user_group) + 1;
             }
-            $user_group += array("lgroup" . $numgroup => array("status" => 2, "group_id" => $lg_group->id, "group_name" => $lg_group->group_name));
+            $user_group += array("group" . $numgroup => array("status" => 3, "group_id" => $lg_group->id, "group_status" => 1, "group_name" => $lg_group->group_name));
             $user->join_group = json_encode($user_group);
             $user->save();
         } else {
@@ -96,7 +100,7 @@ class GroupController extends Controller {
                 $user_group = json_decode($user->join_group, true);
                 $numgroup = count($user_group) + 1;
             }
-            $user_group += array("sgroup" . $numgroup => array("status" => 2, "group_id" => $sm_group->id, "group_name" => $sm_group->group_name));
+            $user_group += array("group" . $numgroup => array("status" => 2, "group_id" => $sm_group->id, "group_status" => 0, "group_name" => $sm_group->group_name));
             $user->join_group = json_encode($user_group, JSON_UNESCAPED_UNICODE);
             $user->save();
             $u_sg_estb = new U_SG_estb([
@@ -111,9 +115,8 @@ class GroupController extends Controller {
                 "lg_id" => $lg_group->id,
             ]);
             $sg_lg_estb->save();
-            return msg(200, 1);
         }
-
+        return msg(200, 1);
     }
 
     public function join (Request $request) {
@@ -143,7 +146,7 @@ class GroupController extends Controller {
             $user_group = json_decode($user->join_group, true);
             $numgroup = count($user_group) + 1;
         }
-        $user_group += array("sgroup" . $numgroup => array("status" => 0, "group_id" => $sm_group->id, "group_name" => $sm_group->group_name));
+        $user_group += array("group" . $numgroup => array("status" => 0, "group_id" => $sm_group->id, "group_status" => 0, "group_name" => $sm_group->group_name));
         $user->join_group = json_encode($user_group, JSON_UNESCAPED_UNICODE);
         $user->save();
         $u_sg_estb = new U_SG_estb([
@@ -159,50 +162,133 @@ class GroupController extends Controller {
     public function joined (Request $request) {
         $mod = array();
         $this->set_data($mod, $request);
-        $user = User::query()->where('id',$this->data['user_id'])->first();
+        $user = User::query()->where('id', $this->data['user_id'])->first();
         if ($user->join_group === null) {
-            $user_group = array();
+            $result = array();
         } else {
             $user_group = json_decode($user->join_group, true);
+            $result = array();
+            $num = 1;
+            foreach ($user_group as $group) {
+                $result += [
+                    "group" . $num++ => [
+                        "group_id" => $group["group_id"],
+                        "group_name" => $group["group_name"],
+                    ]
+                ];
+
+            }
         }
-        return msg(200, $user_group);
+        return msg(200, $result);
     }
 
-    public function small_group(){
-        $small_group=small_group::query()->get();
-        $result=array();
-        if ($small_group->isEmpty()){
-            return msg(200,$result);
+    public function manage (Request $request) {
+        $mod = array();
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
         }
-        $small_group=$small_group->toArray();
-
-        $num=1;
-        foreach ($small_group as $group){
-            $result+=[
-              "group".$num++=>[
-                  "group_id"=>$group['id'],
-                  "group_name"=>$group['group_name'],
-              ]
-            ];
+        $user = User::query()->where('id', $this->data['user_id'])->first();
+        if ($user->join_group === null) {
+            $result = array();
+        } else {
+            $user_group = json_decode($user->join_group, true);
+            $result = array();
+            $num = 1;
+            foreach ($user_group as $group) {
+                if ($group['status'] > 0) {
+                    $result += [
+                        "group" . $num++ => [
+                            "group_id" => $group["group_id"],
+                            "group_name" => $group["group_name"],
+                            "group_status" => $group['group_status'],
+                        ]
+                    ];
+                }
+            }
         }
-        return msg(200,$result);
+        return msg(200, $result);
     }
-    public function large_group(){
-        $large_group=large_group::query()->get();
-        $result=array();
-        if ($large_group->isEmpty()){
-            return msg(200,$result);
+
+    public function small_group () {
+        $small_group = small_group::query()->get();
+        $result = array();
+        if ($small_group->isEmpty()) {
+            return msg(200, $result);
         }
-        $large_group=$large_group->toArray();
-        $num=1;
-        foreach ($large_group as $group){
-            $result+=[
-                "group".$num++=>[
-                    "group_id"=>$group['id'],
-                    "group_name"=>$group['group_name'],
+        $small_group = $small_group->toArray();
+        $num = 1;
+        foreach ($small_group as $group) {
+            $result += [
+                "group" . $num++ => [
+                    "group_id" => $group['id'],
+                    "group_name" => $group['group_name'],
                 ]
             ];
         }
-        return msg(200,$result);
+        return msg(200, $result);
+    }
+
+    public function large_group () {
+        $large_group = large_group::query()->get();
+        $result = array();
+        if ($large_group->isEmpty()) {
+            return msg(200, $result);
+        }
+        $large_group = $large_group->toArray();
+        $num = 1;
+        foreach ($large_group as $group) {
+            $result += [
+                "group" . $num++ => [
+                    "group_id" => $group['id'],
+                    "group_name" => $group['group_name'],
+                ]
+            ];
+        }
+        return msg(200, $result);
+    }
+
+
+    public function small_situation (Request $request) {
+        $mod = array(
+            'groupid' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+        );
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $u_sg_estb = U_SG_estb::query()->where([['user_id', $this->data['user_id']], ['sg_id', $this->data['groupid'], ['status', '>', 0]]])->first();
+        if ($u_sg_estb === null) {
+            return error_msg(403, 23);
+        }
+        $si_record = si_record::query()
+            ->join('sign_in', 'sign_in.id', '=', 'si_record.sign_in_id')
+            ->join('u_sg_estb', function ($join) {
+                $join->on('u_sg_estb.user_id', '=', 'si_record.user_id')->on('u_sg_estb.sg_id', '=', 'sign_in.group_id');
+            })
+            ->where([["si_record.status", '<>', 1], ['group_id', $this->data['groupid']]])
+            ->groupBy("si_record.user_id", 'u_sg_estb.remark')->selectRaw('count(*) as times,`u_sg_estb`.`remark`')
+            ->get();
+        if ($si_record->isEmpty()) {
+            return error_msg(403, 9);
+        }
+        $result=array(["名称","缺席次数"]);
+        $si_record = $si_record->toArray();
+        $num=1;
+        foreach ($si_record as $record) {
+            $result[$num++]=[
+                $record['remark'],$record['times']
+            ];
+        }
+        $export = new InvoicesExport($result);
+        $file = md5(time() . "vphere") . ".xlsx";
+        return Excel::download($export,$file);
+    }
+
+    public function large_situation (Request $request) {
+        dump($request);
     }
 }

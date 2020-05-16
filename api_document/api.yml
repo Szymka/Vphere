@@ -196,11 +196,40 @@ paths:
                         type: object
         "401":
           $ref: "#/components/responses/NotAuthorization"
-  /group/situation:
+  /group/manage:
     get:
       tags:
         - group
-      summary: 集体签到情况
+      summary: 获取用户管理的小集体
+      description: group_status为0表示小集体,1表示大集体
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+  /group/small/situation:
+    get:
+      tags:
+        - group
+      summary: 小集体签到情况
+      parameters: 
+        - name: groupid
+          description: 集体id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "401":
+          $ref: "#/components/responses/NotAuthorization"
+  /group/large/situation:
+    get:
+      tags:
+        - group
+      summary: 大集体签到情况
       parameters: 
         - name: groupid
           description: 集体id
