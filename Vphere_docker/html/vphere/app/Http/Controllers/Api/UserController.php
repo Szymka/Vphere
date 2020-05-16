@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\si_record;
 use App\Models\U_SG_estb;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -68,7 +69,31 @@ class UserController extends Controller {
         if ($this->data === null) {
             return $this->msg;
         }
-        dump($this->data);
+        $u_si_record = si_record::query()
+            ->join('sign_in', 'si_record.sign_in_id', '=', 'sign_in.id')
+            ->join('small_group', 'sign_in.group_id', '=', 'small_group.id')
+            ->where('si_record.user_id', $this->data['user_id'])->orderBy("start_time", 'desc')->get();
+        $schedule = array();
+        if ($u_si_record->isEmpty()) {
+            return msg(200, $schedule);
+        }
+        $u_si_record = $u_si_record->toArray();
+        $num = 1;
+        foreach ($u_si_record as $item) {
+            $location = json_decode($item['location'], true);
+            $location = $location['address'];
+            $schedule += [
+                "group" . $num => [
+                    "group_name" => $item['group_name'],
+                    "start_time" => $item['start_time'],
+                    "end_time" => $item['end_time'],
+                    "status" => $item['status'],
+                    "locataion" => $location,
+                ]
+            ];
+            $num++;
+        }
+        return msg(200, $schedule);
     }
 
     public function attendance (Request $request) {
@@ -82,7 +107,34 @@ class UserController extends Controller {
         if ($this->data === null) {
             return $this->msg;
         }
-        dump($this->data);
+        $u_si_record = si_record::query()
+            ->join('sign_in', 'si_record.sign_in_id', '=', 'sign_in.id')
+            ->join('small_group', 'sign_in.group_id', '=', 'small_group.id')
+            ->where([['si_record.user_id', $this->data['user_id']], ['status', '<>', '1']])
+            ->get();
+        $attendance = array();
+        if ($u_si_record->isEmpty()) {
+            return msg(200, $attendance);
+        }
+        $u_si_record = $u_si_record->toArray();
+
+        foreach ($u_si_record as $item) {
+            if (array_key_exists($item['group_id'], $attendance)) {
+                $times = $attendance[$item['group_id']]['times'] + 1;
+            } else {
+                $times = 1;
+            }
+            $attendance[$item['group_id']] = [
+                "group_name" => $item["group_name"],
+                "times" => $times,
+            ];
+        }
+        $result = array();
+        $num = 1;
+        foreach ($attendance as $item) {
+            $result["group" . $num++] = $item;
+        }
+        return msg(200, $result);
     }
 
     public function manage (Request $request) {
@@ -107,8 +159,8 @@ class UserController extends Controller {
             if ($group['status'] === 1 || $group['status'] === 2) {
                 $manage_group += ['group' . $num => [
                     'id' => $group['group_id'],
-                    'group_name'=>$group['group_name'],
-                    ]
+                    'group_name' => $group['group_name'],
+                ]
                 ];
                 $num++;
             }

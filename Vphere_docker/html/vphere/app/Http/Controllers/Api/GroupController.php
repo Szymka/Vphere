@@ -67,7 +67,7 @@ class GroupController extends Controller {
                 $user_group = json_decode($user->join_group, true);
                 $numgroup = count($user_group) + 1;
             }
-            $user_group += array("lgroup" . $numgroup => array("status" => 1, "group_id" => $lg_group->id, "group_name" => $lg_group->group_name));
+            $user_group += array("lgroup" . $numgroup => array("status" => 2, "group_id" => $lg_group->id, "group_name" => $lg_group->group_name));
             $user->join_group = json_encode($user_group);
             $user->save();
         } else {
@@ -96,14 +96,14 @@ class GroupController extends Controller {
                 $user_group = json_decode($user->join_group, true);
                 $numgroup = count($user_group) + 1;
             }
-            $user_group += array("sgroup" . $numgroup => array("status" => 1, "group_id" => $sm_group->id, "group_name" => $sm_group->group_name));
+            $user_group += array("sgroup" . $numgroup => array("status" => 2, "group_id" => $sm_group->id, "group_name" => $sm_group->group_name));
             $user->join_group = json_encode($user_group, JSON_UNESCAPED_UNICODE);
             $user->save();
             $u_sg_estb = new U_SG_estb([
                 "user_id" => $user->id,
                 "sg_id" => $sm_group->id,
                 "remark" => $user->username,
-                "status" => 1,
+                "status" => 2,
             ]);
             $u_sg_estb->save();
             $sg_lg_estb = new SG_LG_estb([
@@ -150,7 +150,7 @@ class GroupController extends Controller {
             "user_id" => $user->id,
             "sg_id" => $sm_group->id,
             "remark" => $user->username,
-            "status" => 1,
+            "status" => 0,
         ]);
         $u_sg_estb->save();
         return msg(200, 1);
@@ -168,5 +168,41 @@ class GroupController extends Controller {
         return msg(200, $user_group);
     }
 
+    public function small_group(){
+        $small_group=small_group::query()->get();
+        $result=array();
+        if ($small_group->isEmpty()){
+            return msg(200,$result);
+        }
+        $small_group=$small_group->toArray();
 
+        $num=1;
+        foreach ($small_group as $group){
+            $result+=[
+              "group".$num++=>[
+                  "group_id"=>$group['id'],
+                  "group_name"=>$group['group_name'],
+              ]
+            ];
+        }
+        return msg(200,$result);
+    }
+    public function large_group(){
+        $large_group=large_group::query()->get();
+        $result=array();
+        if ($large_group->isEmpty()){
+            return msg(200,$result);
+        }
+        $large_group=$large_group->toArray();
+        $num=1;
+        foreach ($large_group as $group){
+            $result+=[
+                "group".$num++=>[
+                    "group_id"=>$group['id'],
+                    "group_name"=>$group['group_name'],
+                ]
+            ];
+        }
+        return msg(200,$result);
+    }
 }

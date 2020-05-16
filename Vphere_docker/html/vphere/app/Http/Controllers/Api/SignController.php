@@ -81,7 +81,7 @@ class SignController extends Controller {
         } else {
             return error_msg(403, $vpr_res['message'] . "请通知管理员维护");
         }
-        return error_msg(403,9);
+        return error_msg(403, 9);
     }
 
     public function in (Request $request) {
@@ -124,29 +124,24 @@ class SignController extends Controller {
                     return error_msg(403, 14);
                 }
                 $u_si_record = si_record::query()->where([['user_id', $this->data['user_id']], ['sign_in_id', $this->data['signid']]])->first();
-                if ($u_si_record !== null) {
+                if ($u_si_record=== null) {
+                    return error_msg(403, 21);
+                }
+                if ($u_si_record->status !== 0) {
                     return error_msg(403, 15);
                 }
-                $sign_start=strtotime($sign->start_time);
-                $sign_end=strtotime($sign->end_time);
-                $sign_time=time();
-                if ($sign_start<=$sign_time&&$sign_time<=$sign_end){
-                    $u_si_record = new si_record([
-                        'user_id'=>$this->data['user_id'],
-                        'sign_in_id'=>(int)$this->data['signid'],
-                        'status'=>1,
-                    ]);
+                $sign_start = strtotime($sign->start_time);
+                $sign_end = strtotime($sign->end_time);
+                $sign_time = time();
+                if ($sign_start <= $sign_time && $sign_time <= $sign_end) {
+                    $u_si_record->status=1;
                     $u_si_record->save();
                     return msg(200, 1);
-                }elseif ($sign_time>$sign_end){
-                    $u_si_record = new si_record([
-                        'user_id'=>$this->data['user_id'],
-                        'sign_in_id'=>(int)$this->data['signid'],
-                        'status'=>2,
-                    ]);
+                } else if ($sign_time > $sign_end) {
+                    $u_si_record->status=2;
                     $u_si_record->save();
                     return error_msg(403, 16);
-                }elseif ($sign_time<$sign_start){
+                } else if ($sign_time < $sign_start) {
                     return error_msg(403, 17);
                 }
 
@@ -156,10 +151,10 @@ class SignController extends Controller {
         } else {
             return error_msg(403, $vpr_res['message'] . "请通知管理员维护");
         }
-        return error_msg(403,9);
+        return error_msg(403, 9);
     }
 
-    public function create(Request $request){
+    public function create (Request $request) {
         $mod = array(
             'groupid' => [
                 'required',
@@ -173,7 +168,7 @@ class SignController extends Controller {
                 'required',
                 'regex:/^\d+$/',
             ],
-            'location'=>[
+            'location' => [
                 'required',
                 'string'
             ]
@@ -182,26 +177,59 @@ class SignController extends Controller {
         if ($this->data === null) {
             return $this->msg;
         }
-        $u_sg_estb=U_SG_estb::query()->where([['user_id',$this->data['user_id']],['sg_id',$this->data['groupid']]])->first();
-        if ($u_sg_estb===null){
-            return error_msg(403,19);
+        $u_sg_estb = U_SG_estb::query()->where([['user_id', $this->data['user_id']], ['sg_id', $this->data['groupid']]])->first();
+        if ($u_sg_estb === null) {
+            return error_msg(403, 19);
         }
-        if ($u_sg_estb->status===1||$u_sg_estb->status===2){
-            $location=json_decode($this->data['location'],true);
-            $location=json_encode($location,JSON_UNESCAPED_UNICODE);
-            $sign=new sign_in([
-                'creat_user'=>$this->data['user_id'],
-                'group_id'=>$this->data['groupid'],
-                'start_time'=>date('Y-m-d H:i:s', $this->data['start_time']),
-                'end_time'=>date('Y-m-d H:i:s', $this->data['end_time']),
-                'location'=>$location,
+        if ($u_sg_estb->status === 1 || $u_sg_estb->status === 2) {
+            $location = json_decode($this->data['location'], true);
+            $location = json_encode($location, JSON_UNESCAPED_UNICODE);
+            $u_sg_estb = U_SG_estb::query()->where([['sg_id', $this->data['groupid']], ['status', '<=', 1]])->pluck('user_id');
+            if ($u_sg_estb->isEmpty()) {
+                return msg(403, 20);
+            }
+            $sign = new sign_in([
+                'creat_user' => $this->data['user_id'],
+                'group_id' => $this->data['groupid'],
+                'start_time' => date('Y-m-d H:i:s', $this->data['start_time']),
+                'end_time' => date('Y-m-d H:i:s', $this->data['end_time']),
+                'location' => $location,
             ]);
             $sign->save();
-            return msg(200,1);
-        }else {
-            return error_msg(403,18);
+            $u_sg_estb = $u_sg_estb->toArray();
+            foreach ($u_sg_estb as $user_id) {
+                $si_record = new si_record([
+                    "user_id" => $user_id,
+                    "sign_in_id" => $sign->id,
+                    "status"=>0,
+                ]);
+                $si_record->save();
+            }
+            return msg(200, 1);
+        } else {
+            return error_msg(403, 18);
         }
-        return error_msg(403,9);
+        return error_msg(403, 9);
+    }
+
+    public function status(Request $request){
+        $mod=array();
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $user=User::query()->where('id',$this->data['user_id'])->first();
+        $status=$user->vpr_status;
+        $result=array(
+            "status"=>"未注册",
+            "times"=>$user->vpr_num,
+        );
+        if ($status===1){
+            $result['status']="已注册";
+        }elseif ($status===2){
+            $result['status']="注册中";
+        }
+        return msg(200,$result);
     }
 
     protected function vpr ($vpr_mode) {

@@ -13,5 +13,7 @@ class si_record extends Model
         'sign_in_id',
         'sign_time',
         'status',
+
     ];
+
 }
