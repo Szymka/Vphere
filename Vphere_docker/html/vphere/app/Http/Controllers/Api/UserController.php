@@ -41,18 +41,20 @@ class UserController extends Controller {
         if ($this->data === null) {
             return $this->msg;
         }
-//        try {
-//            $this->wechat_api_status = $this->get_openid_sessionkey($this->data['code']);
-//        } catch (Exception $wechat_error) {
-//            return error_msg($wechat_error->getCode(), $wechat_error->getMessage());
-//        }
+        try {
+            $this->wechat_api_status = $this->get_openid_sessionkey($this->data['code']);
+        } catch (Exception $wechat_error) {
+            return error_msg($wechat_error->getCode(), $wechat_error->getMessage());
+        }
 //        dump($this->data);
         $user = new User();
-        //$this->openid_session_key['openid']
-        $user = $user->firstOrCreate(['open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0"], [
+        //"oZ_AN5ISqFZoLFDVhP9DU4TqK-F0"
+        $user = $user->firstOrCreate(['open_id' => $this->openid_session_key['openid']], [
             'username' => $this->data['nick_name'],
-            'open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0",//$this->openid_session_key['openid']
-            'avatarUrl' => $this->data['avatarUrl']
+            'open_id' => $this->openid_session_key['openid'],//"oZ_AN5ISqFZoLFDVhP9DU4TqK-F0",
+            'avatarUrl' => $this->data['avatarUrl'],
+            'vpr_num'=>3,
+            'vpr_status'=>1
         ]);
         session(['login' => true, 'uid' => $user->id]);
         return msg(200, 1);
