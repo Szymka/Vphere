@@ -1,0 +1,27 @@
+<view>
+  <text>注册方式：语音录入点击按钮获取的随机数，并上传录音</text>
+</view>
+<view >
+    <button bindtap="clickMe" type="primary" size="mini">点击我获取随机数</button>
+</view>
+<view class="box01">
+<view>{{ msg }}</view>
+</view>
+<view class="sound-recording">
+  <view class="time">{{status==0?'录音时长':(status==3?'录音已完成':'正在录音中')}}：{{time}} 秒</view>
+  <view class="btn">
+    <view class="{{status==3?'show':'hide'}}" catchtap="reset" hover-class="jump-hover">重新录制</view>
+    <view class="{{status==3 && playStatus==0?'show':'hide'}}" catchtap="play" hover-class="jump-hover">{{playStatus==1?'录音播放中':'播放录音'}}</view>
+    <view class="{{status==3?'show':'hide'}}" catchtap="upload" hover-class="jump-hover">上传录音</view>
+  </view>
+  <view class="progress">
+    <text class="txt">最大录音时长为{{duration/1000}}秒 = {{duration/60000}}分钟，最小录音时长2秒</text>
+    <progress percent="{{time*(100/(duration/1000))}}" border-radius="10" color="green" stroke-width="10" backgroundColor="#fff" />
+  </view>
+  <view class="anniu">
+    <view class="{{status==0?'row':'no-clicking'}}" catchtap="start" hover-class="jump-hover">开始</view>
+    <view class="{{status==1?'row':'no-clicking'}}" catchtap="pause" hover-class="jump-hover">暂停</view>
+    <view class="{{status==2?'row':'no-clicking'}}" catchtap="continue" hover-class="jump-hover">继续</view>
+    <view class="{{(status==1 || status==2)?'row':'no-clicking'}}" catchtap="stop" hover-class="jump-hover">停止</view>
+  </view>
+</view>

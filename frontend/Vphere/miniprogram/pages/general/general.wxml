@@ -8,48 +8,48 @@
 
 		<!-- 示例 -->
 		<view class="tr">
-			<view class="td">int</view>
-			<view class="td">String</view>
-			<view class="td">int</view>
+			<view class="td">1</view>
+			<view class="td">高等数学</view>
+			<view class="td">0</view>
 		</view>
         		<view class="tr">
-			<view class="td">int</view>
-			<view class="td">String</view>
-			<view class="td">int</view>
+			<view class="td">2</view>
+			<view class="td">线性代数</view>
+			<view class="td">0</view>
 		</view>
         		<view class="tr">
-			<view class="td">int</view>
-			<view class="td">String</view>
-			<view class="td">int</view>
+			<view class="td">3</view>
+			<view class="td">大学物理</view>
+			<view class="td">0</view>
 		</view>
         		<view class="tr">
-			<view class="td">int</view>
-			<view class="td">String</view>
-			<view class="td">int</view>
+			<view class="td">4</view>
+			<view class="td">离散数学</view>
+			<view class="td">0</view>
 		</view>
         		<view class="tr">
-			<view class="td">int</view>
-			<view class="td">String</view>
-			<view class="td">int</view>
+			<view class="td">5</view>
+			<view class="td">大学英语</view>
+			<view class="td">0</view>
 		</view>
         		<view class="tr">
-			<view class="td">int</view>
-			<view class="td">String</view>
-			<view class="td">int</view>
+			<view class="td">6</view>
+			<view class="td">计算机组成原理</view>
+			<view class="td">0</view>
 		</view>
 		<view class="tr">
-			<view class="td">int</view>
-			<view class="td">String</view>
-			<view class="td">int</view>
+			<view class="td">7</view>
+			<view class="td">计算机网络</view>
+			<view class="td">0</view>
 		</view>
 		<view class="tr">
-			<view class="td">int</view>
-			<view class="td">String</view>
-			<view class="td">int</view>
+			<view class="td">8</view>
+			<view class="td">大学体育</view>
+			<view class="td">1</view>
 		</view>
 		<!-- 示例 -->
 
-		<view class="tr" wx:for="{{list}}" wx:for-item="item" wx:key="{{list}}">
+		<view class="tr" wx:for="{{list}}" wx:for-item="item" >
 			<view class="td">{{item.Id}}</view>
 			<view class="td">{{item.Name}}</view>
 			<view class="td">{{item.Num}}</view>

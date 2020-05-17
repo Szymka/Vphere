@@ -15,27 +15,34 @@ view{
   margin-bottom: 25rpx;
 }
 .top{
+  width: 90%;
   margin-top: 50rpx;
   /* border-bottom: gainsboro 1rpx solid; */
   padding-bottom: 50rpx;
   margin-bottom: 50rpx;
   box-shadow: rgba(220, 220, 220, 0.582) 0px 2px 5px 2px;
+  border-radius: 15rpx;
 }
 .top-status{
   position: relative;
   padding-top: 50rpx;
-  font-size: 50rpx;
+  font-size: 45rpx;
+
+  font-weight: bold;
   margin-bottom: 25rpx;
 }
 .second{
-  box-shadow: rgba(220, 220, 220, 0.582) 0px 4px 3px 1px;
+  width: 90%;
+  box-shadow: rgba(220, 220, 220, 0.582) 0px 2px 5px 2px;
   padding-bottom: 50rpx;
   margin-bottom: 50rpx;
+  border-radius: 15rpx;
 }
 .second-status{
   position: relative;
   padding-top: 50rpx;
-  font-size: 50rpx;
+  font-size: 40rpx;
+  font-weight: bold;
   margin-bottom: 25rpx;
 }
 button{
@@ -43,3 +50,13 @@ button{
   width: 40%;
   font-size: 38rpx;
 } 
+.distance{
+  margin-bottom: 20rpx;
+}
+.border{
+  width:40%;
+  height: 80rpx;
+  border: 1rpx solid;
+  margin-bottom: 40rpx;
+  text-align: center
+}

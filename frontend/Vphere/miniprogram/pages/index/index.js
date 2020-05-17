@@ -21,18 +21,29 @@ Page({
               wx.login({
                 success: res => {
                   // 获取到用户的 code 之后：res.code
+                  wx.getUserInfo({
+                    success: res => {
+                      console.log(res.userInfo)
+                    }
+                  })
+                  console.log(app.globalData.URL);
                   console.log("用户的code:" + res.code);
                   // 传给后台，再经过解析获取用户的 openid
-                  // wx.request({
-                  //   url: '',
-                  //   data: {code:res.code},
-                  //   header: {
-                  //     'content-type':'application/json'
-                  //   },
-                  //   success: function(res) {
-                  //     console.log(res.data)
-                  //   },
-                  // })
+                   wx.request({
+                     url: app.globalData.URL + '/user/login',
+                     data: {
+                       code:res.code,
+                       nick_name:res.nickname,
+                       avatarUrl:res.avatarUrl
+                       },
+                     method:'POST',
+                     header: {
+                       'content-type':'application/json'
+                     },
+                     success: function(res) {
+                       console.log(res.data)
+                     },
+                   })
                 }
               });
             }
