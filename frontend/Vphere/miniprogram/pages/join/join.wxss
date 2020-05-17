@@ -1,1 +1,15 @@
 /* pages/join/join.wxss */
+.title{
+  display: flex;
+  padding: 1.5vw;
+  font-size: 3.5vw;
+  font-weight: bold;
+  justify-content: center;
+  box-shadow: gainsboro 0px 3px 3px 0px;
+  z-index: 1;
+}
+.classes{
+  border-top: 1rpx gainsboro solid;
+  height: 88.5%;
+  position: absolute;
+}

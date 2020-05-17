@@ -5,9 +5,35 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    time:"这边样式先咕咕",
+    endTime:"这边picker应该是写好了",
+    array:["picker、scroll-view、block浪费了不少时间","233","请选择3","请选择4",],
+    index:0
   },
-
+  bindPickerChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index: e.detail.value
+    })
+  },
+  bindMultiPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      multiIndex: e.detail.value
+    })
+  },
+  bindTimeChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      time: e.detail.value
+    })
+  },
+  bindEndTimeChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      time: e.detail.value
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
