@@ -27,6 +27,7 @@ page{
 }
 .bg-w{
   box-shadow: gainsboro 0px 3px 3px 0px;
+  font-weight: bold;
 }
 .bg-g{
   background: rgb(249, 250, 210);
