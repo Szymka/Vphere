@@ -1,18 +1,49 @@
-// pages/register/register.js
+const app=getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    items: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let url = app.globalData.URL + '/sign/status';
+    let data = {
+      
+    };
+    app.wxRequest('GET', url, data, (res) => {
+      console.log(res.data)
+      that.setData({
+          list:res.data
+        })
+    }, (err) => {
+      console.log(err.errMsg)
+    })
+   
+    // var that=this
+    // wx.request({
+    //   url: 'http://vphere.yanmy.top/api/sign/status',
+    //   header:{
+    //     'content-Type': 'application/json'
+    //   },
+    //   success:function(res){
+    //     console.log(res.data);
+    //     that.setData({
+    //       list:res.data
+    //     })
+    //   }
+    // })
+  },
+  gotoregister:function()
+  {
+    wx.navigateTo({
+      url: '/pages/register01/register01',
+    })
   },
 
   /**

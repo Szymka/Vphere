@@ -24,7 +24,7 @@ view{
 .top-status{
   position: relative;
   padding-top: 50rpx;
-  font-size: 50rpx;
+  font-size: 45rpx;
   margin-bottom: 25rpx;
 }
 .second{
@@ -43,3 +43,13 @@ button{
   width: 40%;
   font-size: 38rpx;
 } 
+.distance{
+  margin-bottom: 20rpx;
+}
+.border{
+  width:40%;
+  height: 80rpx;
+  border: 1rpx solid;
+  margin-bottom: 40rpx;
+  text-align: center
+}
