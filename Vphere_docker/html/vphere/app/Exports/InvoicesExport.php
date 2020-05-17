@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\Invoice;
 use Maatwebsite\Excel\Concerns\FromArray;
 
 class InvoicesExport implements FromArray
@@ -18,4 +17,6 @@ class InvoicesExport implements FromArray
     {
         return $this->invoices;
     }
+
+
 }
