@@ -1,11 +1,20 @@
-// pages/teams/teams.js
+// pages/join/join.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    list: [{
+      name:"18网一"
+    },
+    {
+      name:"18网二"
+    },
+    {
+        name: "18软二"
+      }
+    ]
   },
 
   /**
