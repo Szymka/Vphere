@@ -11,7 +11,8 @@
     "pages/create/create",
     "pages/teams/teams",
     "pages/absence/absence",
-    "pages/timesetting/timesetting"
+    "pages/timesetting/timesetting",
+    "pages/register01/register01"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

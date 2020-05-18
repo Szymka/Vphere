@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Exports\InvoicesExport;
+use App\Exports\SheetsExport;
 use App\Http\Controllers\Controller;
 use App\Models\large_group;
 use App\Models\SG_LG_estb;
@@ -14,6 +15,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Sheet;
 
 
 class GroupController extends Controller {
@@ -289,6 +291,62 @@ class GroupController extends Controller {
     }
 
     public function large_situation (Request $request) {
-        dump($request);
+        $mod = array(
+            'groupid' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+        );
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $user=User::query()->where('id',$this->data['user_id'])->first();
+        if ($user->join_group===null){
+            return error_msg(403,13);
+        }
+        $join_group=$user->join_group;
+        $join_group=json_decode($join_group,true);
+        $large_group=array();
+        foreach ($join_group as $group){
+            if ($group['status']===3&&$group['group_status']===1&&$group['group_id']===(int)$this->data['groupid']){
+                $large_group=$group;
+            }
+        }
+        if (empty($large_group)){
+            return error_msg(403,23);
+        }
+        $small_groups= SG_LG_estb::query()->where('lg_id',$large_group['group_id'])->get();
+        $sheets=[];
+        foreach ($small_groups as $group){
+            $si_record = si_record::query()
+                ->join('sign_in', 'sign_in.id', '=', 'si_record.sign_in_id')
+                ->join('u_sg_estb', function ($join) {
+                    $join->on('u_sg_estb.user_id', '=', 'si_record.user_id')->on('u_sg_estb.sg_id', '=', 'sign_in.group_id');
+                })
+                ->where([["si_record.status", '<>', 1], ['group_id', $group['sg_id']]])
+                ->groupBy("si_record.user_id", 'u_sg_estb.remark')->selectRaw('count(*) as times,`u_sg_estb`.`remark`')
+                ->get();
+            $small_group=small_group::query()->where('id',$group['sg_id'])->first();
+            $group_name=$small_group->group_name;
+            if ($si_record->isEmpty()) {
+                continue;
+            }
+            $result=array(["名称","缺席次数"]);
+            $si_record = $si_record->toArray();
+            $num=1;
+            foreach ($si_record as $record) {
+                $result[$num++]=[
+                    $record['remark'],$record['times']
+                ];
+            }
+            $sheets[]=[$result,$group_name];
+        }
+        if (empty($sheets)){
+            return error_msg(403, 9);
+        }
+        $export = new SheetsExport($sheets);
+        $file = md5(time() . "vphere") . ".xlsx";
+        return Excel::download($export,$file);
     }
 }

@@ -1,3 +1,4 @@
+const app=getApp();
 Page({
 
   /**
@@ -11,19 +12,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var that=this
-    // wx.request({
-    //   url: '',
-    //   header:{
-    //     'contenr-type':'application/json',
-    //   },
-    //   success:function(res){
-    //     console.log(res.data);
-    //     that.setData({
-    //       list: res.data,
-    //     })
-    //   }
-    // })
+    console.log(app.globalData.URL)
+    var that=this
+    wx.request({
+      url: app.globalData.URL + '/user/schedule',
+       header:{
+         'contenr-type':'application/json',
+       },
+       success:function(res){
+       console.log(res.data);
+         that.setData({
+           list: res.data,
+         })
+       }
+    })
   },
 
   /**
