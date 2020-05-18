@@ -5,9 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    time:"这边样式先咕咕",
-    endTime:"这边picker应该是写好了",
-    array:["picker、scroll-view、block浪费了不少时间","233","请选择3","请选择4",],
+    time:"00:00",
+    endTime:"00:00",
+    array:["请选择","请选择","请选择","请选择",],
     index:0
   },
   bindPickerChange: function(e) {
