@@ -3,7 +3,7 @@ App({
   globalData: {
     // URL: 'http://vphere.yanmy.top',
     URL: 'http://vphere.yanmy.top/api',
-  
+
   },
   wxRequest(method, url, data, callback, errFun) {
     wx.request({
@@ -23,5 +23,5 @@ App({
       }
     })
   },
-  
+
 })

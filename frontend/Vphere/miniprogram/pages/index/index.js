@@ -1,9 +1,9 @@
-const app=getApp()
+const app = getApp()
 Page({
   data: {
-    
+
   },
-  
+
   onLoad: function () {
     var that = this
     wx.getUserInfo({
