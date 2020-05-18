@@ -49,7 +49,7 @@
 		</view>
 		<!-- 示例 -->
 
-		<view class="tr" wx:for="{{list}}" wx:for-item="item" >
+		<view class="tr" wx:for="{{list}}" wx:for-item="item" wx:key="list">
 			<view class="td">{{item.Id}}</view>
 			<view class="td">{{item.Name}}</view>
 			<view class="td">{{item.Num}}</view>

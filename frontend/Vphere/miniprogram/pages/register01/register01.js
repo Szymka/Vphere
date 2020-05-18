@@ -144,13 +144,14 @@ Page({
    * 停止录音
    */
   stop: function () {
+    var tempFilePath
     recorderManager.onStop((res) => {
       console.log('recorder stop', res)
       this.setData({
         tempFilePath: res.tempFilePath,
         status: 3
       })
-
+      console.log(tempFilePath)
     })
     this.recordingTimer(this.data.time)
     recorderManager.stop()
@@ -158,20 +159,23 @@ Page({
   },
   //上传录音
   upload: function () {
+    
     if (this.data.status == 3) {
       this.setData({
         status: 3
       })
     }
     var that = this
+    console.log(res.tempFilePath)
     wx.showModal({
       title: "上传录音",
       content: "是否上传录音",
       success(res) {
         wx.uploadFile({
-          url: app.globalData.url+'/api/sign/reg',
+          url: app.globalData.url+'/sign/reg',
           filePath: tempFilePath,
           name: 'file',
+          method:'POST',
           header: {
             "Content-Type": "multipart/form-data"
           },

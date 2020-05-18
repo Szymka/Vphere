@@ -1,9 +1,16 @@
 <view class="create-form">
-	<view class="title">请填写创建集体信息表格</view>
-	//这有个啥？不小心删掉忘记看了
+	<view class="title">请填写创建集体表格信息</view>
 	<form bindsubmit='test'>
+  
 		<input class="class-name" name="username" placeholder='创建集体名称' maxlength='12'></input>
-		<input class="father class-name" name="password" placeholder='所属集体名称' maxlength='12'></input>
+		<view class="class-name" style="margin-bottom:75rpx">
+			<text>请选择所属大集体</text>
+			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+				<view class="picker">
+					{{array[index]}}
+				</view>
+			</picker>
+		</view>
 		<button type="primary" formType="submit">提交信息</button>
 	</form>
 </view>

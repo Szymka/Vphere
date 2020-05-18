@@ -12,17 +12,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let url = app.globalData.URL + '/sign/status';
-    let data = {
-      
-    };
-    app.wxRequest('GET', url, data, (res) => {
-      console.log(res.data)
-      that.setData({
-          list:res.data
+    console.log(app.globalData.URL)
+    var that = this
+    wx.request({
+      url: app.globalData.URL + '/sign/status',
+      header: {
+        'contenr-type': 'application/json',
+        
+      },
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          list: res.data,
         })
-    }, (err) => {
-      console.log(err.errMsg)
+      }
     })
    
     // var that=this

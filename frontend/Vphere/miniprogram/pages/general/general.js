@@ -12,22 +12,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(app.globalData.URL)
+    var that = this
+    wx.request({
+      url: app.globalData.URL + '/user/attendance',
+      header: {
+        'contenr-type': 'application/json',
+        'cookie': wx.getStorageInfoSync("sessionid")
+      },
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          list: res.data,
+        })
+      }
+    })
     
-    // var that = this;
-
-    // wx.request({
-    //   url = app.globalData.URL + '/user/attendance',
-    //   header: {
-    //     'content-type': 'application/json' // 默认值
-    //   },
-    //   success: res => {
-    //     console.log(res.data)
-
-    //     that.setData({
-    //       list: res.data.data
-    //     })
-    //   },
-    // })
   },
 
 

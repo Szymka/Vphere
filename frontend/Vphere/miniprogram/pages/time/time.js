@@ -18,6 +18,7 @@ Page({
       url: app.globalData.URL + '/user/schedule',
        header:{
          'contenr-type':'application/json',
+         'cookie':wx.getStorageInfoSync("sessionid")
        },
        success:function(res){
        console.log(res.data);

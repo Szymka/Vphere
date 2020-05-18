@@ -1,4 +1,4 @@
-// pages/join/join.js
+const app = getApp();
 Page({
 
   /**
@@ -21,8 +21,40 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(app.globalData.URL)
+    var that = this
+    wx.request({
+      url: app.globalData.URL + '/group/small_group',
+      method:"GET",
+      header: {
+        'contenr-type': 'application/json',
+      },
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          list: res.data,
+        })
+      }
+    })
   },
-
+  choose:function(){
+    wx.showModal({
+      title: '提示',
+      content: '是否加入此集体',
+      success(res){
+        wx.request({
+          method:'POST',
+          url: app.globalData.url + '/group/join',
+          header:{
+            'content-type':'application/x-www-form-urlencoded'
+          },
+          success: function (res) {
+            console.log(res.data)
+          },
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

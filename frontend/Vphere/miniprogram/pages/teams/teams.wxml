@@ -1,21 +1,17 @@
-<view class="page">
-	<view class="page__bd">
-		<view class="weui-search-bar">
-			<view class="weui-search-bar__form">
-				<view class="weui-search-bar__box">
-					<icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-					<input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
-					<view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
-						<icon type="clear" size="14"></icon>
-					</view>
-				</view>
-			</view>
-		</view>
-	</view>
-</view>
 <view class="title">加入及创建的集体</view>
+<view>
+<view class="weui-cells__title">已加入</view>
 <scroll-view class="classes" scroll-y="true">
-	<view wx:for="{{list}}" class="weui-cell weui-cell_access scroll-view-item">
+	<view wx:for="{{list}}" wx:key="list" class="weui-cell weui-cell_access scroll-view-item">
 		<view class="weui-cell__bd">{{item.name}}</view>
 	</view>
 </scroll-view>
+</view>
+<view>
+  <view class="weui-cells__title">已创建</view>
+<scroll-view class="classes" scroll-y="true">
+	<view wx:for="{{list01}}" wx:key="list01" wx:for-item="list01" class="weui-cell weui-cell_access scroll-view-item">
+		<view class="weui-cell__bd">{{list01.name}}</view>
+	</view>
+</scroll-view>
+</view>
