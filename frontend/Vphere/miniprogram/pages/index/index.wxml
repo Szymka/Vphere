@@ -1,4 +1,4 @@
-<view wx:if="{{isHide}}">
+<!-- <view wx:if="{{isHide}}">
 	<view wx:if="{{canIUse}}">
 		<view class='header'>
 			<image src='/images/wx_login.png'></image>
@@ -15,6 +15,7 @@
 	</view>
 	<view wx:else>请升级微信版本</view>
 </view>
+
 
 <view wx:else>
 	<view class="distance">
@@ -59,4 +60,10 @@
 				<view class="about-vphere weui-cell__ft weui-cell__ft_in-access"></view>
 			</navigator>
 	</view>
-</view>
+</view> -->
+
+<open-data type="userAvatarUrl"></open-data>
+<open-data type="userNickName"></open-data>
+<!-- 需要使用 button 来授权登录 -->
+<button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+<view wx:else>请升级微信版本</view>
