@@ -2,8 +2,8 @@ App({
   //设置全局请求URL
   globalData: {
     // URL: 'http://vphere.yanmy.top',
-    URL: 'http://vphere.com',
-  
+    URL: 'http://vphere.com/api',
+    userInfo: {},
   },
 
   /**

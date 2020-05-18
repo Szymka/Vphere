@@ -19,7 +19,7 @@ class CreateUSGEstbTable extends Migration
             $table->integer("user_id")->comment("用户id");
             $table->integer("sg_id")->comment("remark");
             $table->string("remark",50)->comment("集体内备注");
-            $table->integer("status")->default("0");
+            $table->integer("status")->default("0")->comment("权限级别,3大集体超级管理员,2小集体超级管理员,1管理员,0普通用户");
             $table->timestamps();
         });
     }
