@@ -18,12 +18,12 @@ Page({
       url: app.globalData.URL + '/sign/status',
       header: {
         'contenr-type': 'application/json',
-        
+        'cookie': wx.getStorageSync("sessionid")
       },
       success: function (res) {
         console.log(res.data);
         that.setData({
-          list: res.data,
+          items: res.data,
         })
       }
     })

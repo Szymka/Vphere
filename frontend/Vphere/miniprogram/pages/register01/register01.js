@@ -145,39 +145,76 @@ Page({
    */
   stop: function () {
     var tempFilePath
+    recorderManager.stop()
     recorderManager.onStop((res) => {
+      var that =this
       console.log('recorder stop', res)
       this.setData({
         tempFilePath: res.tempFilePath,
         status: 3
       })
-      console.log(tempFilePath)
+      console.log(res.tempFilePath)
+      wx.uploadFile({
+        url: app.globalData.url+'/sign/reg',
+        filePath: res.tempFilePath,
+        name: 'file',
+        method: 'POST',
+        header: {
+          "Content-Type": "multipart/form-data",
+          'cookie': wx.getStorageSync("sessionid")
+        },
+        //参数绑定
+        formData: {
+          recordingtime: that.data.recordingTimeqwe,
+          topicid: that.data.topicid,
+          userid: 1,
+          praisepoints: 0
+        },
+        success: function (res) {
+          console.log(res);
+          wx.showToast({
+            title: '注册成功',
+            icon: 'success',
+            duration: 2000
+          })
+          innerAudioContext.stop()
+        },
+        fail: function (res) {
+          wx.showToast({
+            title: '注册失败',
+            image: '/images/fail.png',
+            duration: 2000
+          })
+          console.log("录音上传失败");
+        }
     })
     this.recordingTimer(this.data.time)
     recorderManager.stop()
 
-  },
+    })
+},
   //上传录音
-  upload: function () {
-    
+  upload: function (options) {
+    var that =this
     if (this.data.status == 3) {
       this.setData({
         status: 3
       })
     }
-    var that = this
-    console.log(res.tempFilePath)
+    
+    
     wx.showModal({
       title: "上传录音",
       content: "是否上传录音",
       success(res) {
         wx.uploadFile({
           url: app.globalData.url+'/sign/reg',
-          filePath: tempFilePath,
+          filePath: that.data.res.tempFilePath,
           name: 'file',
           method:'POST',
           header: {
-            "Content-Type": "multipart/form-data"
+            "Content-Type": "multipart/form-data",
+            'cookie': wx.getStorageSync("sessionid")
           },
           //参数绑定
           formData: {
@@ -186,7 +223,7 @@ Page({
             userid: 1,
             praisepoints: 0
           },
-          success: function (ress) {
+          success: function (res) {
             console.log(res);
             wx.showToast({
               title: '注册成功',
@@ -195,13 +232,13 @@ Page({
             })
             innerAudioContext.stop()
           },
-          fail: function (ress) {
+          fail: function (res) {
             wx.showToast({
               title: '注册失败',
               image:'/images/fail.png',
               duration:2000
             })
-            console.log("录音保存失败");
+            console.log("录音上传失败");
           }
 
         })
