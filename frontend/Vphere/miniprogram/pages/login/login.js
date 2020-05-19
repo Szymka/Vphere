@@ -54,15 +54,17 @@ Page({
               console.log(res.data)
               if(res&&res.header&&res.header['Set-Cookie']){
                 wx.setStorageSync('cookieKey', res.header['Set-Cookie']);
+                console.log(wx.getStorageInfoSync('cookieKey'));
               }
             },
           })
           let cookie=wx.getStorageInfoSync('cookieKey');
+          console.log(cookie);
           let header={'content-type':'application/x-www-form-urlencoded'};
           if(cookie){
             header.cookie=cookie
           }
-          console.log(cookie)
+          
         }
       });
       
