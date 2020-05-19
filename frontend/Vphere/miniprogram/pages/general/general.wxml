@@ -50,9 +50,9 @@
 		<!-- 示例 -->
 
 		<view class="tr" wx:for="{{list}}" wx:for-item="item" wx:key="list">
-			<view class="td">{{item.Id}}</view>
-			<view class="td">{{item.Name}}</view>
-			<view class="td">{{item.Num}}</view>
+			<view class="td">{{index}}</view>
+			<view class="td">{{group_name}}</view>
+			<view class="td">{{number}}</view>
 		</view>
 	</view>
 </view>

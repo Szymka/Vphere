@@ -1,16 +1,15 @@
 <view class="container">
-  <view>
+  
     <view class="top">
-		<view class="top-status">您当前的声纹注册状态为</view>
-		<view class="border">{{item.status}}</view>
-    <view class="top-status">当前剩余修改次数为</view>
-		<view class="border">{{item.data}}</view>
-      <button size="mini " type="primary" bindtap="gotoregister">立即注册</button>
+		<view class="top-status">您当前的声纹信息注册状态:</view>
+		<view class="border">{{status}}</view>
+    <view class="top-status">剩余可上传声纹信息次数:</view>
+		<view class="border">{{times}}</view>
     
-      <button size="mini " type="primary" bindtap="gotoregister">修改</button>
-	</view>
-
-  </view>
+      <button size="mini " type="primary" bindtap="gotoregister">立即上传</button>
+    
+      
+	  </view>
 </view> 
 <!-- <view class="container">
   <view wx:for="{{list}}" wx:key="list">

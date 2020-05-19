@@ -173,7 +173,7 @@ Page({
         success: function (res) {
           console.log(res);
           wx.showToast({
-            title: '注册成功',
+            title: '上传成功',
             icon: 'success',
             duration: 2000
           })
@@ -181,7 +181,7 @@ Page({
         },
         fail: function (res) {
           wx.showToast({
-            title: '注册失败',
+            title: '上传失败',
             image: '/images/fail.png',
             duration: 2000
           })
@@ -193,58 +193,58 @@ Page({
 
     })
 },
-  //上传录音
-  upload: function (options) {
-    var that =this
-    if (this.data.status == 3) {
-      this.setData({
-        status: 3
-      })
-    }
+  // //上传录音
+  // upload: function (options) {
+  //   var that =this
+  //   if (this.data.status == 3) {
+  //     this.setData({
+  //       status: 3
+  //     })
+  //   }
     
     
-    wx.showModal({
-      title: "上传录音",
-      content: "是否上传录音",
-      success(res) {
-        wx.uploadFile({
-          url: app.globalData.url+'/sign/reg',
-          filePath: that.data.res.tempFilePath,
-          name: 'file',
-          method:'POST',
-          header: {
-            "Content-Type": "multipart/form-data",
-            'cookie': wx.getStorageSync("sessionid")
-          },
-          //参数绑定
-          formData: {
-            recordingtime: that.data.recordingTimeqwe,
-            topicid: that.data.topicid,
-            userid: 1,
-            praisepoints: 0
-          },
-          success: function (res) {
-            console.log(res);
-            wx.showToast({
-              title: '注册成功',
-              icon: 'success',
-              duration: 2000
-            })
-            innerAudioContext.stop()
-          },
-          fail: function (res) {
-            wx.showToast({
-              title: '注册失败',
-              image:'/images/fail.png',
-              duration:2000
-            })
-            console.log("录音上传失败");
-          }
+  //   wx.showModal({
+  //     title: "上传录音",
+  //     content: "是否上传录音",
+  //     success(res) {
+  //       wx.uploadFile({
+  //         url: app.globalData.url+'/sign/reg',
+  //         filePath: that.data.res.tempFilePath,
+  //         name: 'file',
+  //         method:'POST',
+  //         header: {
+  //           "Content-Type": "multipart/form-data",
+  //           'cookie': wx.getStorageSync("sessionid")
+  //         },
+  //         //参数绑定
+  //         formData: {
+  //           recordingtime: that.data.recordingTimeqwe,
+  //           topicid: that.data.topicid,
+  //           userid: 1,
+  //           praisepoints: 0
+  //         },
+  //         success: function (res) {
+  //           console.log(res);
+  //           wx.showToast({
+  //             title: '注册成功',
+  //             icon: 'success',
+  //             duration: 2000
+  //           })
+  //           innerAudioContext.stop()
+  //         },
+  //         fail: function (res) {
+  //           wx.showToast({
+  //             title: '注册失败',
+  //             image:'/images/fail.png',
+  //             duration:2000
+  //           })
+  //           console.log("录音上传失败");
+  //         }
 
-        })
-      }
-    })
-  },
+  //       })
+  //     }
+  //   })
+  // },
 
   /**
    * 播放录音

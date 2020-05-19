@@ -5,7 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    items:[]
+    items:[],
+    group_name:[],
+    start_time:{},
+    end_time:[],
+    location:[],
+    status:[],
+    hasuserinfo:false
   },
 
   /**
@@ -25,6 +31,11 @@ Page({
        console.log(res.data);
          that.setData({
            items: res.data,
+           hasuserinfo:true,
+          //  group_name:res.data.data.group_name,
+          //  start_time:res.data.data.start_time,
+          //  end_time:res.data.data.end_time,
+          //  staus:res.data.data.status
          })
        }
     })
