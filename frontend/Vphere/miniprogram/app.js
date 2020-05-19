@@ -1,9 +1,10 @@
+
 App({
   //设置全局请求URL
   globalData: {
     URL: 'https://vphere.yanmy.top/api',
-
   },
+  
   wxRequest(method, url, data, callback, errFun) {
     wx.request({
       url: url,

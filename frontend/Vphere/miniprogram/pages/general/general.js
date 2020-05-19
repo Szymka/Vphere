@@ -5,7 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    items: []
+    items:[],
+    group_name:[],
+    number:[],
   },
 
   /**
@@ -18,12 +20,12 @@ Page({
       url: app.globalData.URL + '/user/attendance',
       header: {
         'contenr-type': 'application/json',
-        'cookie': wx.getStorageInfoSync("sessionid")
+        'cookie': wx.getStorageSync("sessionid")
       },
       success: function (res) {
         console.log(res.data);
         that.setData({
-          list: res.data,
+          items: res.data,
         })
       }
     })

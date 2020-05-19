@@ -41,29 +41,20 @@ Page({
           // 传给后台，再经过解析获取用户的 openid
           wx.request({
             url: app.globalData.URL + '/user/login',
+            method: 'POST',
             data: {
               code: res.code,
               nick_name: this.data.userInfo.nickName,
               avatarUrl: this.data.userInfo.avatarUrl,
             },
-            method: 'POST',
             header: {
               'content-type': 'application/x-www-form-urlencoded'
             },
             success: function (res) {
               console.log(res.data)
-              if(res&&res.header&&res.header['Set-Cookie']){
-                wx.setStorageSync('cookieKey', res.header['Set-Cookie']);
-                console.log(wx.getStorageInfoSync('cookieKey'));
-              }
+              wx.setStorageSync("sessionid", res.header["Set-Cookie"])
             },
           })
-          let cookie=wx.getStorageInfoSync('cookieKey');
-          console.log(cookie);
-          let header={'content-type':'application/x-www-form-urlencoded'};
-          if(cookie){
-            header.cookie=cookie
-          }
           
         }
       });
@@ -75,8 +66,8 @@ Page({
     } else {
       //用户按了拒绝按钮
       wx.showModal({
-        title: '警告',
-        content: '您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
+        title: '温馨提示',
+        content: '拒绝授权将无法进入小程序',
         showCancel: false,
         confirmText: '返回授权',
         success: function (res) {

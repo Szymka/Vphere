@@ -5,7 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    items: []
+    status:"",
+    times:"",
+    
   },
 
   /**
@@ -18,29 +20,17 @@ Page({
       url: app.globalData.URL + '/sign/status',
       header: {
         'contenr-type': 'application/json',
-        
+        'cookie': wx.getStorageSync("sessionid")
       },
       success: function (res) {
         console.log(res.data);
         that.setData({
-          list: res.data,
+          status: res.data.data.status,
+          times:res.data.data.times,
         })
       }
     })
    
-    // var that=this
-    // wx.request({
-    //   url: 'http://vphere.yanmy.top/api/sign/status',
-    //   header:{
-    //     'content-Type': 'application/json'
-    //   },
-    //   success:function(res){
-    //     console.log(res.data);
-    //     that.setData({
-    //       list:res.data
-    //     })
-    //   }
-    // })
   },
   gotoregister:function()
   {
