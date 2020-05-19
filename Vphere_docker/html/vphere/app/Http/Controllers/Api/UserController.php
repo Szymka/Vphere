@@ -102,7 +102,7 @@ class UserController extends Controller {
                     "start_time" => $item['start_time'],
                     "end_time" => $item['end_time'],
                     "status" => $status,
-                    "locataion" => $location,
+                    "location" => $location,
                 ]
             ];
             $num++;
