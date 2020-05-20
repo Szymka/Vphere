@@ -11,6 +11,7 @@ Page({
     end_time:[],
     location:[],
     status:[],
+    group:[],
     hasuserinfo:false
   },
 
@@ -27,7 +28,28 @@ Page({
          'cookie':wx.getStorageSync("sessionid")
        },
        success:function(res){
-         
+         var json = {
+           "group1": {
+             "group_name": "test4",
+             "start_time": "2020-05-15 16:33:29",
+             "end_time": "2020-05-15 22:33:28",
+             "status": "未签到",
+             "location": "湖南省娄底市涟源市人民路49号"
+           },
+           "group2": {
+             "group_name": "test4",
+             "start_time": "2020-05-15 10:50:10",
+             "end_time": "2020-05-15 22:00:00",
+             "status": "已迟到",
+             "location": "湖南省娄底市涟源市人民路49号"
+           }
+         };
+         var nArr = [];
+         for (var i in json) {
+           nArr.push(json[i]);
+         }
+         console.log(json);
+         console.log(nArr);  
        console.log(res.data);
          that.setData({
            items: res.data,
@@ -36,7 +58,9 @@ Page({
           //  start_time:res.data.data.start_time,
           //  end_time:res.data.data.end_time,
           //  staus:res.data.data.status
+           group: nArr,
          })
+         console.log(that.data.group);
        }
     })
   },
