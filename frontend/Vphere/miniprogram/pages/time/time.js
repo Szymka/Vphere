@@ -5,7 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+
     itemdata:[]
+
   },
 
   /**
@@ -21,7 +23,7 @@ Page({
          'cookie':wx.getStorageSync("sessionid")
        },
        success:function(res){
-         
+
        console.log(res.data);
         //  var json = {
         //    "group1": {
@@ -50,6 +52,7 @@ Page({
         }
         console.log(items)
          that.setData({
+
            itemdata:items,
          })
          console.log(that.data.itemdata)
