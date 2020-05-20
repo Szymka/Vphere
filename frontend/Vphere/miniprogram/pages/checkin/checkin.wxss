@@ -1,30 +1,78 @@
-.box01{
-    border: 1rpx solid;
-    color: black;
-    border-radius: 30%;
-    height: 100rpx;
-    width: 400rpx;
-    margin: 0 auto;
-    text-align: center
-}
-.sound-recording {
-  background-color: rgb(216, 228, 223);
-  margin: 10rpx 30rpx;
-  border-radius: 20rpx;
-  padding: 5rpx 0rpx;
-}
-
-.btn {
-  margin: 0rpx 100rpx;
+page{
+  height: 100%;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
 }
-
-.btn .show {
+.title{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20rpx;
+}
+.big-title{
+  font-weight: bold;
+  font-size: 50rpx;
+  margin-top: 50rpx;
+}
+.show-virifycode{
+  display: flex;
+  flex-direction: column;
+  margin-top: 50rpx;
+  margin-bottom: 20rpx;
+}
+.get-code{
+  margin-top: 50rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 43rpx;
+  font-weight: bold;
+  line-height: none;
+}
+.box01{
+    border: 1px solid;
+    border-radius: 15rpx;
+    height: 100rpx;
+    width: 400rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55rpx;
+    font-weight: bold;
+    box-shadow: rgba(220, 220, 220, 0.733) 0px 3px 3px 1px;
+}
+.sound-recording {
+  margin-top: 20rpx;
+  border-radius: 15rpx;
+  padding: 5rpx 0rpx;
+  width: 90%;
+  overflow: hidden;
+  background-color: rgb(249, 250, 223);
+  box-shadow: rgba(220, 220, 220, 0.733) 0px 3px 3px 1px;
+}
+.time {
+  line-height: 70rpx;
+  text-align: center;
+  font-size: 30rpx;
+  margin-top: 15rpx;
+  margin-bottom: 20rpx;
+}
+.btn {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 14%;
+}
+.btn>view{
   padding: 10rpx;
-  width: 200rpx;
+  width: 22%;
   font-size: 25rpx;
+  height: 100%;
+}
+.btn .show {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,43 +80,37 @@
   border-radius: 20rpx;
   border: 5rpx solid rgb(127, 204, 214);
 }
-
 .btn .hide {
-  padding: 10rpx;
-  width: 200rpx;
-  font-size: 25rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 20rpx;
   border: 5rpx solid #eee;
   pointer-events: none;
-  background-color: rgba(167, 162, 162, 0.445);
-}
-
-.time {
-  line-height: 70rpx;
-  text-align: center;
-  font-size: 30rpx;
+  background-color: rgba(99, 99, 99, 0.137);
 }
 
 .progress {
-  margin: 20rpx;
+  margin: 30rpx 5%;
+  width: 90%;
 }
-
-.play {
-  margin: 0rpx 20rpx;
-}
-
 .txt {
   display: flex;
   justify-content: center;
   line-height: 60rpx;
   font-size: 25rpx;
 }
+.progress>progress{
+  box-shadow: rgba(220, 220, 220, 0.534) 0px 3px 3px 1px;
+}
+
+.play {
+  margin: 0rpx 20rpx;
+}
 
 .anniu {
-  margin: 10rpx 50rpx;
+  margin: 30rpx 50rpx;
+  margin-top: 40rpx;
   display: flex;
   justify-content: space-between;
 }
@@ -81,7 +123,7 @@
   font-size: 25rpx;
   width: 80rpx;
   height: 80rpx;
-  background-color: rgb(178, 228, 228);
+  background-color: rgba(178, 228, 228, 0.397);
   border: 5rpx solid rgb(127, 204, 214);
 }
 
@@ -93,7 +135,7 @@
 
 .anniu .no-clicking {
   pointer-events: none;
-  background-color: rgba(167, 162, 162, 0.445);
+  background-color: rgba(179, 179, 179, 0.466);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,5 +143,5 @@
   font-size: 25rpx;
   width: 80rpx;
   height: 80rpx;
-  border: 5rpx solid rgb(241, 244, 245);
+  border: 5rpx solid rgba(255, 255, 255, 0.74);
 }

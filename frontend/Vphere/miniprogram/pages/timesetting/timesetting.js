@@ -9,7 +9,8 @@ Page({
     time:"点击选择考勤起始时间",
     endTime:"点击选择考勤终止时间",
     array:['点击选择考勤集体',],
-    index:0
+    index:0,
+    mode:"dateTime"
   },
   bindPickerChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -17,13 +18,7 @@ Page({
       index: e.detail.value
     })
   },
-  bindMultiPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
-      multiIndex: e.detail.value
-    })
-  },
-  bindTimeChange: function(e) {
+  bindStartTimeChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       time: e.detail.value
@@ -32,7 +27,7 @@ Page({
   bindEndTimeChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      time: e.detail.value
+      endTime: e.detail.value
     })
   },
   /**

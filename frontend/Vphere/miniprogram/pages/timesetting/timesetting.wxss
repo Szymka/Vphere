@@ -1,6 +1,17 @@
 page{
     height: 100%;
     width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.container{
+    height: min-content;
+    margin-top: 30rpx;
+    width: 96%;
+    padding: 10rpx;
+    font-size: 30rpx;
+    box-shadow: rgba(220, 220, 220, 0.692) 0px 2px 3px 1px;
+    border-radius: 15rpx;
 }
 .box2{
  width: 680rpx;
@@ -8,7 +19,7 @@ page{
  display: flex;
  flex-direction: row;
  align-items: center;
- border-bottom: solid 2rpx #D7D7D7;
+ /* border-bottom: solid 2rpx #D7D7D7; */
 }
 .box2_left{
  width: 180rpx;
@@ -30,23 +41,18 @@ page{
  flex-direction: row-reverse;
  align-items: center;
 }
-.container{
-    padding: 1rem;
-    font-size: 0.9rem;
-    line-height: 1.5rem;
-    border-shadow: 1px 1px #0099CC;
-}
 .row{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 0.8rem;
+    margin-top: 40rpx;
+    margin-bottom: 40rpx;
 }
 .row text{
     flex-grow: 1;
     text-align: right;
 }
-.row input{
+.box2_right{
     font-size: 0.7rem;
     color: #ccc;
     flex-grow: 3;
@@ -60,11 +66,14 @@ page{
     padding: 0 2rem;
 }
 picker{
-    width: 100%;
+    width: 90%;
     height: 80rpx;
-    border: gainsboro 5rpx solid;
-    border-radius: 10rpx;
+    border: gainsboro 3rpx solid;
+    border-radius: 15rpx;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 40rpx;
+    font-weight: bold;
+    text-align: center;
 }
