@@ -5,13 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    items:[],
-    group_name:[],
-    start_time:{},
-    end_time:[],
-    location:[],
-    status:[],
-    hasuserinfo:false
+    itemdata:[]
   },
 
   /**
@@ -29,14 +23,36 @@ Page({
        success:function(res){
          
        console.log(res.data);
+        //  var json = {
+        //    "group1": {
+        //      "group_name": "test4",
+        //      "start_time": "2020-05-15 16:33:29",
+        //      "end_time": "2020-05-15 22:33:28",
+        //      "status": "未签到",
+        //      "locataion": "湖南省娄底市涟源市人民路49号"
+        //    },
+        //    "group2": {
+        //      "group_name": "test4",
+        //      "start_time": "2020-05-15 10:50:10",
+        //      "end_time": "2020-05-15 22:00:00",
+        //      "status": "已迟到",
+        //      "locataion": "湖南省娄底市涟源市人民路49号"
+        //    }
+        //  };
+        //  for (var i in json) {
+        //    nArr.push(json[i]);
+        //  }
+        //  console.log(nArr)
+        
+        var items=[];
+         for (var i in res.data.data){
+           items.push(res.data.data[i]);
+        }
+        console.log(items)
          that.setData({
-           items: res.data,
-           hasuserinfo:true,
-          //  group_name:res.data.data.group_name,
-          //  start_time:res.data.data.start_time,
-          //  end_time:res.data.data.end_time,
-          //  staus:res.data.data.status
+           itemdata:items,
          })
+         console.log(that.data.itemdata)
        }
     })
   },

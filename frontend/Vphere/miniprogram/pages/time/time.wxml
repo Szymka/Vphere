@@ -1,8 +1,8 @@
 <view class="weui-cells__title">签到事项</view>
-        <view class="weui-cells weui-cells_after-title" wx:for="{{list}}" wx:key="list" wx:if="{{hasuserinfo}}">
+        <view class="weui-cells weui-cells_after-title" wx:for="{{itemdata}}" wx:key="index">
             <view class="weui-cell">
-                <view class="weui-cell__bd">{{group_name}}</view>
-                <view class="weui-cell__ft">{{start_time}} {{end_time}} {{location}} </view>
-                <view class="weui-cell__ft">{{status==0?'未开始':(status==1?'签到成功':'迟到')}}</view>
+                <view class="weui-cell__bd">{{item.group_name}}</view>
+                <view class="weui-cell__ft">{{item.start_time}} {{item.end_time}} {{item.location}} </view>
+                <view class="weui-cell__ft">{{item.status}}</view>
             </view>
         </view>
