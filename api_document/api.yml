@@ -271,7 +271,18 @@ paths:
       security: []
       responses:
         "200":
-          $ref: "#/components/responses/success"
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    $ref: "#/components/schemas/small_group"
         "401":
           $ref: "#/components/responses/NotAuthorization"
   /group/large_group:
@@ -282,7 +293,18 @@ paths:
       security: []
       responses:
         "200":
-          $ref: "#/components/responses/success"
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    $ref: "#/components/schemas/large_group"
         "401":
           $ref: "#/components/responses/NotAuthorization"
         
@@ -579,7 +601,53 @@ components:
               example: 计算机学院
             group_status:
               type: integer
-              example: 1  
+              example: 1
+    small_group:
+      type: object
+      properties:
+        group1:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 2 
+            group_name:
+              type: string
+              example: 高数
+        group2:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 3 
+            group_name:
+              type: string
+              example: 英语 
+    large_group:
+      type: object
+      properties:
+        group1:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 1
+            group_name:
+              type: string
+              example: 计算机学院
+        group2:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 2
+            group_name:
+              type: string
+              example: 自动化学院                       
     Signstatus:
       type: object
       properties:
