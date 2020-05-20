@@ -1,28 +1,40 @@
+const app = getApp();
 Page({
   data: {
-    listData: [
-      { "code": "01", "text": "高等数学" },
-      { "code": "02", "text": "C语言程序设计"},
-      { "code": "03", "text": "线性代数" },
-      { "code": "04", "text": "离散数学"},
-      { "code": "05", "text": "大学英语"},
-      { "code": "06", "text": "大学体育"},
-      { "code": "06", "text": "大学体育"},
-      { "code": "06", "text": "大学体育"},
-      { "code": "06", "text": "大学体育"},
-      { "code": "06", "text": "大学体育"},
-      { "code": "06", "text": "大学体育"},
-      { "code": "06", "text": "大学体育"},
-      { "code": "06", "text": "大学体育"},
-      { "code": "06", "text": "大学体育"},
-      { "code": "06", "text": "大学体育"},
-      
-      { "code": "07", "text": "大学物理"}
-    ]
+    listData: [],
+    listData01: [],
   },
-  onLoad: function () {
-    console.log('onLoad')
+  onLoad: function (options) {
+    console.log(app.globalData.URL)
+    var that = this
+    wx.request({
+      url: app.globalData.URL + '/group/joined',
+      header: {
+        'contenr-type': 'application/json',
+        'cookie': wx.getStorageInfoSync("sessionid")
+      },
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          list: res.data,
+        })
+        wx.request({
+          url: app.globalData.URL + '/group/manage',
+          header: {
+            'contenr-type': 'application/json',
+            'cookie': wx.getStorageInfoSync("sessionid")
+          },
+          success: function (res) {
+            console.log(res.data);
+            that.setData({
+              list01: res.data,
+            })
+          }
+        })
+      }
+    })
   },
+
   download: function (e) {
     console.log(e);
     let type = e.currentTarget.dataset.type;

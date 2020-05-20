@@ -52,7 +52,7 @@ page{
     flex-grow: 1;
     text-align: right;
 }
-.row input{
+.box2_right{
     font-size: 0.7rem;
     color: #ccc;
     flex-grow: 3;
@@ -75,7 +75,5 @@ picker{
     align-items: center;
     font-size: 40rpx;
     font-weight: bold;
-}
-.section.row:nth-child(2)>picker,.section.row:nth-child(1)>picker{
-    width: 30%;
+    text-align: center;
 }

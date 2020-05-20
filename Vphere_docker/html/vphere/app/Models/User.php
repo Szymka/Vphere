@@ -13,5 +13,6 @@ class User extends Model {
         "avatarUrl",
         "join_group",
         "vpr_num",
+        "vpr_status",
     ];
 }

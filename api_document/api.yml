@@ -70,7 +70,8 @@ paths:
                   status:
                     $ref: "#/components/schemas/status"
                   data:
-                    type: string        
+                    type: string
+                    example: 成功       
         "403":
           description: 登录失败
           content:
@@ -85,7 +86,7 @@ paths:
       description: 获取用户的考勤时间表
       responses:
         "200":
-          description: 成功,返回用户考勤表,status为整数,0表示未完成,1表示签到成功,2表示签到成功但是已经迟到
+          description: 成功,返回用户考勤表
           content:
             application/json:
               schema:
@@ -96,7 +97,8 @@ paths:
                   status:
                     $ref: "#/components/schemas/status"
                   data:
-                    type: string
+                    $ref: "#/components/schemas/schedule"
+                      
         "401":
           $ref: "#/components/responses/NotAuthorization"
         "403":
@@ -109,7 +111,18 @@ paths:
       description: 获取用户的考勤情况
       responses:
         "200":
-          $ref: "#/components/responses/success"
+          description: 成功,返回用户缺席记录,只有缺席过的集体才会记录
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    $ref: "#/components/schemas/attendance"
         "401":
           $ref: "#/components/responses/NotAuthorization"
         "403":
@@ -133,7 +146,7 @@ paths:
                     status:
                       $ref: "#/components/schemas/status"
                     data:
-                      type: object  
+                      $ref: "#/components/schemas/Usermanage" 
         "401":
           $ref: "#/components/responses/NotAuthorization"
         "403":
@@ -190,21 +203,28 @@ paths:
                   status:
                     $ref: "#/components/schemas/status"
                   data:
-                    type: object
-                    properties:
-                      list:
-                        type: object
+                    $ref: "#/components/schemas/joined"
         "401":
           $ref: "#/components/responses/NotAuthorization"
   /group/manage:
     get:
       tags:
         - group
-      summary: 获取用户管理的小集体
-      description: group_status为0表示小集体,1表示大集体
+      summary: 获取用户管理的集体
       responses:
         "200":
-          $ref: "#/components/responses/success"
+          description: 成功,返回用户管理的小集体,group_status为0表示小集体,1表示大集体
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    $ref: "#/components/schemas/Groupmanage"
         "401":
           $ref: "#/components/responses/NotAuthorization"
   /group/small/situation:
@@ -222,7 +242,7 @@ paths:
             example: 1
       responses:
         "200":
-          $ref: "#/components/responses/success"
+          $ref: "#/components/responses/Excel"
         "401":
           $ref: "#/components/responses/NotAuthorization"
   /group/large/situation:
@@ -240,7 +260,7 @@ paths:
             example: 1
       responses:
         "200":
-          $ref: "#/components/responses/success"
+          $ref: "#/components/responses/Excel"
         "401":
           $ref: "#/components/responses/NotAuthorization"
   /group/small_group:
@@ -340,7 +360,18 @@ paths:
       description: 获取声纹注册状态和剩余修改次数                
       responses:
         "200":
-          $ref: "#/components/responses/success"
+          description: 成功,返回声纹注册状态
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    $ref: "#/components/schemas/Signstatus"
 components:
   securitySchemes:
     cookieAuth:         # arbitrary name for the security scheme; will be used in the "security" key later
@@ -351,17 +382,18 @@ components:
     code:
       description: 状态码
       type: integer
+      example: 200
     status:
       description: 状态信息
       type: string
+      example: OK
     Error:
       description: 错误返回信息
       type: object
       properties:
         error:
           description: 详细错误信息
-          type: string
-    
+          type: string    
     CreatGroup:
       type: object
       properties:
@@ -393,7 +425,172 @@ components:
         longitude: 
           type: number
           description: 纬度
-
+    schedule:
+      type: object
+      properties: 
+        group1:
+          type: object
+          properties:
+            group_name:
+              type: string
+              example: 高数
+            start_time:
+              type: string
+              example: 2020-05-15 16:33:29
+            end_time:
+              type: string
+              example: 2020-05-15 22:33:28
+            status:
+              type: string
+              example: 已签到
+            locataion: 
+              type: string
+              example: 湘大逸夫楼
+        group2:
+          type: object
+          properties:
+            group_name:
+              type: string
+              example: 英语
+            start_time:
+              type: string
+              example: 2020-05-16 13:33:29
+            end_time:
+              type: string
+              example: 2020-05-16 15:22:28
+            status:
+              type: string
+              example: 未签到
+            locataion: 
+              type: string
+              example: 湘大逸夫楼
+        group3:
+          type: object
+          properties:
+            group_name:
+              type: string
+              example: 数据库
+            start_time:
+              type: string
+              example: 2020-05-18 13:33:29
+            end_time:
+              type: string
+              example: 2020-05-18 15:22:28
+            status:
+              type: string
+              example: 已迟到
+            locataion: 
+              type: string
+              example: 湘大逸夫楼       
+    attendance:
+      type: object
+      properties:
+        group1:
+          type: object
+          properties:
+            group_name:
+              type: string
+              example: 高数
+            times:
+              type: integer
+              description: 缺席次数
+              example: 2  
+        group2:
+          type: object
+          properties:
+            group_name:
+              type: string
+              example: 英语
+            times:
+              type: integer
+              description: 缺席次数
+              example: 1  
+    Usermanage:
+      type: object
+      properties:
+        group1:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 2 
+            group_name:
+              type: string
+              example: 高数
+        group2:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 12 
+            group_name:
+              type: string
+              example: 英语 
+    joined:
+      type: object
+      properties:
+        group1:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 2 
+            group_name:
+              type: string
+              example: 高数
+        group2:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 12 
+            group_name:
+              type: string
+              example: 英语          
+    Groupmanage:
+      type: object
+      properties:
+        group1:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 2 
+            group_name:
+              type: string
+              example: 高数
+            group_status:
+              type: integer
+              example: 0  
+        group2:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 集体id
+              example: 2 
+            group_name:
+              type: string
+              example: 计算机学院
+            group_status:
+              type: integer
+              example: 1  
+    Signstatus:
+      type: object
+      properties:
+        status:
+          type: string
+          example: 未注册
+          description: 声纹注册状态,已注册,未注册,注册中
+        times:
+          type: string
+          example: 3
+          description: 剩余声纹注册次数
   responses:
     #200
     success:
@@ -409,6 +606,15 @@ components:
                 $ref: "#/components/schemas/status"
               data:
                 type: string
+                example: 成功
+    Excel:
+      description: A Excel file
+      content:
+        application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+          schema:
+            type: string
+            format: binary
+
     # 401
     NotAuthorization:
       description: 未登录
@@ -420,7 +626,7 @@ components:
           schema:
             $ref: "#/components/schemas/Error"
           example:
-            error: "参数【xxx】无效"
+            error: "参数缺失"
     IllegalContent:
       description: 内容非法
       content:

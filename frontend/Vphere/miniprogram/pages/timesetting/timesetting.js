@@ -1,14 +1,16 @@
-// pages/timesetting/timesetting.js
+const app = getApp();
+var util=require('../utils/utils.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    time:"00:00",
-    endTime:"00:00",
-    array:["请选择","请选择","请选择","请选择",],
-    index:0
+    time:"点击选择考勤起始时间",
+    endTime:"点击选择考勤终止时间",
+    array:['点击选择考勤集体',],
+    index:0,
+    mode:"dateTime"
   },
   bindPickerChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -16,13 +18,7 @@ Page({
       index: e.detail.value
     })
   },
-  bindMultiPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
-      multiIndex: e.detail.value
-    })
-  },
-  bindTimeChange: function(e) {
+  bindStartTimeChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       time: e.detail.value
@@ -38,9 +34,89 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var time=util.formatTime(new Date())
+    console.log(time)
+    console.log(app.globalData.URL)
+    var that = this
+    wx.request({
+      url: app.globalData.URL + '/group/manage',
+      header: {
+        'contenr-type': 'application/json',
+        'cookie': wx.getStorageInfoSync("sessionid")
+      },
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          array: res.data,
+        })
+      }
+    })
   },
 
+  formSubmit:function(e){
+    if (e.detail.value.name.length == 0) {
+      wx.showToast({
+        title: '考勤集体不能为空',
+        icon: 'loading',
+        duration: 1500
+      })
+      setTimeout(function () {
+        wx.hideToast()
+      }, 2000)
+      }else if(e.detail.value.starttime.length==0){
+      wx.showToast({
+        title: '起始时间不能为空',
+        icon: 'loading',
+        duration: 1500
+      })
+      setTimeout(function () {
+        wx.hideToast()
+      }, 2000)
+    } else if (e.detail.value.endtime.length == 0) {
+      wx.showToast({
+        title: '终止时间不能为空',
+        icon: 'loading',
+        duration: 1500
+      })
+      setTimeout(function () {
+        wx.hideToast()
+      }, 2000)
+    }
+      else{
+        var timestamp = Date.parse(new Date());
+        timestamp = timestamp / 1000;
+        console.log("当前时间戳为：" + timestamp);
+        wx.request({
+        url: app.globalData.URL + '/sign/create',
+        data: {
+          start_time:e.detail.value.starttime,
+          end_time:e.detail.value.endtime,
+          
+        },
+        method: 'POST',
+        header: {
+          'contenr-type': 'application/x-www-form-urlencoded',
+          'cookie': wx.getStorageInfoSync("sessionid")
+        },
+        success: function (res) {
+          console.log(res.data);
+          if (res.data.status == 0) {
+            wx.showToast({
+              title: '提交失败',
+              icon: 'loading',
+              duration: 1500
+            })
+          } else {
+            wx.showToast({
+              title: '提交成功',
+              icon: 'success',
+              duration: 1000
+            })
+          }
+        }
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -20,6 +20,7 @@ class CreateSignInTable extends Migration
             $table->integer("group_id")->comment("小集体id");
             $table->timestamp("start_time")->comment("签到开始时间");
             $table->timestamp("end_time")->comment("签到结束时间");
+            $table->json("location")->comment("签到位置");
             $table->timestamps();
         });
     }

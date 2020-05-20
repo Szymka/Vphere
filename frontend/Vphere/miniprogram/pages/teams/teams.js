@@ -1,27 +1,45 @@
-// pages/join/join.js
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list: [{
-      name:"18网一"
-    },
-    {
-      name:"18网二"
-    },
-    {
-        name: "18软二"
-      }
-    ]
+    list:[],
+    list01:[],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(app.globalData.URL)
+    var that = this
+    wx.request({
+      url: app.globalData.URL + '/group/joined',
+      header: {
+        'contenr-type': 'application/json',
+        'cookie': wx.getStorageInfoSync("sessionid")
+      },
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          list: res.data,
+        })
+        wx.request({
+          url: app.globalData.URL + '/group/manage',
+          header: {
+            'contenr-type': 'application/json',
+            'cookie': wx.getStorageInfoSync("sessionid")
+          },
+          success: function (res) {
+            console.log(res.data);
+            that.setData({
+              list01: res.data,
+            })}
+        })
+      }
+    })
   },
 
   /**

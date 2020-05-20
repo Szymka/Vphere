@@ -1,0 +1,19 @@
+/* components/timePicker/index.wxss */
+.max{
+    width: 100%;
+}
+.input_base {
+    border: 2rpx solid #ccc;
+    padding-left: 10rpx;
+    margin-right: 50rpx;
+}
+
+.input_h30 {
+    height: 30px;
+    line-height: 30px;
+}
+
+.col-1 {
+    -webkit-box-flex: 1;
+    box-flex: 1;
+}

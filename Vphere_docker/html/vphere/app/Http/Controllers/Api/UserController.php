@@ -48,11 +48,13 @@ class UserController extends Controller {
 //        }
 //        dump($this->data);
         $user = new User();
-        //$this->openid_session_key['openid']
+        //"oZ_AN5ISqFZoLFDVhP9DU4TqK-F0" $this->openid_session_key['openid']
         $user = $user->firstOrCreate(['open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0"], [
             'username' => $this->data['nick_name'],
-            'open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0",//$this->openid_session_key['openid']
-            'avatarUrl' => $this->data['avatarUrl']
+            'open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0",//"oZ_AN5ISqFZoLFDVhP9DU4TqK-F0",$this->openid_session_key['openid']
+            'avatarUrl' => $this->data['avatarUrl'],
+            'vpr_num'=>3,
+            'vpr_status'=>0
         ]);
         session(['login' => true, 'uid' => $user->id]);
         return msg(200, 1);
@@ -82,12 +84,24 @@ class UserController extends Controller {
         foreach ($u_si_record as $item) {
             $location = json_decode($item['location'], true);
             $location = $location['address'];
+            $status=null;
+            switch ($item['status']){
+                case 0:
+                    $status="未签到";
+                    break;
+                case 1:
+                    $status="已签到";
+                    break;
+                case 2:
+                    $status="已迟到";
+                    break;
+            }
             $schedule += [
                 "group" . $num => [
                     "group_name" => $item['group_name'],
                     "start_time" => $item['start_time'],
                     "end_time" => $item['end_time'],
-                    "status" => $item['status'],
+                    "status" => $status,
                     "locataion" => $location,
                 ]
             ];

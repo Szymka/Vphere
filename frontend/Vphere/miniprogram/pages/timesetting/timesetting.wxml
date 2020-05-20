@@ -2,20 +2,12 @@
 <view class="container">
 	<form bindsubmit="formSubmit">
 		<view class="section row">
-			<view class="section__title">考勤时间</view>
-			<picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
-				<view class="picker">
-					{{time}}
-				</view>
-			</picker>
+			<view class="section__title">考勤起始时间</view>
+	<time-picker mode="{{mode}}" class="picker" placeholder="请选择时间" bind:onPickerChange="bindStartTimeChange"></time-picker>
 		</view>
 		<view class="section row">
-			<view class="section__title">考勤终止时间</view>
-			<picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindEndTimeChange">
-				<view class="picker">
-					{{endTime}}
-				</view>
-			</picker>
+			<view class="section__title">考勤终止时间：</view>
+			<time-picker mode="{{mode}}" class="picker" placeholder="请选择时间" bind:onPickerChange="bindEndTimeChange"></time-picker>
 		</view>
 		<view class="section row">
 			<text>所要考勤的集体</text>
