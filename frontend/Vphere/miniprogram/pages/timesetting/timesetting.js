@@ -8,9 +8,17 @@ Page({
   data: {
     time:"点击选择考勤起始时间",
     endTime:"点击选择考勤终止时间",
-    array:['点击选择考勤集体',],
+    array: [],
+    // array: ["点击选择考勤集体", "湘潭大学机械院", "湘潭大学计算机学院", "湘潭大学公管院",],
+
     index:0,
     mode:"dateTime"
+  },
+  bindMultiPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      multiIndex: e.detail.value
+    })
   },
   bindPickerChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -34,23 +42,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var time=util.formatTime(new Date())
-    console.log(time)
-    console.log(app.globalData.URL)
-    var that = this
-    wx.request({
-      url: app.globalData.URL + '/group/manage',
-      header: {
-        'contenr-type': 'application/json',
-        'cookie': wx.getStorageInfoSync("sessionid")
-      },
-      success: function (res) {
-        console.log(res.data);
-        that.setData({
-          array: res.data,
-        })
-      }
-    })
+    // var time=util.formatTime(new Date())
+    // console.log(time)
+    // console.log(app.globalData.URL)
+    // var that = this
+    // wx.request({
+    //   url: app.globalData.URL + '/group/manage',
+    //   header: {
+    //     'contenr-type': 'application/json',
+    //     'cookie': wx.getStorageSync("sessionid")
+    //   },
+    //   success: function (res) {
+    //     console.log(res.data);
+    //     that.setData({
+    //       array: res.data,
+    //     })
+    //   }
+    // })
   },
 
   formSubmit:function(e){

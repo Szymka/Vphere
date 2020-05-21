@@ -5,10 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    array: ['1','2',],
-    index:0,
+    array:['湘潭大学计算机学院','湘潭大学机械院']
   },
   bindPickerChange: function (e) {
+    
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index: e.detail.value
@@ -19,22 +19,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.URL)
-    var that = this
-    wx.request({
-      url: app.globalData.URL + '/group/large_group',
-      header: {
-        'contenr-type': 'application/json',
-        'cookie': wx.getStorageInfoSync("sessionid")
-      },
-      success: function (res) {
-        console.log(res.data);
-        that.setData({
-          array: res.data,
-        })
-      }
-    })
+    
+    // console.log(app.globalData.URL)
+    // var that = this
+    // wx.request({
+    //   url: app.globalData.URL + '/group/large_group',
+    //   header: {
+    //     'contenr-type': 'application/json',
+    //   },
+    //   success: function (res) {
+    //     console.log(res.data);
+    //     var items = [];
+    //     for (var i in res.data.data) {
+    //       items.push(res.data.data[i]);
+    //     }
+    //     console.log(items)
+    //     that.setData({
+    //       array: items,
+    //     })
+    //     console.log(that.data.array)
+    //   }
+    // })
   },
+
+
 
   test:function(e){
     if (e.detail.value.smallgroup_name.length==0){

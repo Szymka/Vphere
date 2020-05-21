@@ -1,4 +1,4 @@
-
+const app = getApp()
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext()
 var init
@@ -10,10 +10,12 @@ Page({
    */
   data: {
     time: 0, //录音时长
-    duration: 60000, //录音最大值ms 60000/10分钟
+    duration: 20000, //录音最大值ms
     tempFilePath: "", //音频路径
     status: 0, //录音状态 0:未开始录音 1:正在录音 2:暂停录音 3:已完成录音
     playStatus: 0, //录音播放状态 0:未播放 1:正在播放
+    latitude:0,
+    longitude:0
   },
 
   clickMe: function () {
@@ -29,7 +31,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that=this
+    wx.getLocation({
+      altitude: true,
 
+      type: 'gcj02',
+      success(res) {
+        console.log(res.latitude);
+        console.log(res.longitude)
+        const latitude = res.latitude
+        const longitude = res.longitude
+        that.setData({
+          latitude:res.latitude,
+          longitude:res.longitude
+        })
+        console.log(that.data.latitude)
+        console.log(that.data.longitude)
+      }
+    })
   },
 
   /**
@@ -107,9 +126,9 @@ Page({
       duration: this.data.duration, //指定录音的时长，单位 ms
       sampleRate: 16000, //采样率
       numberOfChannels: 1, //录音通道数
-      encodeBitRate: 96000, //编码码率
+      encodeBitRate: 48000, //编码码率
       format: 'wav', //音频格式，有效值 aac/mp3
-      frameSize: 50, //指定帧大小，单位 KB
+      //frameSize: 36, //指定帧大小，单位 KB
     }
     this.recordingTimer()
     recorderManager.start(options)
@@ -144,67 +163,62 @@ Page({
    * 停止录音
    */
   stop: function () {
+    var tempFilePath
+    recorderManager.stop()
     recorderManager.onStop((res) => {
+      var that = this
       console.log('recorder stop', res)
       this.setData({
         tempFilePath: res.tempFilePath,
         status: 3
       })
-      
-    })
-    this.recordingTimer(this.data.time)
-    recorderManager.stop()
+      console.log(res.tempFilePath)
+      console.log(that.data.latitude)
+      console.log(that.data.longitude)
+      wx.uploadFile({
+        url: app.globalData.URL + '/sign/in',
+        filePath: res.tempFilePath,
+        name: 'vfile',
+        method: 'POST',
+        header: {
+          "Content-Type": "multipart/form-data",
+          'cookie': wx.getStorageSync("sessionid")
+        },
+        //参数绑定
+        formData: {
+          
+          // recordingtime: that.data.recordingTimeqwe,
+          // topicid: that.data.topicid,
+          // userid: 1,
+          // praisepoints: 0
+        },
+        success: function (res) {
+          console.log(res);
 
-  },
-  //上传录音
-  upload:function(){
-    if(this.data.status==3)
-    {
-      this.setData({
-        status:3
+          wx.showModal({
+            title: '温馨提示',
+            content: res.data.data,
+            duration: 2000
+          })
+          innerAudioContext.stop()
+        },
+        fail: function (res) {
+          wx.showToast({
+            title: '上传失败',
+            image: '/images/fail.png',
+            duration: 2000
+          })
+          console.log("录音上传失败");
+        }
       })
-    }
-    var that = this
-    wx.showModal({
-      title: "上传录音",
-      content: "是否上传录音",
-      success(res) {
-        wx.uploadFile({
-          url: 'http://vphere.yanmy.top/api/sign/in',
-          filePath: tempFilePath,
-          name: 'file',
-          header: {
-            "Content-Type": "multipart/form-data"
-          },
-          //参数绑定
-          formData: {
-            recordingtime: that.data.recordingTimeqwe,
-            topicid: that.data.topicid,
-            userid: 1,
-            praisepoints: 0
-          },
-          success: function (ress) {
-            console.log(res);
-            wx.showToast({
-              title: '录音已上传',
-              icon: 'success',
-              duration: 2000
-            })
-            innerAudioContext.stop()
-          },
-          fail: function (ress) {
-            console.log("录音上传失败");
-            wx.showToast({
-              title: '上传失败',
-              image: '/images/fail.png',
-              duration: 2000
-            })
-          }
+      this.recordingTimer(this.data.time)
+      recorderManager.stop()
 
-        })
-      }
     })
+
   },
+
+
 
   /**
    * 播放录音

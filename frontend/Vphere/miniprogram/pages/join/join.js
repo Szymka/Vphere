@@ -5,16 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list: [{
-      name:"18网一"
-    },
-    {
-      name:"18网二"
-    },
-    {
-        name: "18软二"
-      }
-    ]
+    list: []
   },
 
   /**
@@ -31,25 +22,56 @@ Page({
       },
       success: function (res) {
         console.log(res.data);
+        var items = [];
+        for (var i in res.data.data) {
+          items.push(res.data.data[i]);
+        }
+        console.log(items)
         that.setData({
-          list: res.data,
+          list: items,
         })
+        console.log(that.data.list)
+        
       }
     })
   },
-  choose:function(){
+  choose:function(e){
+    var that=this
+    var group_id=e.target.id
+    console.log(group_id)
     wx.showModal({
       title: '提示',
       content: '是否加入此集体',
       success(res){
-        wx.request({
+        console.log(group_id)
+        wx.request({          
           method:'POST',
-          url: app.globalData.url + '/group/join',
+          url: app.globalData.URL + '/group/join',
           header:{
-            'content-type':'application/x-www-form-urlencoded'
+            'content-type':'application/x-www-form-urlencoded',
+            'cookie': wx.getStorageSync("sessionid")
+          },
+          data:{
+            groupid: group_id,
           },
           success: function (res) {
-            console.log(res.data)
+            console.log(res.statusCode)
+            if (res.statusCode == 200)
+            {
+              console.log(res.data)
+              wx.showToast({
+                title: '成功加入',
+                icon:'success',
+                duration:2000,
+              })
+            }else{
+              console.log(res.data)
+              wx.showModal({
+                title: '错误信息',
+                content: res.data.error,
+              })
+            }
+            
           },
         })
       }

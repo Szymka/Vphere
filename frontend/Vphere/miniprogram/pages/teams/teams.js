@@ -19,24 +19,39 @@ Page({
       url: app.globalData.URL + '/group/joined',
       header: {
         'contenr-type': 'application/json',
-        'cookie': wx.getStorageInfoSync("sessionid")
+        'cookie': wx.getStorageSync("sessionid")
       },
       success: function (res) {
-        console.log(res.data);
+        console.log(res.data.data);
+        var items = [];
+        for (var i in res.data.data) {
+          items.push(res.data.data[i]);
+        }
+        console.log(items)
         that.setData({
-          list: res.data,
+
+          list: items,
         })
+        console.log(that.data.list)
         wx.request({
           url: app.globalData.URL + '/group/manage',
           header: {
             'contenr-type': 'application/json',
-            'cookie': wx.getStorageInfoSync("sessionid")
+            'cookie': wx.getStorageSync("sessionid")
           },
           success: function (res) {
-            console.log(res.data);
+            console.log(res.data.data);
+            var items = [];
+            for (var i in res.data.data) {
+              items.push(res.data.data[i]);
+            }
+            console.log(items)
             that.setData({
-              list01: res.data,
-            })}
+
+              list01: items,
+            })
+            console.log(that.data.list01)
+            }
         })
       }
     })

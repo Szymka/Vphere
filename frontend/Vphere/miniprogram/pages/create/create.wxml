@@ -3,7 +3,7 @@
 	<form bindsubmit='test'>
   
 		<input class="class-name" name="username" placeholder='创建集体名称' maxlength='12'></input>
-		<view class="class-name" style="margin-bottom:75rpx">
+    <view class="class-name" style="margin-bottom:75rpx">
 			<text>请选择所属大集体</text>
 			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
 				<view class="picker">
@@ -11,6 +11,14 @@
 				</view>
 			</picker>
 		</view>
+		<!-- <view class="class-name" style="margin-bottom:75rpx">
+			<text>请选择所属大集体</text>
+			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array[index].group_name}}">
+				<view class="picker">
+					{{array[index].group_name}}
+				</view>
+			</picker>
+		</view> -->
 		<button type="primary" formType="submit">提交信息</button>
 	</form>
 </view>

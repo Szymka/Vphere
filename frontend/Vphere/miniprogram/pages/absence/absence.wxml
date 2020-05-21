@@ -1,35 +1,23 @@
 <view>
   <view class="tr bg-w">
-  	<view class="th">小集体编号</view>
+  	<view class="th">编号</view>
   	<view class="th">集体名称</view>
   	<view class="th ">下载考勤信息</view>
   </view>
   <scroll-view class="table" scroll-y="true">
-  	<block wx:for="{{listData}}" wx:key="listData" class="scroll-view-item">
+  	<block wx:for="{{listData01}}" wx:key="index" class="scroll-view-item">
   		<view class="tr bg-g" wx:if="{{index % 2 != 0}}">
-  			<view class="td">{{index}}</view>
-  			<view class="td">{{item}}</view>
+  			<view class="td">{{index+1}}</view>
+  			<view class="td">{{item.group_name}}</view>
   			<view class="td">
-  				<view catchtap='download' data-type="excel" data-url="">下载</view>
+  				<view catchtap='download' data-type="excel" data-url="" id="{{item.group_status}}">下载</view>
   			</view>
   		</view>
-  		
-  	</block>
-  </scroll-view>
-</view>
-<view>
-  <view class="tr bg-w">
-  	<view class="th">大集体编号</view>
-  	<view class="th">集体名称</view>
-  	<view class="th ">下载考勤信息</view>
-  </view>
-  <scroll-view class="table" scroll-y="true">
-  	<block wx:for="{{listData01}}" wx:key="listData01" wx:for-item="listData01" class="scroll-view-item">
-  		<view class="tr bg-g" wx:if="{{index % 2 != 0}}">
-  			<view class="td">{{index}}</view>
-  			<view class="td">{{listData01}}</view>
+      <view class="tr" wx:else>
+  			<view class="td">{{index+1}}</view>
+  			<view class="td">{{item.group_name}}</view>
   			<view class="td">
-  				<view catchtap='download' data-type="excel" data-url="">下载</view>
+  				<view catchtap='download' data-type="excel" data-url="" id="{{item.group_status}}">下载</view>
   			</view>
   		</view>
   		

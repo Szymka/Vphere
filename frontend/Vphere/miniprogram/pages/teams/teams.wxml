@@ -1,17 +1,17 @@
 <view class="title">加入及创建的集体</view>
 <view>
-<view class="weui-cells__title">已加入</view>
+<!-- <view class="weui-cells__title">已加入及已创建</view> -->
 <scroll-view class="classes" scroll-y="true">
-	<view wx:for="{{list}}" wx:key="list" class="weui-cell weui-cell_access scroll-view-item">
-		<view class="weui-cell__bd">{{item.name}}</view>
+	<view wx:for="{{list}}" wx:key="index" class="weui-cell weui-cell_access scroll-view-item">
+		<view class="weui-cell__bd">{{item.group_name}}</view>
 	</view>
 </scroll-view>
 </view>
 <view>
-  <view class="weui-cells__title">已创建</view>
+  <!-- <view class="weui-cells__title">已创建</view>
 <scroll-view class="classes" scroll-y="true">
-	<view wx:for="{{list01}}" wx:key="list01" wx:for-item="list01" class="weui-cell weui-cell_access scroll-view-item">
-		<view class="weui-cell__bd">{{list01.name}}</view>
+	<view wx:for="{{list01}}" wx:key="index"class="weui-cell weui-cell_access scroll-view-item">
+		<view class="weui-cell__bd">{{item.group_name}}</view>
 	</view>
-</scroll-view>
+</scroll-view> -->
 </view>

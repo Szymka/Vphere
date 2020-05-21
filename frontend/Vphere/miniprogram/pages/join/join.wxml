@@ -1,7 +1,7 @@
 
 <view class="title">系统内已有集体</view>
 <scroll-view class="classes" scroll-y="true">
-	<view wx:for="{{list}}" wx:key="list" class="weui-cell weui-cell_access scroll-view-item">
-		<view class="weui-cell__bd" bindtap="choose">{{item.name}}</view>
+	<view wx:for="{{list}}" wx:key="index" class="weui-cell weui-cell_access scroll-view-item">
+		<view class="weui-cell__bd" catchtap="choose" id="{{item.group_id}}">{{item.group_name}}</view>
 	</view>
 </scroll-view>

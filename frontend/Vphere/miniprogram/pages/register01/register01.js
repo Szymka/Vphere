@@ -10,7 +10,7 @@ Page({
    */
   data: {
     time: 0, //录音时长
-    duration: 60000, //录音最大值ms 60000/10分钟
+    duration: 20000, //录音最大值ms 8000/10分钟
     tempFilePath: "", //音频路径
     status: 0, //录音状态 0:未开始录音 1:正在录音 2:暂停录音 3:已完成录音
     playStatus: 0, //录音播放状态 0:未播放 1:正在播放
@@ -107,9 +107,9 @@ Page({
       duration: this.data.duration, //指定录音的时长，单位 ms
       sampleRate: 16000, //采样率
       numberOfChannels: 1, //录音通道数
-      encodeBitRate: 96000, //编码码率
+      encodeBitRate: 48000, //编码码率
       format: 'wav', //音频格式，有效值 aac/mp3
-      frameSize: 50, //指定帧大小，单位 KB
+      //frameSize: 36, //指定帧大小，单位 KB
     }
     this.recordingTimer()
     recorderManager.start(options)
@@ -155,28 +155,33 @@ Page({
       })
       console.log(res.tempFilePath)
       wx.uploadFile({
-        url: app.globalData.url+'/sign/reg',
+        url: app.globalData.URL+'/sign/reg',
         filePath: res.tempFilePath,
-        name: 'file',
+        name: 'vfile',
         method: 'POST',
         header: {
           "Content-Type": "multipart/form-data",
           'cookie': wx.getStorageSync("sessionid")
         },
         //参数绑定
-        formData: {
-          recordingtime: that.data.recordingTimeqwe,
-          topicid: that.data.topicid,
-          userid: 1,
-          praisepoints: 0
-        },
+        formData: {},
         success: function (res) {
-          console.log(res);
-          wx.showToast({
-            title: '上传成功',
-            icon: 'success',
-            duration: 2000
-          })
+          console.log(res.data);          
+          if(res.statusCode==403){
+            console.log(JSON.parse(res.data)['error'])
+            wx.showModal({
+              title: '温馨提示',
+              content: JSON.parse(res.data)['error'],
+              duration:2000
+            })
+          }else{
+            console.log(JSON.parse(res.data)['data'])
+            wx.showModal({
+              title: '温馨提示',
+              content: JSON.parse(res.data)['data'],
+              duration: 2000
+            })
+          }
           innerAudioContext.stop()
         },
         fail: function (res) {
@@ -192,60 +197,10 @@ Page({
     recorderManager.stop()
 
     })
+    
 },
-  // //上传录音
-  // upload: function (options) {
-  //   var that =this
-  //   if (this.data.status == 3) {
-  //     this.setData({
-  //       status: 3
-  //     })
-  //   }
-    
-    
-  //   wx.showModal({
-  //     title: "上传录音",
-  //     content: "是否上传录音",
-  //     success(res) {
-  //       wx.uploadFile({
-  //         url: app.globalData.url+'/sign/reg',
-  //         filePath: that.data.res.tempFilePath,
-  //         name: 'file',
-  //         method:'POST',
-  //         header: {
-  //           "Content-Type": "multipart/form-data",
-  //           'cookie': wx.getStorageSync("sessionid")
-  //         },
-  //         //参数绑定
-  //         formData: {
-  //           recordingtime: that.data.recordingTimeqwe,
-  //           topicid: that.data.topicid,
-  //           userid: 1,
-  //           praisepoints: 0
-  //         },
-  //         success: function (res) {
-  //           console.log(res);
-  //           wx.showToast({
-  //             title: '注册成功',
-  //             icon: 'success',
-  //             duration: 2000
-  //           })
-  //           innerAudioContext.stop()
-  //         },
-  //         fail: function (res) {
-  //           wx.showToast({
-  //             title: '注册失败',
-  //             image:'/images/fail.png',
-  //             duration:2000
-  //           })
-  //           console.log("录音上传失败");
-  //         }
 
-  //       })
-  //     }
-  //   })
-  // },
-
+ 
   /**
    * 播放录音
    */
