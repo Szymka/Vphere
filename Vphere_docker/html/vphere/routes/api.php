@@ -33,6 +33,7 @@ Route::namespace('Api')->group(function () {
         Route::post('/sign/reg','SignController@reg');
         Route::post('/sign/create','SignController@create');
         Route::get('/sign/status','SignController@status');
+        Route::get('/sign/record','SignController@record');
     });
     Route::get('/group/small_group','GroupController@small_group');
     Route::get('/group/large_group','GroupController@large_group');
