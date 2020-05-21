@@ -3,6 +3,7 @@ App({
   //设置全局请求URL
   globalData: {
     URL: 'https://vphere.yanmy.top/api',
+    // URL: 'http://vphere.top/api',
   },
   
   wxRequest(method, url, data, callback, errFun) {

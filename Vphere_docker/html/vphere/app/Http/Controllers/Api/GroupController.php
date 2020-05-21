@@ -15,7 +15,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Sheet;
 
 
 class GroupController extends Controller {
@@ -123,7 +122,7 @@ class GroupController extends Controller {
 
     public function join (Request $request) {
         $mod = array(
-            'id' => [
+            'groupid' => [
                 'required',
                 'regex:/^\d+$/',
             ],
@@ -132,12 +131,12 @@ class GroupController extends Controller {
         if ($this->data === null) {
             return $this->msg;
         }
-        $sm_group = small_group::query()->where('id', $this->data['id'])->first();
+        $sm_group = small_group::query()->where('id', $this->data['groupid'])->first();
         if ($sm_group === null) {
             return error_msg(403, 6);
         }
         $user = User::query()->where('id', $this->data['user_id'])->first();
-        $u_sg_estb = U_SG_estb::query()->where([["user_id", $this->data['user_id']], ["sg_id", $this->data['id']]])->first();
+        $u_sg_estb = U_SG_estb::query()->where([["user_id", $this->data['user_id']], ["sg_id", $this->data['groupid']]])->first();
         if ($u_sg_estb !== null) {
             return error_msg(403, 7);
         }

@@ -1,4 +1,4 @@
-const app=getApp()
+const app = getApp()
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext()
 var init
@@ -16,74 +16,76 @@ Page({
     playStatus: 0, //录音播放状态 0:未播放 1:正在播放
   },
 
-  clickMe: function () {
+  clickMe: function() {
     var i, j, res = '';
     for (j = 0; j < 10; j++) {
       i = (Math.random()).toFixed(0)
       i = (Math.random() * 10).toFixed(0)
       res += i;
     }
-    this.setData({ msg: res })
+    this.setData({
+      msg: res
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
 
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
 
 
   /**开始录音 */
-  start: function () {
+  start: function() {
     clearInterval(init) //清除定时器
     // 监听音频开始事件
     recorderManager.onStart((res) => {
@@ -109,16 +111,23 @@ Page({
       numberOfChannels: 1, //录音通道数
       encodeBitRate: 96000, //编码码率
       format: 'wav', //音频格式，有效值 aac/mp3
-      frameSize: 50, //指定帧大小，单位 KB
+      // frameSize: 50, //指定帧大小，单位 KB
     }
     this.recordingTimer()
-    recorderManager.start(options)
+    recorderManager.start({
+      duration: 8000,//this.data.duration, //指定录音的时长，单位 ms
+      sampleRate: 16000, //采样率
+      numberOfChannels: 1, //录音通道数
+      encodeBitRate: 48000, //编码码率
+      format: 'wav', //音频格式，有效值 aac/mp3
+      // frameSize: 36, //指定帧大小，单位 KB
+    })
   },
 
   /**
    * 暂停录音
    */
-  pause: function () {
+  pause: function() {
     recorderManager.onPause(() => {
       console.log('recorder pause')
       this.setData({
@@ -132,7 +141,7 @@ Page({
   /**
    * 继续录音
    */
-  continue: function () {
+  continue: function() {
     this.setData({
       status: 1
     })
@@ -143,11 +152,11 @@ Page({
   /**
    * 停止录音
    */
-  stop: function () {
+  stop: function() {
     var tempFilePath
     recorderManager.stop()
     recorderManager.onStop((res) => {
-      var that =this
+      var that = this
       console.log('recorder stop', res)
       this.setData({
         tempFilePath: res.tempFilePath,
@@ -155,9 +164,9 @@ Page({
       })
       console.log(res.tempFilePath)
       wx.uploadFile({
-        url: app.globalData.url+'/sign/reg',
+        url: app.globalData.URL + '/sign/reg',
         filePath: res.tempFilePath,
-        name: 'file',
+        name: 'vfile',
         method: 'POST',
         header: {
           "Content-Type": "multipart/form-data",
@@ -165,12 +174,13 @@ Page({
         },
         //参数绑定
         formData: {
-          recordingtime: that.data.recordingTimeqwe,
-          topicid: that.data.topicid,
-          userid: 1,
-          praisepoints: 0
+
+          // recordingtime: that.data.recordingTimeqwe,
+          // topicid: that.data.topicid,
+          // userid: 1,
+          // praisepoints: 0
         },
-        success: function (res) {
+        success: function(res) {
           console.log(res);
           wx.showToast({
             title: '上传成功',
@@ -179,7 +189,7 @@ Page({
           })
           innerAudioContext.stop()
         },
-        fail: function (res) {
+        fail: function(res) {
           wx.showToast({
             title: '上传失败',
             image: '/images/fail.png',
@@ -187,69 +197,56 @@ Page({
           })
           console.log("录音上传失败");
         }
-    })
-    this.recordingTimer(this.data.time)
-    recorderManager.stop()
+      })
+      // wx.saveFile({
+      //   tempFilePath: res.tempFilePath,
+      //   success: function(res) {
+      //     const savedFilePath = res.savedFilePath
+      //     console.log(savedFilePath)
+      //     console.log("保存成功")
+      //   }
+      // })
+      this.recordingTimer(this.data.time)
+      recorderManager.stop()
 
     })
-},
-  // //上传录音
-  // upload: function (options) {
-  //   var that =this
-  //   if (this.data.status == 3) {
-  //     this.setData({
-  //       status: 3
-  //     })
-  //   }
-    
-    
-  //   wx.showModal({
-  //     title: "上传录音",
-  //     content: "是否上传录音",
-  //     success(res) {
-  //       wx.uploadFile({
-  //         url: app.globalData.url+'/sign/reg',
-  //         filePath: that.data.res.tempFilePath,
-  //         name: 'file',
-  //         method:'POST',
-  //         header: {
-  //           "Content-Type": "multipart/form-data",
-  //           'cookie': wx.getStorageSync("sessionid")
-  //         },
-  //         //参数绑定
-  //         formData: {
-  //           recordingtime: that.data.recordingTimeqwe,
-  //           topicid: that.data.topicid,
-  //           userid: 1,
-  //           praisepoints: 0
-  //         },
-  //         success: function (res) {
-  //           console.log(res);
-  //           wx.showToast({
-  //             title: '注册成功',
-  //             icon: 'success',
-  //             duration: 2000
-  //           })
-  //           innerAudioContext.stop()
-  //         },
-  //         fail: function (res) {
-  //           wx.showToast({
-  //             title: '注册失败',
-  //             image:'/images/fail.png',
-  //             duration:2000
-  //           })
-  //           console.log("录音上传失败");
-  //         }
 
-  //       })
-  //     }
-  //   })
-  // },
+  },
+
+  downloadfile(e) {
+    var url = e.currentTarget.dataset.url;
+    console.log(url)
+    //下载文件，生成临时地址
+    wx.downloadFile({
+      url: url,
+      success(res) {
+        console.log(res)
+        //保存到本地
+        wx.saveFile({
+          tempFilePath: res.tempFilePath,
+          success: function(res) {
+            const savedFilePath = res.savedFilePath;
+            // 打开文件
+            wx.openDocument({
+              filePath: savedFilePath,
+              success: function(res) {
+                console.log('打开文档成功')
+              },
+            });
+          },
+          fail: function(err) {
+            console.log('保存失败：', err)
+          }
+        });
+      }
+    })
+  },
+
 
   /**
    * 播放录音
    */
-  play: function () {
+  play: function() {
     //音频地址
     innerAudioContext.src = this.data.tempFilePath
     //在ios下静音时播放没有声音，默认为true，改为false就好了。
@@ -272,11 +269,11 @@ Page({
   },
 
   //录音计时器
-  recordingTimer: function (time) {
+  recordingTimer: function(time) {
     var that = this
     if (time == undefined) {
       //将计时器赋值给init
-      init = setInterval(function () {
+      init = setInterval(function() {
         var time = that.data.time + 1;
         that.setData({
           time: time
@@ -291,7 +288,7 @@ Page({
   /**
    * 重新录制
    */
-  reset: function () {
+  reset: function() {
     var that = this
     wx.showModal({
       title: "重新录音",
