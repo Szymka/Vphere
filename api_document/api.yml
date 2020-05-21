@@ -321,15 +321,20 @@ paths:
                   groupid: 
                     type: integer
                     description: 集体id
+                    example: 1
                   signid: 
                     type: integer
                     description: 签到记录id
+                    example: 1
                   vfile: 
                     type: string
                     format: binary
                     description: 录音文件
-                  location:
-                    $ref: "#/components/schemas/location"
+                  latitude: 
+                    $ref: "#/components/schemas/latitude"
+                  longitude: 
+                    $ref: "#/components/schemas/longitude"
+                    
       responses:
         "200":
           $ref: "#/components/responses/success"
@@ -394,6 +399,25 @@ paths:
                     $ref: "#/components/schemas/status"
                   data:
                     $ref: "#/components/schemas/Signstatus"
+  /sign/record:
+    get:
+      tags:
+        - signin
+      summary: 获取未签到记录                
+      responses:
+        "200":
+          description: 成功,获取未签到记录
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    $ref: "#/components/schemas/code"
+                  status:
+                    $ref: "#/components/schemas/status"
+                  data:
+                    $ref: "#/components/schemas/Signrecord"                  
 components:
   securitySchemes:
     cookieAuth:         # arbitrary name for the security scheme; will be used in the "security" key later
@@ -431,6 +455,14 @@ components:
         groupid:
           description: 集体id
           type: integer
+    latitude: 
+      type: number
+      description: 纬度
+      example: 21.6641166772461
+    longitude: 
+      type: number
+      description: 纬度
+      example: 111.6641166772461
     location:
       type: object
       description: 签到位置
@@ -438,15 +470,15 @@ components:
         name: 
           type: string
           description: 地点名
+          example: 湘大逸夫楼
         address: 
           type: string
           description: 地点
+          example: 湘潭大学逸夫楼
         latitude: 
-          type: number
-          description: 纬度
+          $ref: "#/components/schemas/latitude"
         longitude: 
-          type: number
-          description: 纬度
+          $ref: "#/components/schemas/longitude"
     schedule:
       type: object
       properties: 
@@ -659,6 +691,46 @@ components:
           type: string
           example: 3
           description: 剩余声纹注册次数
+    Signrecord:
+      type: object
+      properties:
+        group1:
+          type: object
+          properties:
+            group_id:
+              type: integer
+              description: 集体id
+              example: 2 
+            group_name:
+              type: string
+              example: 高数
+              description: 集体名称
+            sign_in_id:
+              type: string
+              example: 6
+            locataion:
+              type: string
+              description: 签到位置
+              example: 湘大逸夫楼   
+        group2:
+          type: object
+          properties:
+            group_id:
+              type: integer
+              description: 集体id
+              example: 3 
+            group_name:
+              type: string
+              description: 集体名称
+              example: 英语
+            sign_in_id:
+              type: string
+              description: 签到记录id
+              example: 7
+            locataion:
+              type: string
+              description: 签到位置
+              example: 湘大逸夫楼 
   responses:
     #200
     success:

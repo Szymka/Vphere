@@ -41,16 +41,16 @@ class SignController extends Controller {
     public function reg (Request $request) {
 
         $mod = array(
-            'vphere' => ['required']
+            'vfile' => ['required']
         );
-        if (!$request->hasFile('vphere')) {
+        if (!$request->hasFile('vfile')) {
             return $this->msg = error_msg(403, 0);
         }
         $this->set_data($mod, $request);
         if ($this->data === null) {
             return $this->msg;
         }
-        $this->audio = $request->file('vphere')->openFile();
+        $this->audio = $request->file('vfile')->openFile();
         $this->audio = $this->audio->fread($this->audio->getSize());
         $user = User::query()->where('id', $this->data['user_id'])->first();
         $this->uuid = $user->open_id;
@@ -73,8 +73,12 @@ class SignController extends Controller {
             $user->save();
             if ($user->vpr_status === 2) {
                 return msg(200, 10);
+
             } else if ($user->vpr_status === 1) {
-                return msg(200, 1);
+                if ($user->vpr_num === 2) {
+                    return msg(200, 24);
+                }
+                return msg(200, 25);
             } else if ($user->vpr_status === 0) {
                 return msg(200, 12);
             }
@@ -94,19 +98,57 @@ class SignController extends Controller {
                 'required',
                 'regex:/^\d+$/',
             ],
-            'vphere' => ['required']
+            'vfile' => ['required'],
+            'latitude' => [
+                'required',
+                'regex:/^\d+\.\d+$/'
+            ],
+            'longitude' => [
+                'required',
+                'regex:/^\d+\.\d+$/'
+            ],
         );
-        if (!$request->hasFile('vphere')) {
+        if (!$request->hasFile('vfile')) {
             return $this->msg = error_msg(403, 0);
         }
         $this->set_data($mod, $request);
         if ($this->data === null) {
             return $this->msg;
         }
-        $this->audio = $request->file('vphere')->openFile();
+        $this->audio = $request->file('vfile')->openFile();
         $this->audio = $this->audio->fread($this->audio->getSize());
         $user = User::query()->where('id', $this->data['user_id'])->first();
         $this->uuid = $user->open_id;
+        $sign = sign_in::query()->where('id', $this->data['signid'])->first();
+        if ($sign === null) {
+            return error_msg(403, 14);
+        }
+        $location_calc = $this->location_calc($sign->location, $this->data['latitude'], $this->data['longitude']);
+        if ($location_calc !== true) {
+            return error_msg(403, 26);
+        }
+        $u_sg_estb = U_SG_estb::query()->where([['user_id', $this->data['user_id']], ['sg_id', $this->data['groupid']]])->first();
+        if ($u_sg_estb === null) {
+            return error_msg(403, 13);
+        }
+        $u_si_record = si_record::query()->where([['user_id', $this->data['user_id']], ['sign_in_id', $this->data['signid']]])->first();
+        if ($u_si_record === null) {
+            return error_msg(403, 21);
+        }
+        if ($u_si_record->status !== 0) {
+            return error_msg(403, 15);
+        }
+        $sign_start = strtotime($sign->start_time);
+        $sign_end = strtotime($sign->end_time);
+        $sign_time = time();
+        $time_status = 0;
+        if ($sign_start <= $sign_time && $sign_time <= $sign_end) {
+            $time_status = 1;
+        } else if ($sign_time > $sign_end) {
+            $time_status = 2;
+        } else if ($sign_time < $sign_start) {
+            return error_msg(403, 17);
+        }
         $vpr_mode = "test";
         $vpr_res = $this->vpr($vpr_mode);
         $vpr_res = json_decode($vpr_res, true);
@@ -115,36 +157,17 @@ class SignController extends Controller {
             $vpr_text = $vpr_res['result'];
             $vpr_text = $vpr_text[0]['text'];
             if ($vpr_text === "accept") {
-                $u_sg_estb = U_SG_estb::query()->where([['user_id', $this->data['user_id']], ['sg_id', $this->data['groupid']]])->first();
-                if ($u_sg_estb === null) {
-                    return error_msg(403, 13);
-                }
-                $sign = sign_in::query()->where('id', $this->data['signid'])->first();
-                if ($sign === null) {
-                    return error_msg(403, 14);
-                }
-                $u_si_record = si_record::query()->where([['user_id', $this->data['user_id']], ['sign_in_id', $this->data['signid']]])->first();
-                if ($u_si_record=== null) {
-                    return error_msg(403, 21);
-                }
-                if ($u_si_record->status !== 0) {
-                    return error_msg(403, 15);
-                }
-                $sign_start = strtotime($sign->start_time);
-                $sign_end = strtotime($sign->end_time);
-                $sign_time = time();
-                if ($sign_start <= $sign_time && $sign_time <= $sign_end) {
-                    $u_si_record->status=1;
+                if ($time_status === 1) {
+                    $u_si_record->status = 1;
                     $u_si_record->save();
                     return msg(200, 1);
-                } else if ($sign_time > $sign_end) {
-                    $u_si_record->status=2;
+                } else if ($time_status === 2) {
+                    $u_si_record->status = 2;
                     $u_si_record->save();
                     return error_msg(403, 16);
-                } else if ($sign_time < $sign_start) {
-                    return error_msg(403, 17);
+                } else {
+                    return error_msg(403, 9);
                 }
-
             } else {
                 return error_msg(403, $vpr_text);
             }
@@ -201,7 +224,7 @@ class SignController extends Controller {
                 $si_record = new si_record([
                     "user_id" => $user_id,
                     "sign_in_id" => $sign->id,
-                    "status"=>0,
+                    "status" => 0,
                 ]);
                 $si_record->save();
             }
@@ -212,24 +235,95 @@ class SignController extends Controller {
         return error_msg(403, 9);
     }
 
-    public function status(Request $request){
-        $mod=array();
+    public function status (Request $request) {
+        $mod = array();
         $this->set_data($mod, $request);
         if ($this->data === null) {
             return $this->msg;
         }
-        $user=User::query()->where('id',$this->data['user_id'])->first();
-        $status=$user->vpr_status;
-        $result=array(
-            "status"=>"未注册",
-            "times"=>$user->vpr_num,
+        $user = User::query()->where('id', $this->data['user_id'])->first();
+        $status = $user->vpr_status;
+        $result = array(
+            "status" => "未注册",
+            "times" => $user->vpr_num,
         );
-        if ($status===1){
-            $result['status']="已注册";
-        }elseif ($status===2){
-            $result['status']="注册中";
+        if ($status === 1) {
+            $result['status'] = "已注册";
+        } else if ($status === 2) {
+            $result['status'] = "注册中";
+        }
+        return msg(200, $result);
+    }
+
+    public function record (Request $request) {
+        $mod = array();
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $now_time = date('Y-m-d H:i:s', time());
+        $si_record = si_record::query()
+            ->join('sign_in', 'sign_in.id', '=', 'si_record.sign_in_id')
+            ->join('small_group', 'sign_in.group_id', '=', 'small_group.id')
+            ->where([
+                ['si_record.user_id', $this->data['user_id']],
+                ['start_time', '<=', $now_time],
+                ['end_time', '>=', $now_time],
+                ['si_record.status',0]
+            ])
+            ->get();
+        if ($si_record->isEmpty()) {
+            return error_msg(403, 27);
+        }
+        $si_record = $si_record->toArray();
+        $result = array();
+        $num = 1;
+        foreach ($si_record as $record) {
+            $location = json_decode($record['location'], true);
+            $location = $location['address'];
+            $result += [
+                "group" . $num++ => [
+                    "group_id" => $record['group_id'],
+                    "group_name" => $record['group_name'],
+                    "sign_in_id" => $record['sign_in_id'],
+                    "location" => $location,
+                ]
+            ];
         }
         return msg(200,$result);
+    }
+
+    protected function location_calc ($location, $latitude, $longitude) {
+        $location = json_decode($location, true);
+        $real_latitude = (float)$location['latitude'];
+        $real_longitude = (float)$location['longitude'];
+        $latitude = (float)$latitude;
+        $longitude = (float)$longitude;
+        $distance = $this->getDistance($real_latitude, $real_longitude, $latitude, $longitude);
+        if ($distance > 25) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 根据两点间的经纬度计算距离
+     * @param $lng1
+     * @param $lat1
+     * @param $lng2
+     * @param $lat2
+     * @return int
+     */
+    public static function getDistance ($lng1, $lat1, $lng2, $lat2) {
+        //将角度转为狐度
+        $radLat1 = deg2rad($lat1);//deg2rad()函数将角度转换为弧度
+        $radLat2 = deg2rad($lat2);
+        $radLng1 = deg2rad($lng1);
+        $radLng2 = deg2rad($lng2);
+        $a = $radLat1 - $radLat2;
+        $b = $radLng1 - $radLng2;
+        $s = 2 * asin(sqrt(pow(sin($a / 2), 2) + cos($radLat1) * cos($radLat2) * pow(sin($b / 2), 2))) * 6378.137 * 1000;
+        return $s;
     }
 
     protected function vpr ($vpr_mode) {
