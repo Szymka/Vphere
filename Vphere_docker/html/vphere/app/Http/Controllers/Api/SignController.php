@@ -7,6 +7,9 @@ use App\Models\si_record;
 use App\Models\sign_in;
 use App\Models\U_SG_estb;
 use App\Models\User;
+use FFMpeg\FFMpeg;
+use FFMpeg\Format\Audio\Mp3;
+use FFMpeg\Format\Video\X264;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
@@ -41,17 +44,20 @@ class SignController extends Controller {
     public function reg (Request $request) {
 
         $mod = array(
-            'vphere' => ['required']
+            'vfile' => ['required']
         );
-        if (!$request->hasFile('vphere')) {
+        if (!$request->hasFile('vfile')) {
             return $this->msg = error_msg(403, 0);
         }
         $this->set_data($mod, $request);
         if ($this->data === null) {
             return $this->msg;
         }
-        $this->audio = $request->file('vphere')->openFile();
+        dump($request->file('vfile'));
+        $this->audio = $request->file('vfile')->openFile();
+        $path = $request->file('vfile')->storeAs('audio','test.mp3');
         $this->audio = $this->audio->fread($this->audio->getSize());
+//        return $this->audio;
         $user = User::query()->where('id', $this->data['user_id'])->first();
         $this->uuid = $user->open_id;
         if ($user->vpr_num === 0) {
@@ -94,16 +100,16 @@ class SignController extends Controller {
                 'required',
                 'regex:/^\d+$/',
             ],
-            'vphere' => ['required']
+            'vfile' => ['required']
         );
-        if (!$request->hasFile('vphere')) {
+        if (!$request->hasFile('vfile')) {
             return $this->msg = error_msg(403, 0);
         }
         $this->set_data($mod, $request);
         if ($this->data === null) {
             return $this->msg;
         }
-        $this->audio = $request->file('vphere')->openFile();
+        $this->audio = $request->file('vfile')->openFile();
         $this->audio = $this->audio->fread($this->audio->getSize());
         $user = User::query()->where('id', $this->data['user_id'])->first();
         $this->uuid = $user->open_id;
