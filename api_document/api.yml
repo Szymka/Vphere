@@ -497,7 +497,7 @@ components:
             status:
               type: string
               example: 已签到
-            locataion: 
+            location: 
               type: string
               example: 湘大逸夫楼
         group2:
@@ -515,7 +515,7 @@ components:
             status:
               type: string
               example: 未签到
-            locataion: 
+            location: 
               type: string
               example: 湘大逸夫楼
         group3:
@@ -533,7 +533,7 @@ components:
             status:
               type: string
               example: 已迟到
-            locataion: 
+            location: 
               type: string
               example: 湘大逸夫楼       
     attendance:
@@ -708,7 +708,7 @@ components:
             sign_in_id:
               type: string
               example: 6
-            locataion:
+            location:
               type: string
               description: 签到位置
               example: 湘大逸夫楼   
@@ -727,7 +727,7 @@ components:
               type: string
               description: 签到记录id
               example: 7
-            locataion:
+            location:
               type: string
               description: 签到位置
               example: 湘大逸夫楼 
