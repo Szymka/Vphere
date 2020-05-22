@@ -174,25 +174,6 @@ Page({
         },
         //参数绑定
         formData: {},
-        success: function (res) {
-          console.log(res.data);          
-          if(res.statusCode==403){
-            console.log(JSON.parse(res.data)['error'])
-            wx.showModal({
-              title: '温馨提示',
-              content: JSON.parse(res.data)['error'],
-              duration:2000
-            })
-          }else{
-            console.log(JSON.parse(res.data)['data'])
-            wx.showModal({
-              title: '温馨提示',
-              content: JSON.parse(res.data)['data'],
-              duration: 2000
-            })
-          }
-        formData: {}
-        },
         success: function(res) {
           console.log(res);
           if(res.statusCode==403){

@@ -2,25 +2,25 @@
 <view class="container">
 	<form bindsubmit="formSubmit">
 		<view class="section row">
-			<view class="section__title">考勤起始时间</view>
-	<time-picker mode="{{mode}}" class="picker" placeholder="请选择时间" bind:onPickerChange="bindStartTimeChange"></time-picker>
+			<view class="section__title">考勤起始时间：</view>
+	<time-picker mode="{{mode}}" class="picker" placeholder="请选择时间" bind:onPickerChange="bindStartTimeChange" name="starttime"></time-picker>
 		</view>
 		<view class="section row">
 			<view class="section__title">考勤终止时间：</view>
-			<time-picker mode="{{mode}}" class="picker" placeholder="请选择时间" bind:onPickerChange="bindEndTimeChange"></time-picker>
+			<time-picker mode="{{mode}}" class="picker" bind:onPickerChange="bindEndTimeChange" name="endtime"></time-picker>
 		</view>
 		<view class="section row">
-			<text>所要考勤的集体</text>
-			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+			<text>所要考勤的集体：</text>
+			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" >
 				<view class="picker">
-					{{array[index]}}
+          {{array[index]}}					
 				</view>
 			</picker>
 		</view>
 		<view class="row">
 			<view class="box2">
 				<view class="box2_left">考勤地点：</view>
-				<input type="text" class="box2_right" placeholder="请选择考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}'></input>
+				<input type="text" class="box2_right" placeholder="请选择考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}' name="location"></input>
 				<view class="fuhao" bindtap="onChangeAddress">></view>
 			</view>
 		</view>

@@ -1,0 +1,10 @@
+<text>以下签到事项可以打卡啦\n点击进行打卡叭</text>
+
+
+  <view class="weui-cells weui-cells_after-title">
+            <navigator url="/pages/checkin/checkin?group_id={{item.group_id}}&sign_in_id={{item.sign_in_id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:for="{{list}}" wx:key="index" >
+                <view class="weui-cell__bd">{{item.group_name}}</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">地点：{{item.location}}</view>
+            </navigator>
+            
+        </view>

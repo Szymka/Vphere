@@ -13,7 +13,8 @@
     "pages/teams/teams",
     "pages/absence/absence",
     "pages/timesetting/timesetting",
-    "pages/register01/register01"
+    "pages/register01/register01",
+    "pages/check/check"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -36,7 +37,7 @@
       "selectedIconPath": "images/manage02.png"
     },
     {
-      "pagePath": "pages/checkin/checkin",
+      "pagePath": "pages/check/check",
       "text": "打卡",
       "iconPath": "images/checkin01.png",
       "selectedIconPath": "images/checkin02.png"

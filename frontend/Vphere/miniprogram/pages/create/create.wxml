@@ -1,24 +1,17 @@
 <view class="create-form">
-	<view class="title">请填写创建集体表格信息</view>
-	<form bindsubmit='test'>
-  
-		<input class="class-name" name="username" placeholder='创建集体名称' maxlength='12'></input>
+  <view class="title">请填写创建集体表格信息</view>
+  <view>若所创建集体无所属集体，所属大集体编号请选0</view>
+  <form bindsubmit='test'>
+    <text>创建集体名称：</text>
+    <input class="class-name" name="name" placeholder='创建集体名称' maxlength='12'></input>
+    <text>所属大集体编号：</text>
     <view class="class-name" style="margin-bottom:75rpx">
-			<text>请选择所属大集体</text>
-			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-				<view class="picker">
-					{{array[index]}}
-				</view>
-			</picker>
-		</view>
-		<!-- <view class="class-name" style="margin-bottom:75rpx">
-			<text>请选择所属大集体</text>
-			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array[index].group_name}}">
-				<view class="picker">
-					{{array[index].group_name}}
-				</view>
-			</picker>
-		</view> -->
-		<button type="primary" formType="submit">提交信息</button>
-	</form>
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker">
+          {{array[index]}}
+        </view>
+      </picker>
+    </view>
+    <button type="primary" formType="submit">提交信息</button>
+  </form>
 </view>

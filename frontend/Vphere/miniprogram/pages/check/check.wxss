@@ -1,0 +1,4 @@
+/* pages/manage/manage.wxss */
+.items{
+  height: 10vw;
+}

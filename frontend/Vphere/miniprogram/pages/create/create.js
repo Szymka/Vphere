@@ -5,14 +5,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-    array:['湘潭大学计算机学院','湘潭大学机械院']
+    array:[],
+    smallgroupname:"",
+    index:0
   },
   bindPickerChange: function (e) {
     
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      index: e.detail.value
+      index: e.detail.value,
+      smallgroupname: this.data.array[e.detail.value]
     })
+    console.log(this.data.smallgroupname)
   },
 
   /**
@@ -20,51 +24,47 @@ Page({
    */
   onLoad: function (options) {
     
-    // console.log(app.globalData.URL)
-    // var that = this
-    // wx.request({
-    //   url: app.globalData.URL + '/group/large_group',
-    //   header: {
-    //     'contenr-type': 'application/json',
-    //   },
-    //   success: function (res) {
-    //     console.log(res.data);
-    //     var items = [];
-    //     for (var i in res.data.data) {
-    //       items.push(res.data.data[i]);
-    //     }
-    //     console.log(items)
-    //     that.setData({
-    //       array: items,
-    //     })
-    //     console.log(that.data.array)
-    //   }
-    // })
+    console.log(app.globalData.URL)
+    var that = this
+    wx.request({
+      url: app.globalData.URL + '/group/large_group',
+      header: {
+        'contenr-type': 'application/json',
+      },
+      success: function (res) {
+        console.log(res.data);
+        var items=[]
+        for (var i in res.data.data) {
+          items.push(res.data.data[i].group_id);
+        }
+        console.log(items)
+        that.setData({
+          array: items,
+        })
+        that.setData({
+          array:that.data.array.concat(0)
+        })
+        console.log(that.data.array)
+      }
+    })
   },
 
 
 
   test:function(e){
-    if (e.detail.value.smallgroup_name.length==0){
-      wx.showToast({
-        title: '创建集体名不能为空',
-        icon:'loading',
-        duration:1500
-      })
-      setTimeout(function(){
-        wx.hideToast()
-      },2000)
-    } else {
+    var that=this
+    console.log(e)
+    
       wx.request({
         url: app.globalData.URL + '/group/create',
         data: {
-          name: e.detail.value.smallgroup_name,
-          belong: e.detail.value.biggroup_name,
+          name: e.detail.value.name,
+          belong: that.data.smallgroupname,
         },
         method:'POST',
         header: {
           'contenr-type': 'application/x-www-form-urlencoded',
-          'cookie': wx.getStorageInfoSync("sessionid")
+          'cookie': wx.getStorageSync("sessionid")
         },
         success: function (res) {
           console.log(res.data);
@@ -83,7 +83,7 @@ Page({
           }
         }
       })
-    }
+    
   },
 
   /**

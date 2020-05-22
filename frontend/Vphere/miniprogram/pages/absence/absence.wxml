@@ -1,26 +1,43 @@
 <view>
   <view class="tr bg-w">
-  	<view class="th">编号</view>
-  	<view class="th">集体名称</view>
-  	<view class="th ">下载考勤信息</view>
+    <view class="th">编号</view>
+    <view class="th">集体名称</view>
+    <view class="th ">查看考勤信息</view>
   </view>
   <scroll-view class="table" scroll-y="true">
-  	<block wx:for="{{listData01}}" wx:key="index" class="scroll-view-item">
-  		<view class="tr bg-g" wx:if="{{index % 2 != 0}}">
-  			<view class="td">{{index+1}}</view>
-  			<view class="td">{{item.group_name}}</view>
-  			<view class="td">
-  				<view catchtap='download' data-type="excel" data-url="" id="{{item.group_status}}">下载</view>
-  			</view>
-  		</view>
-      <view class="tr" wx:else>
-  			<view class="td">{{index+1}}</view>
-  			<view class="td">{{item.group_name}}</view>
-  			<view class="td">
-  				<view catchtap='download' data-type="excel" data-url="" id="{{item.group_status}}">下载</view>
-  			</view>
-  		</view>
-  		
-  	</block>
+    <block wx:for="{{listData01}}" wx:key="index" class="scroll-view-item">
+      <view wx:if="{{item.group_status==0}}">
+        <view class="tr bg-g" wx:if="{{index % 2 != 0}}">
+          <view class="td">{{index+1}}</view>
+          <view class="td">{{item.group_name}}</view>
+          <view class="td">
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}">下载</view>
+          </view>
+        </view>
+        <view class="tr" wx:else>
+          <view class="td">{{index+1}}</view>
+          <view class="td">{{item.group_name}}</view>
+          <view class="td">
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}">下载</view>
+          </view>
+        </view>
+      </view>
+      <view wx:else>
+        <view class="tr bg-g" wx:if="{{index % 2 != 0}}">
+          <view class="td">{{index+1}}</view>
+          <view class="td">{{item.group_name}}</view>
+          <view class="td">
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}">下载</view>
+          </view>
+        </view>
+        <view class="tr" wx:else>
+          <view class="td">{{index+1}}</view>
+          <view class="td">{{item.group_name}}</view>
+          <view class="td">
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}">下载</view>
+          </view>
+        </view>
+      </view>
+    </block>
   </scroll-view>
 </view>

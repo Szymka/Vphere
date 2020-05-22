@@ -23,7 +23,6 @@ Page({
          'cookie':wx.getStorageSync("sessionid")
        },
        success:function(res){
-
        console.log(res.data);
         var items=[];
          for (var i in res.data.data){

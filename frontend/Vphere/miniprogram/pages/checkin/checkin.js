@@ -15,7 +15,9 @@ Page({
     status: 0, //录音状态 0:未开始录音 1:正在录音 2:暂停录音 3:已完成录音
     playStatus: 0, //录音播放状态 0:未播放 1:正在播放
     latitude:0,
-    longitude:0
+    longitude:0,
+    groupid:'',
+    signid:''
   },
 
   clickMe: function () {
@@ -32,6 +34,12 @@ Page({
    */
   onLoad: function (options) {
     var that=this
+    console.log(options.group_id)
+    console.log(options.sign_in_id)
+    that.setData({
+      groupid:options.group_id,
+      signid:options.sign_in_id
+    })
     wx.getLocation({
       altitude: true,
 
@@ -186,20 +194,25 @@ Page({
         },
         //参数绑定
         formData: {
-          
-          // recordingtime: that.data.recordingTimeqwe,
-          // topicid: that.data.topicid,
-          // userid: 1,
-          // praisepoints: 0
+          groupid:that.data.groupid,
+          signid:that.data.signid,
+          latitude:that.data.latitude,
+          longitude:that.data.longitude
         },
+
         success: function (res) {
           console.log(res);
-
-          wx.showModal({
-            title: '温馨提示',
-            content: res.data.data,
-            duration: 2000
-          })
+          if (res.statusCode == 403) {
+            wx.showModal({
+              title: '温馨提示',
+              content: JSON.parse(res.data)['error'],
+            })
+          } else {
+            wx.showModal({
+              title: '温馨提示',
+              content: JSON.parse(res.data)['data'],
+            })
+          }
           innerAudioContext.stop()
         },
         fail: function (res) {
