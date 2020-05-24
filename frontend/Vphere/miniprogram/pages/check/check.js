@@ -56,8 +56,8 @@ Page({
           })
         } else {
           var items = [];
-          for (var i in json) {
-            items.push(json[i]);
+          for (var i in res.data.data) {
+            items.push(res.data.data[i]);
           }
           console.log(items)
           that.setData({

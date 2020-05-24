@@ -6,7 +6,8 @@ Page({
    */
   data: {
     array:[],
-    smallgroupname:"",
+    groupid:[],
+    largegroupid:"",
     index:0
   },
   bindPickerChange: function (e) {
@@ -14,9 +15,9 @@ Page({
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index: e.detail.value,
-      smallgroupname: this.data.array[e.detail.value]
+      largegroupid: this.data.groupid[e.detail.value]
     })
-    console.log(this.data.smallgroupname)
+    console.log(this.data.largegroupid)
   },
 
   /**
@@ -33,18 +34,23 @@ Page({
       },
       success: function (res) {
         console.log(res.data);
-        var items=[]
+        var items=[0,]
+        var items01=["无",]
         for (var i in res.data.data) {
           items.push(res.data.data[i].group_id);
+          items01.push(res.data.data[i].group_name)
         }
         console.log(items)
+        console.log(items01)
         that.setData({
-          array: items,
+          array: items01,
+          groupid:items
         })
-        that.setData({
-          array:that.data.array.concat(0)
-        })
+        // that.setData({
+        //   array:that.data.array.concat(0)
+        // })
         console.log(that.data.array)
+        console.log(that.data.groupid)
       }
     })
   },
@@ -59,7 +65,7 @@ Page({
         url: app.globalData.URL + '/group/create',
         data: {
           name: e.detail.value.name,
-          belong: that.data.smallgroupname,
+          belong: that.data.largegroupid,
         },
         method:'POST',
         header: {

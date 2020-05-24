@@ -1,0 +1,7 @@
+<view>
+  <form bindsubmit="add">
+    <text>请填写在该集体内的昵称</text>
+    <input placeholder="昵称" name="name"></input>
+    <button type="primary" form-type="submit">加入</button>
+  </form>
+</view>

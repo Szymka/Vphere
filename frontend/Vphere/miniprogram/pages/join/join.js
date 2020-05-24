@@ -35,48 +35,7 @@ Page({
       }
     })
   },
-  choose:function(e){
-    var that=this
-    var group_id=e.target.id
-    console.log(group_id)
-    wx.showModal({
-      title: '提示',
-      content: '是否加入此集体',
-      success(res){
-        console.log(group_id)
-        wx.request({          
-          method:'POST',
-          url: app.globalData.URL + '/group/join',
-          header:{
-            'content-type':'application/x-www-form-urlencoded',
-            'cookie': wx.getStorageSync("sessionid")
-          },
-          data:{
-            groupid: group_id,
-          },
-          success: function (res) {
-            console.log(res.statusCode)
-            if (res.statusCode == 200)
-            {
-              console.log(res.data)
-              wx.showToast({
-                title: '成功加入',
-                icon:'success',
-                duration:2000,
-              })
-            }else{
-              console.log(res.data)
-              wx.showModal({
-                title: '错误信息',
-                content: res.data.error,
-              })
-            }
-            
-          },
-        })
-      }
-    })
-  },
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
