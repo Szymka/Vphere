@@ -1,1 +1,37 @@
 /* pages/username/username.wxss */
+page{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+view{
+  height: 100%;
+}
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  margin-top: 80rpx;
+  border: gainsboro 3rpx solid;
+  border-radius: 15rpx;
+  box-shadow: rgba(220, 220, 220, 0.486) 0px 2px 3px 1px;
+  padding: 0% 15%;
+}
+.in-form{
+  margin-top: 15%;
+}
+input{
+  border: 1px solid #0099CC;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  padding: 0.3rem;
+}
+text{
+  font-weight: bold;
+  font-size: 40rpx;
+  width: 100%;
+}

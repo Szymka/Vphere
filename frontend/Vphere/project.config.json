@@ -5,6 +5,7 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
@@ -19,7 +20,6 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"preloadBackgroundData": false,
 		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
@@ -153,6 +153,12 @@
 					"name": "check",
 					"pathName": "pages/check/check",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/username/username",
+					"pathName": "pages/username/username",
 					"scene": null
 				}
 			]
