@@ -1,4 +1,8 @@
- 
+button{
+  margin-top: 25rpx;
+  width: 40%;
+  font-size: 38rpx;
+}  
 .header {
     margin: 90rpx 0 90rpx 50rpx;
     border-bottom: 1px solid #ccc;

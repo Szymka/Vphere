@@ -41,3 +41,4 @@
 				<view class="about-vphere weui-cell__ft weui-cell__ft_in-access"></view>
 			</navigator>
 	</view>
+  <button bindtap="test" type="primary">订阅签到提醒</button>
