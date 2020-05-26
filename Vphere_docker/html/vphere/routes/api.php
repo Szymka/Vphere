@@ -37,4 +37,6 @@ Route::namespace('Api')->group(function () {
     });
     Route::get('/group/small_group','GroupController@small_group');
     Route::get('/group/large_group','GroupController@large_group');
+
+    Route::get('/sub','SignController@sub');
 });

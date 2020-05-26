@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\si_record;
-use App\Models\U_SG_estb;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Mockery\Exception;

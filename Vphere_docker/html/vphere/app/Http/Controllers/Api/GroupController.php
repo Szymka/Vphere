@@ -126,6 +126,9 @@ class GroupController extends Controller {
                 'required',
                 'regex:/^\d+$/',
             ],
+            'name' => [
+                'required',
+            ],
         );
         $this->set_data($mod, $request);
         if ($this->data === null) {
@@ -153,7 +156,7 @@ class GroupController extends Controller {
         $u_sg_estb = new U_SG_estb([
             "user_id" => $user->id,
             "sg_id" => $sm_group->id,
-            "remark" => $user->username,
+            "remark" => $this->data['name'],
             "status" => 0,
         ]);
         $u_sg_estb->save();
@@ -276,17 +279,17 @@ class GroupController extends Controller {
         if ($si_record->isEmpty()) {
             return error_msg(403, 9);
         }
-        $result=array(["名称","缺席次数"]);
+        $result = array(["名称", "缺席次数"]);
         $si_record = $si_record->toArray();
-        $num=1;
+        $num = 1;
         foreach ($si_record as $record) {
-            $result[$num++]=[
-                $record['remark'],$record['times']
+            $result[$num++] = [
+                $record['remark'], $record['times']
             ];
         }
         $export = new InvoicesExport($result);
         $file = md5(time() . "vphere") . ".xlsx";
-        return Excel::download($export,$file);
+        return Excel::download($export, $file);
     }
 
     public function large_situation (Request $request) {
@@ -300,24 +303,24 @@ class GroupController extends Controller {
         if ($this->data === null) {
             return $this->msg;
         }
-        $user=User::query()->where('id',$this->data['user_id'])->first();
-        if ($user->join_group===null){
-            return error_msg(403,13);
+        $user = User::query()->where('id', $this->data['user_id'])->first();
+        if ($user->join_group === null) {
+            return error_msg(403, 13);
         }
-        $join_group=$user->join_group;
-        $join_group=json_decode($join_group,true);
-        $large_group=array();
-        foreach ($join_group as $group){
-            if ($group['status']===3&&$group['group_status']===1&&$group['group_id']===(int)$this->data['groupid']){
-                $large_group=$group;
+        $join_group = $user->join_group;
+        $join_group = json_decode($join_group, true);
+        $large_group = array();
+        foreach ($join_group as $group) {
+            if ($group['status'] === 3 && $group['group_status'] === 1 && $group['group_id'] === (int)$this->data['groupid']) {
+                $large_group = $group;
             }
         }
-        if (empty($large_group)){
-            return error_msg(403,23);
+        if (empty($large_group)) {
+            return error_msg(403, 23);
         }
-        $small_groups= SG_LG_estb::query()->where('lg_id',$large_group['group_id'])->get();
-        $sheets=[];
-        foreach ($small_groups as $group){
+        $small_groups = SG_LG_estb::query()->where('lg_id', $large_group['group_id'])->get();
+        $sheets = [];
+        foreach ($small_groups as $group) {
             $si_record = si_record::query()
                 ->join('sign_in', 'sign_in.id', '=', 'si_record.sign_in_id')
                 ->join('u_sg_estb', function ($join) {
@@ -326,26 +329,26 @@ class GroupController extends Controller {
                 ->where([["si_record.status", '<>', 1], ['group_id', $group['sg_id']]])
                 ->groupBy("si_record.user_id", 'u_sg_estb.remark')->selectRaw('count(*) as times,`u_sg_estb`.`remark`')
                 ->get();
-            $small_group=small_group::query()->where('id',$group['sg_id'])->first();
-            $group_name=$small_group->group_name;
+            $small_group = small_group::query()->where('id', $group['sg_id'])->first();
+            $group_name = $small_group->group_name;
             if ($si_record->isEmpty()) {
                 continue;
             }
-            $result=array(["名称","缺席次数"]);
+            $result = array(["名称", "缺席次数"]);
             $si_record = $si_record->toArray();
-            $num=1;
+            $num = 1;
             foreach ($si_record as $record) {
-                $result[$num++]=[
-                    $record['remark'],$record['times']
+                $result[$num++] = [
+                    $record['remark'], $record['times']
                 ];
             }
-            $sheets[]=[$result,$group_name];
+            $sheets[] = [$result, $group_name];
         }
-        if (empty($sheets)){
+        if (empty($sheets)) {
             return error_msg(403, 9);
         }
         $export = new SheetsExport($sheets);
         $file = md5(time() . "vphere") . ".xlsx";
-        return Excel::download($export,$file);
+        return Excel::download($export, $file);
     }
 }

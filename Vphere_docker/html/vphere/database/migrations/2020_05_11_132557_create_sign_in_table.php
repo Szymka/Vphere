@@ -21,6 +21,7 @@ class CreateSignInTable extends Migration
             $table->timestamp("start_time")->comment("签到开始时间");
             $table->timestamp("end_time")->comment("签到结束时间");
             $table->json("location")->comment("签到位置");
+            $table->integer('send')->default(0)->comment('1表示已经推送,0表示没用推送');
             $table->timestamps();
         });
     }
