@@ -16,7 +16,21 @@ Page({
     playStatus: 0, //录音播放状态 0:未播放 1:正在播放
   },
 
-  clickMe: function() {
+  // clickMe: function() {
+  //   var i, j, res = '';
+  //   for (j = 0; j < 10; j++) {
+  //     i = (Math.random()).toFixed(0)
+  //     i = (Math.random() * 10).toFixed(0)
+  //     res += i;
+  //   }
+  //   this.setData({
+  //     msg: res
+  //   })
+  // },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
     var i, j, res = '';
     for (j = 0; j < 10; j++) {
       i = (Math.random()).toFixed(0)
@@ -26,12 +40,6 @@ Page({
     this.setData({
       msg: res
     })
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-
   },
 
   /**
@@ -187,6 +195,9 @@ Page({
               content: JSON.parse(res.data)['data'] ,
             })
           }
+          wx.navigateTo({
+            url: '/pages/register01/register01',
+          })
           innerAudioContext.stop()
         },
         fail: function(res) {

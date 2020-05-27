@@ -15,6 +15,6 @@
   <view class="weui-cell">
     <view class="weui-cell__bd">{{item.group_name}}</view>
     <view class="weui-cell__ft">{{item.start_time}} {{item.end_time}} {{item.location}} </view>
-    <view class="weui-cell__ft">{{item.status==0?'未开始':(status==1?'签到成功':'迟到')}}</view>
+    <view class="weui-cell__ft">{{item.status}}</view>
   </view>
 </view>
