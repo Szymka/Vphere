@@ -372,13 +372,4 @@ class SignController extends Controller {
     }
 
 
-    public function sub (Request $request) {
-        $openid='oZ_AN5ISqFZoLFDVhP9DU4TqK-F0';
-        $groupname="高数";
-        $start_time='2020年1月1日 12:30:34';
-        $end_time='2020年1月1日 12:30:34';
-        $address="逸夫楼";
-//        $plan=\Forsun::plan()->job(new SubMsgSend($openid, $groupname, $start_time, $end_time, $address))->at(strtotime("2020-05-26 15:52:17"));
-
-    }
 }

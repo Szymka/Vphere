@@ -3,7 +3,6 @@
 namespace App\Console;
 
 use App\Models\access;
-use App\Models\si_record;
 use App\Models\sign_in;
 use App\Models\U_SG_estb;
 use Illuminate\Console\Scheduling\Schedule;
@@ -30,11 +29,10 @@ class Kernel extends ConsoleKernel {
         // $schedule->command('inspire')->hourly();
         $send_start_time = time();
         $send_start_time = $send_start_time + 600;
-        $send_end_time = $send_start_time + 60000;
+        $send_end_time = $send_start_time + 60000000;
         $send_start_time = date("Y-m-d H:i:s", $send_start_time);
         $send_end_time = date("Y-m-d H:i:s", $send_end_time);
-
-        $signs = sign_in::query()
+        $signs = sign_in::query()->select(['sign_in.*','small_group.group_name'])
             ->join('small_group', 'small_group.id', '=', 'sign_in.group_id')
             ->where([['start_time', '>', $send_start_time], ['start_time', '<', $send_end_time], ['send', 0]])
             ->get();
@@ -53,12 +51,11 @@ class Kernel extends ConsoleKernel {
                     ->join('users', 'users.id', '=', 'u_sg_estb.user_id')
                     ->pluck('users.open_id');
                 foreach ($openids as $openid) {
-                    $openid = $openids;
-                    $this->sendMsg($openid, $groupname, $start_time, $end_time, $address);
+                    $res=$this->sendMsg($openid, $groupname, $start_time, $end_time, $address);
+                    dump($res);
                 }
             }
         }
-
     }
 
     /**
@@ -83,7 +80,7 @@ class Kernel extends ConsoleKernel {
         $data = [];
 
         //接收者（用户）的 openid
-        $data['touser'] = 'oZ_AN5ISqFZoLFDVhP9DU4TqK-F0';
+        $data['touser'] = $openid;
         //$openid;
 
         //所需下发的订阅模板id
@@ -129,10 +126,9 @@ class Kernel extends ConsoleKernel {
 
         //判断access_token是否过期
         $before_time = $now_time - $timeout;
-
+        $before_time = date("Y-m-d H:i:s",$before_time);
         //未查找到就为过期
         $access_token = access::query()->where([['id', 1], ['updated_at', '>', $before_time]])->first();
-
         //如果过期
         if (!$access_token) {
             //获取新的access_token
@@ -143,10 +139,8 @@ class Kernel extends ConsoleKernel {
             $response = $client->request('GET', $url, ['verify' => false,]);
             $res = $response->getBody()->getContents();
             $res = json_decode($res, true);
-
-            $access_token->access_token = $res['access_token'];
+            $access_token=access::query()->updateOrCreate(['id'=>1],['access_token'=>$res['access_token']]);
             //更新数据库
-            $access_token->save();
         }
         return $access_token->access_token;
     }
