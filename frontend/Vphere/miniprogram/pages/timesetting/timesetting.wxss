@@ -12,6 +12,10 @@ page{
     font-size: 30rpx;
     box-shadow: rgba(220, 220, 220, 0.692) 0px 2px 3px 1px;
     border-radius: 15rpx;
+    background-color: white;
+}
+time-picker{
+    width: 70%;
 }
 .box2{
  width: 680rpx;

@@ -6,10 +6,10 @@
   font-weight: bold;
   justify-content: center;
   box-shadow: gainsboro 0px 3px 3px 0px;
-  z-index: 1;
+  z-index: 6;
+  background-color: white;
 }
 .classes{
-  border-top: 1rpx gainsboro solid;
   height: 88.5%;
   position: absolute;
 }

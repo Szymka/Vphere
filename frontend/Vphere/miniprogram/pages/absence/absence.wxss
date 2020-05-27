@@ -13,6 +13,7 @@ page{
   justify-content: center;
   height: 100rpx;
   align-items: center;
+  background-color: white;
 }
 .td {
     width:25%;
