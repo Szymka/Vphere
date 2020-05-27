@@ -9,8 +9,9 @@ test:function(e){
     tmplIds: [templateId],
     success(res) {
       if (res[templateId] == 'accept') {
-        wx.showToast({
-          title: '订阅成功'
+        wx.showModal({
+          title: '提示信息',
+          content: "订阅成功,如需长期订阅请勾选'保持已选选项不再询问'",
         })
       } else {
         wx.showToast({
