@@ -14,6 +14,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    console.log(options)
     console.log(options.groupid)
     that.setData({
       groupid: options.groupid,
@@ -21,6 +22,7 @@ Page({
     console.log(that.data.groupid)
   },
   add:function(e){
+    console.log(e)
     var that =this
     wx.showModal({
       title: '提示',
@@ -36,7 +38,7 @@ Page({
           },
           data: {
             groupid: that.data.groupid,
-            name:e.detail.name
+            name:e.detail.value.name
           },
           success: function (res) {
             console.log(res.statusCode)
