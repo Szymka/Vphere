@@ -11,7 +11,7 @@ test:function(e){
       if (res[templateId] == 'accept') {
         wx.showModal({
           title: '提示信息',
-          content: "订阅成功,如需长期订阅请勾选'保持已选选项不再询问'",
+          content: "订阅成功,由于开发限制每次订阅只接收一条提醒",
         })
       } else {
         wx.showToast({
