@@ -1,4 +1,3 @@
-<!--pages/login/login.wxml-->
 <view class="container">
 	<form bindsubmit="formSubmit">
 		<view class="section row">
@@ -11,9 +10,9 @@
 		</view>
 		<view class="section row">
 			<text>所要考勤的集体：</text>
-			<picker bindchange="bindPickerChange" value="{{groupindex}}" range="{{array}}" >
+			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" >
 				<view class="picker">
-          {{array[groupindex]?array[groupindex]:'请选择'}}					
+          {{array[index]?array[index]:'请选择'}}					
 				</view>
 			</picker>
 		</view>

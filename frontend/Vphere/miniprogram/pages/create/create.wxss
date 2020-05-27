@@ -26,7 +26,7 @@ form{
   font-size: 45rpx;
 }
 .content{
-  font-size: 35rpx;
+  font-size: 25rpx;
   margin-top: 10rpx;
 }
 .class-name{

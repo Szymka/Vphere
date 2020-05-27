@@ -6,9 +6,9 @@
     <input class="class-name" name="name" placeholder='创建集体名称' maxlength='12'></input>
     <text>所属大集体：</text>
     <view class="class-name" style="margin-bottom:75rpx">
-      <picker bindchange="bindPickerChange" value="{{groupindex}}" range="{{array}}">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
         <view class="picker">
-          {{array[groupindex]?array[groupindex]:'请选择'}}
+          {{array[index]?array[index]:'请选择'}}
         </view>
       </picker>
     </view>
