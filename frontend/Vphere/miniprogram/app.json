@@ -48,7 +48,7 @@
   "sitemapLocation": "sitemap.json",
   "permission": {
     "scope.userLocation": {
-      "desc": "位置信息效果展示"
+      "desc": "请同意获取定位权限"
     }
   }
 }

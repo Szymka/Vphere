@@ -1,6 +1,6 @@
 <view>
-	<view class="title big-title">打卡</view>
-	<view class="title">语音录入下框中获取的随机数字<view>识别声纹与位置信息后打卡成功</view>
+	<view class="title big-title">注册及修改</view>
+	<view class="title">语音录入下框中获取的随机数字<view>将有提示信息显示注册/修改状态</view>
 	</view>
 </view>
 

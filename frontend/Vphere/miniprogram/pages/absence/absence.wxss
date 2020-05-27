@@ -11,7 +11,7 @@ page{
   display: flex;
   width: 100%;
   justify-content: center;
-  height: 10%;
+  height: 100rpx;
   align-items: center;
 }
 .td {
