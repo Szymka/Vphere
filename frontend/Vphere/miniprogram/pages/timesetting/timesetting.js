@@ -14,7 +14,8 @@ Page({
     index:0,
     mode:"dateTime",
     location:{},
-    group_id01:''
+    group_id01:'',
+    groupindex:''
   },
   bindMultiPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)

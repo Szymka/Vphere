@@ -220,8 +220,8 @@ Page({
               content: JSON.parse(res.data)['data'],
             })
           }
-          wx.navigateTo({
-            url: '/pages/checkin/checkin',
+          wx.switchTab({
+            url: '/pages/check/check',
           })
           innerAudioContext.stop()
         },

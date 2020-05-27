@@ -8,7 +8,8 @@ Page({
     array:[],
     groupid:[],
     largegroupid:"",
-    index:0
+    index:0,
+    groupindex:''
   },
   bindPickerChange: function (e) {
     
