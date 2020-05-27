@@ -15,7 +15,11 @@ Page({
     status: 0, //录音状态 0:未开始录音 1:正在录音 2:暂停录音 3:已完成录音
     playStatus: 0, //录音播放状态 0:未播放 1:正在播放
   },
-
+  gotoindex:function(e){
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
   // clickMe: function() {
   //   var i, j, res = '';
   //   for (j = 0; j < 10; j++) {

@@ -5,9 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
     itemdata:[]
-
   },
 
   /**
@@ -30,7 +28,6 @@ Page({
         }
         console.log(items)
          that.setData({
-
            itemdata:items,
          })
          console.log(that.data.itemdata)

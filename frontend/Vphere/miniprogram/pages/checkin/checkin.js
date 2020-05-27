@@ -221,7 +221,7 @@ Page({
             })
           }
           wx.navigateTo({
-            url: '/pages/register01/register01',
+            url: '/pages/checkin/checkin',
           })
           innerAudioContext.stop()
         },
