@@ -20,15 +20,6 @@ Page({
     signid:''
   },
 
-  // clickMe: function () {
-  //   var i, j, res = '';
-  //   for (j = 0; j < 10; j++) {
-  //     i = (Math.random()).toFixed(0)
-  //     i = (Math.random() * 10).toFixed(0)
-  //     res += i;
-  //   }
-  //   this.setData({ msg: res })
-  // },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -77,7 +68,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**

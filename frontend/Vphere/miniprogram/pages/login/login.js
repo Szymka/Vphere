@@ -22,6 +22,9 @@ Page({
       }
     })
   },
+  onShow:function(){
+    
+  },
   bindGetUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo=e.detail.userInfo
@@ -58,9 +61,8 @@ Page({
           
         }
       });
-      
       //授权成功后，跳转进入小程序首页
-      wx.switchTab({
+      wx.reLaunch({
         url: "/pages/index/index"
       })
     } else {

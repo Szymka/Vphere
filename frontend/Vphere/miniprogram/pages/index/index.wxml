@@ -1,10 +1,12 @@
-
-	<view class="distance">
-		<i-card title="{{userinfo.nickName}}" extra="{{userinfo.language}}" thumb="{{userinfo.avatarUrl}}" i-class="card-demo">
+  <view class="distance">
+    <view bindtap="gotologin">
+		<i-card title="{{nickName}}" extra="{{language}}" thumb="{{avatarUrl}}" i-class="card-demo">
 			<view slot="content">:-)</view>
 			<view slot="footer">今天也是元气满满的一天</view>
 		</i-card>
+    </view>
 	</view>
+
 	<view class='en'>
 		<i-grid class="grid-button">
 			<navigator url="/pages/time/time">

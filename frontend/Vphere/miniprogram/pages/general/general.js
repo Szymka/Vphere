@@ -23,16 +23,6 @@ Page({
       },
       success: function (res) {
         console.log(res.data);
-        // var json={
-        //   "group1": {
-        //     "group_name": "高数",
-        //     "times": 2
-        //   },
-        //   "group2": {
-        //     "group_name": "英语",
-        //     "times": 1
-        //   }
-        // }
         var items = [];
         for (var i in res.data.data) {
           items.push(res.data.data[i]);
@@ -46,6 +36,8 @@ Page({
     })
     
   },
-
+  onShow:function(){
+    
+  }
 
 })

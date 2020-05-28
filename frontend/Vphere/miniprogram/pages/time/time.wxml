@@ -4,9 +4,9 @@
   <view class="weui-cell">
     <view class="weui-cell__bd">{{item.group_name}}</view>
     <view class="weui-cell__ft" style="text-align:center">
-      <view>{{item.start_time}}</view>
-      <view>{{item.end_time}}</view>
-      <view>{{item.location}}</view>  
+      <view>起始时间：{{item.start_time}}</view>
+      <view>截止时间：{{item.end_time}}</view>
+      <view>地点：{{item.location}}</view>  
     </view>
     <view class="weui-cell__ft" style="width:15rpx">{{item.status}}</view>
   </view>

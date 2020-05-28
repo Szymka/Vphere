@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/login/login",
+    
     "pages/index/index",
     "pages/manage/manage",
     "pages/checkin/checkin",
@@ -15,7 +15,8 @@
     "pages/timesetting/timesetting",
     "pages/register01/register01",
     "pages/check/check",
-    "pages/username/username"
+    "pages/username/username",
+    "pages/login/login"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

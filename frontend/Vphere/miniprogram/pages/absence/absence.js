@@ -37,74 +37,12 @@ Page({
       }
     })
   },
-
-  // download:function(res){
-  //   console.log(res)
-    
-  //   let kind=res.target.id
-  //   let url = app.globalData.URL + '/group/large/situation?id=kind'
-  //   if(kind==0){
-  //     url = app.globalData.URL + '/group/small/situation?id=kind'
-  //   }
-  //   console.log(kind)
-  //   wx.getSavedFileList({  // 获取文件列表
-  //     success(res) {
-  //       res.fileList.forEach((val, key) => { // 遍历文件列表里的数据
-  //         // 删除存储的垃圾数据
-  //         wx.removeSavedFile({
-  //           filePath: val.filePath
-  //         });
-  //       })
-  //     }
-  //   })
-  //   wx.downloadFile({
-  //     url: url,
-  //     success: function (res) {
-  //       console.log(res)
-  //       const tempFilePath = res.tempFilePath;
-  //       console.log(tempFilePath)
-  //       // 保存文件
-  //       wx.saveFile({
-  //         tempFilePath,
-  //         success: function (res) {
-  //           const savedFilePath = res.savedFilePath;
-  //           // 打开文件
-  //           wx.openDocument({
-  //             filePath: savedFilePath,
-  //             success: function (res) {
-  //               console.log('打开文档成功')
-  //             },
-  //           });
-  //         },
-  //         fail: function (err) {
-  //           console.log('保存失败：', err)
-  //         }
-  //       });
-  //     },
-  //     fail: function (err) {
-  //       console.log('下载失败：', err);
-  //     },
-  //   });
-  // },
   download: function (e) {
     var that=this
     console.log(e);
     let type = e.currentTarget.dataset.type;
     let url=e.target.dataset.url
-    // switch (type) {
-    //   case "pdf":
-    //     url += 'pdf';
-    //     break;
-    //   case "word":
-    //     url += 'docx';
-    //     break;
-    //   case "excel":
-    //     url += 'xlsx';
-    //     break;
-    //   default:
-    //     url += 'pptx';
-    //     break;
-    // }
+    
     var groupid = e.target.id
     console.log(groupid)
     console.log(url)
