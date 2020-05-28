@@ -1,14 +1,12 @@
 <view>
 	<view class="title big-title">打卡</view>
-	<view class="title">每次打卡时语音录入获取的随机数<view>声纹与位置信息核对正确后打卡成功</view>
+	<view class="title">每次打卡时语音录入显示的随机数<view>声纹与位置信息核对正确后打卡成功</view>
 	</view>
 </view>
 
 <view class="show-virifycode">
-	<view class="box01">
-		<view>{{ msg }}</view>
-	</view>
-  <button class="get-code" bindtap="clickMe" type="primary">获取随机数</button>
+		<view  class="box01">{{ msg }}</view>
+  <!-- <button class="get-code" bindtap="clickMe" type="primary">获取随机数</button> -->
 </view>
 
 <view class="sound-recording">

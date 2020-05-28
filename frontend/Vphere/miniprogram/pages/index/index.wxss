@@ -1,5 +1,5 @@
 button{
-  margin-top: 25rpx;
+  margin-top: 35rpx;
   width: 40%;
   font-size: 38rpx;
 }  
@@ -62,6 +62,7 @@ button{
 .en{
   margin: 0 auto;
   width: 91.5%;
+  border-left: 1rpx solid #e9eaec;
 }
 
 /* 上面都是主页面的代码 */

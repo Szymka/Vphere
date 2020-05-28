@@ -15,8 +15,16 @@ Page({
     status: 0, //录音状态 0:未开始录音 1:正在录音 2:暂停录音 3:已完成录音
     playStatus: 0, //录音播放状态 0:未播放 1:正在播放
   },
-
-  clickMe: function() {
+  gotoindex:function(e){
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
+  
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
     var i, j, res = '';
     for (j = 0; j < 10; j++) {
       i = (Math.random()).toFixed(0)
@@ -26,12 +34,6 @@ Page({
     this.setData({
       msg: res
     })
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-
   },
 
   /**
@@ -45,7 +47,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    
   },
 
   /**
@@ -187,6 +189,9 @@ Page({
               content: JSON.parse(res.data)['data'] ,
             })
           }
+          wx.navigateTo({
+            url: '/pages/register01/register01',
+          })
           innerAudioContext.stop()
         },
         fail: function(res) {

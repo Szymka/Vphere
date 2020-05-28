@@ -11,14 +11,14 @@
           <view class="td">{{index+1}}</view>
           <view class="td">{{item.group_name}}</view>
           <view class="td">
-            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}">下载</view>
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}">查看</view>
           </view>
         </view>
         <view class="tr" wx:else>
           <view class="td">{{index+1}}</view>
           <view class="td">{{item.group_name}}</view>
           <view class="td">
-            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}">下载</view>
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}">查看</view>
           </view>
         </view>
       </view>
@@ -27,14 +27,14 @@
           <view class="td">{{index+1}}</view>
           <view class="td">{{item.group_name}}</view>
           <view class="td">
-            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}">下载</view>
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}">查看</view>
           </view>
         </view>
         <view class="tr" wx:else>
           <view class="td">{{index+1}}</view>
           <view class="td">{{item.group_name}}</view>
           <view class="td">
-            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}">下载</view>
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}">查看</view>
           </view>
         </view>
       </view>

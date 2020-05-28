@@ -34,16 +34,14 @@ page{
   line-height: none;
 }
 .box01{
-    border: 1px solid;
-    border-radius: 15rpx;
+   padding: 0 20rpx;
     height: 100rpx;
-    width: 400rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    line-height: 100rpx;
     font-size: 55rpx;
     font-weight: bold;
     box-shadow: rgba(220, 220, 220, 0.733) 0px 3px 3px 1px;
+    border: 1px solid;
+    border-radius: 15rpx;
 }
 .sound-recording {
   margin-top: 20rpx;

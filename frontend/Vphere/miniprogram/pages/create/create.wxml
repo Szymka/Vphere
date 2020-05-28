@@ -1,6 +1,6 @@
 <view class="create-form">
   <view class="title">请填写创建集体表格信息</view>
-  <view>若所创建集体无所属集体，则所属大集体请选无</view>
+  <view class="content">若所创建集体无所属集体，则所属大集体请选无</view>
   <form bindsubmit='test'>
     <text>创建集体名称：</text>
     <input class="class-name" name="name" placeholder='创建集体名称' maxlength='12'></input>
@@ -8,7 +8,7 @@
     <view class="class-name" style="margin-bottom:75rpx">
       <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
         <view class="picker">
-          {{array[index]}}
+          {{array[index]?array[index]:'请选择'}}
         </view>
       </picker>
     </view>

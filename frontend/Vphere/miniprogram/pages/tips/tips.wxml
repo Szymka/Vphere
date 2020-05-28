@@ -1,7 +1,7 @@
-<view class="version">当前版本：v1.xx.xxx</view>
+<view class="version">当前版本：v1.0.0</view>
 <view class="tips">
-	<view>使用tips:</view>
-	<text style="font-size:30rpx">无论是学校公司等大群体，还是几个人组成的小组都可根据创建打卡集体。Vphere是一个极简方便结果准确的考勤打卡工具</text>
+	<view style="font-size:40rpx">简介:</view>
+	<text style="font-size:30rpx">无论是学校公司等大群体，还是几个人组成的小组都可根据需求创建打卡集体。\nVphere是一个结合声纹信息和定位信息的考勤打卡工具，极简方便结果准确。</text>
 </view>
 <view class="feedback-button">
 	<button open-type='feedback' size="mini " type="primary">意见反馈</button>

@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/login/login",
+    
     "pages/index/index",
     "pages/manage/manage",
     "pages/checkin/checkin",
@@ -15,7 +15,8 @@
     "pages/timesetting/timesetting",
     "pages/register01/register01",
     "pages/check/check",
-    "pages/username/username"
+    "pages/username/username",
+    "pages/login/login"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -28,27 +29,27 @@
     "list": [{
       "pagePath": "pages/index/index",
       "text": "个人中心",
-      "iconPath": "images/index01.png",
-      "selectedIconPath": "images/index02.png"
+      "iconPath": "images/my_light.png",
+      "selectedIconPath": "images/my_fill_light.png"
     },
     {
       "pagePath": "pages/manage/manage",
       "text": "考勤管理",
-      "iconPath": "images/manage01.png",
-      "selectedIconPath": "images/manage02.png"
+      "iconPath": "images/news_hot_light.png",
+      "selectedIconPath": "images/news_hot_fill_light.png"
     },
     {
       "pagePath": "pages/check/check",
       "text": "打卡",
-      "iconPath": "images/checkin01.png",
-      "selectedIconPath": "images/checkin02.png"
+      "iconPath": "images/news_light.png",
+      "selectedIconPath": "images/news_fill_light.png"
     }
     ]
   },
   "sitemapLocation": "sitemap.json",
   "permission": {
     "scope.userLocation": {
-      "desc": "位置信息效果展示"
+      "desc": "请同意获取定位权限"
     }
   }
 }

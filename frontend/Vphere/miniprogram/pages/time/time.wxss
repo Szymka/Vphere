@@ -125,3 +125,29 @@
   position: absolute;
   height: auto;
 }
+.time-cell{
+  flex-direction: column;
+  padding: 2% 0% 0% 0%;
+  box-shadow: rgba(219, 219, 219, 0.411) 0px 3px 3px 1px;
+}
+.time-border{
+  width: 100%;
+  border-top: 1rpx rgb(235, 235, 235) solid;
+  margin-bottom: 2%;
+  padding-top: 2%;
+}
+.time-title{
+  font-weight: bold;
+  font-size: 42rpx;
+  margin-bottom: 1%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.time-status{
+  font-weight: bold;
+  /* margin-left: 5%; */
+}
+.time-inner{
+  font-size: 30rpx;
+}

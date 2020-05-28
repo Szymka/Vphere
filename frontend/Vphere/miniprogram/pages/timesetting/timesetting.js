@@ -11,10 +11,12 @@ Page({
     array: [],
     array01:[],
     group_id:[],
-    index:0,
+    index:'',
     mode:"dateTime",
     location:{},
-    group_id01:''
+    group_id01:'',
+    groupindex:'',
+    
   },
   bindMultiPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -159,7 +161,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**

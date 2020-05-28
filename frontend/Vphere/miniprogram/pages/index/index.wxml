@@ -1,16 +1,18 @@
-
-	<view class="distance">
-		<i-card title="{{userinfo.nickName}}" extra="{{userinfo.language}}" thumb="{{userinfo.avatarUrl}}" i-class="card-demo">
+  <view class="distance">
+    <view bindtap="gotologin">
+		<i-card title="{{nickName}}" extra="{{language}}" thumb="{{avatarUrl}}" i-class="card-demo">
 			<view slot="content">:-)</view>
 			<view slot="footer">今天也是元气满满的一天</view>
 		</i-card>
+    </view>
 	</view>
+
 	<view class='en'>
 		<i-grid class="grid-button">
 			<navigator url="/pages/time/time">
 				<i-grid-item class="right-button">
 					<i-grid-icon>
-						<image src="../../images/checkin01.png" />
+						<image src="../../images/magic.png" />
 					</i-grid-icon>
 					<i-grid-label>签到事项</i-grid-label>
 				</i-grid-item>
@@ -18,7 +20,7 @@
 			<navigator url="/pages/general/general">
 				<i-grid-item class="left-button">
 					<i-grid-icon>
-						<image src="../../images/checkin01.png" />
+						<image src="../../images/text.png" />
 					</i-grid-icon>
 					<i-grid-label>缺勤情况</i-grid-label>
 				</i-grid-item>
@@ -28,14 +30,14 @@
 	<view class='distance footer weui-cells weui-cells_after-title'>
 			<navigator url="/pages/register/register" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 				<view class="weui-cell__hd">
-					<image src="/images/checkin01.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+					<image src="/images/write.png" style="margin-right: 15rpx;vertical-align: middle;width:40rpx; height: 40rpx;"></image>
 				</view>
 				<view class="weui-cell__bd">声纹注册及修改</view>
 				<view class="weui-cell__ft weui-cell__ft_in-access"></view>
 			</navigator>
 			<navigator url="/pages/tips/tips" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
 				<view class="weui-cell__hd">
-					<image src="/images/checkin01.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+					<image src="/images/like.png" style="margin-right: 15rpx;vertical-align: middle;width:40rpx; height: 40rpx;"></image>
 				</view>
 				<view class="weui-cell__bd">关于Vphere</view>
 				<view class="about-vphere weui-cell__ft weui-cell__ft_in-access"></view>

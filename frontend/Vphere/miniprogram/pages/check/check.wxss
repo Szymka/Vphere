@@ -4,4 +4,8 @@
 }
 .title{
   text-align: center;
+  padding: 15rpx 0rpx;
+}
+.weui-cell{
+  font-size: 32rpx;
 }

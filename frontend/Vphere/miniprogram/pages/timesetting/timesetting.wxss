@@ -12,13 +12,15 @@ page{
     font-size: 30rpx;
     box-shadow: rgba(220, 220, 220, 0.692) 0px 2px 3px 1px;
     border-radius: 15rpx;
+    background-color: white;
 }
 .box2{
- width: 680rpx;
- min-height: 90rpx;
+ width: 100%;
+ min-height: 80rpx;
  display: flex;
  flex-direction: row;
  align-items: center;
+ font-weight: bold;
  /* border-bottom: solid 2rpx #D7D7D7; */
 }
 .box2_left{
@@ -26,13 +28,13 @@ page{
  font-size: 15px;
  color: #000000;
 }
-.box2_right{
- width: 406rpx;
+/* .box2_right{
+ width: 76%;
  min-height: 90rpx;
  display: flex;
  align-items: center;
  font-size: 14px;
-}
+} */
 .fuhao{
  width: 70rpx;
  height:90rpx;
@@ -47,33 +49,37 @@ page{
     align-items: center;
     margin-top: 40rpx;
     margin-bottom: 40rpx;
+    width: 70%;
+    margin-left: 5%;
+    padding: 0 10%;
 }
 .row text{
     flex-grow: 1;
     text-align: right;
 }
 .box2_right{
-    font-size: 0.7rem;
-    color: #ccc;
+    height: 80rpx;
+    color: black;
     flex-grow: 3;
-    border: 1px solid #0099CC;
+    border: gainsboro 3rpx solid;
     display: inline-block;
-    border-radius: 0.3rem;
-    box-shadow: 0 0 0.15rem #aaa;
+    border-radius: 15rpx;
     padding: 0.3rem;
+    width: 50%;
+    text-align: center
 }
 .row button{
     padding: 0 2rem;
 }
 picker{
-    width: 90%;
+    width: 100%;
     height: 80rpx;
     border: gainsboro 3rpx solid;
     border-radius: 15rpx;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40rpx;
+    font-size: 35rpx;
     font-weight: bold;
     text-align: center;
 }

@@ -269,7 +269,7 @@ class SignController extends Controller {
                 ['si_record.user_id', $this->data['user_id']],
                 ['start_time', '<=', $now_time],
                 ['end_time', '>=', $now_time],
-                ['si_record.status',0]
+                ['si_record.status', 0]
             ])
             ->get();
         if ($si_record->isEmpty()) {
@@ -290,7 +290,7 @@ class SignController extends Controller {
                 ]
             ];
         }
-        return msg(200,$result);
+        return msg(200, $result);
     }
 
     protected function location_calc ($location, $latitude, $longitude) {
@@ -370,4 +370,6 @@ class SignController extends Controller {
         $this->time = (int)(microtime(true) * 1000);
         $this->sign = md5(config('vphere.vpr_secretkey') . $this->time);
     }
+
+
 }

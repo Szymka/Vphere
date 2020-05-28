@@ -20,7 +20,10 @@ Page({
     signid:''
   },
 
-  clickMe: function () {
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
     var i, j, res = '';
     for (j = 0; j < 10; j++) {
       i = (Math.random()).toFixed(0)
@@ -28,11 +31,6 @@ Page({
       res += i;
     }
     this.setData({ msg: res })
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
     var that=this
     console.log(options.group_id)
     console.log(options.sign_in_id)
@@ -70,7 +68,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -213,6 +211,9 @@ Page({
               content: JSON.parse(res.data)['data'],
             })
           }
+          wx.switchTab({
+            url: '/pages/check/check',
+          })
           innerAudioContext.stop()
         },
         fail: function (res) {
