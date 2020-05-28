@@ -166,6 +166,20 @@
 					"id": -1,
 					"name": "pages/check/check",
 					"pathName": "pages/check/check",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/time/time",
+					"pathName": "pages/time/time",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/check/check",
+					"pathName": "pages/check/check",
 					"scene": null
 				}
 			]

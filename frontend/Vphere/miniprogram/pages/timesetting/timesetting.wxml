@@ -16,8 +16,8 @@
 				</view>
 			</picker>
 		</view>
-		<view class="row">
-    <view class="box2_left">考勤地点：</view>
+		<view class="section row">
+    <text>考勤地点：</text>
 			<view class="box2">
 				<input type="text" class="box2_right" placeholder="请选择考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}' name="location"></input>
 			</view>

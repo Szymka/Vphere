@@ -1,5 +1,5 @@
 button{
-  margin-top: 25rpx;
+  margin-top: 35rpx;
   width: 40%;
   font-size: 38rpx;
 }  

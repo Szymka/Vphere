@@ -14,15 +14,13 @@ page{
     border-radius: 15rpx;
     background-color: white;
 }
-time-picker{
-    width: 70%;
-}
 .box2{
- width: 680rpx;
- min-height: 90rpx;
+ width: 100%;
+ min-height: 80rpx;
  display: flex;
  flex-direction: row;
  align-items: center;
+ font-weight: bold;
  /* border-bottom: solid 2rpx #D7D7D7; */
 }
 .box2_left{
@@ -51,6 +49,9 @@ time-picker{
     align-items: center;
     margin-top: 40rpx;
     margin-bottom: 40rpx;
+    width: 70%;
+    margin-left: 5%;
+    padding: 0 10%;
 }
 .row text{
     flex-grow: 1;
@@ -58,12 +59,11 @@ time-picker{
 }
 .box2_right{
     height: 80rpx;
-    color: #ccc;
+    color: black;
     flex-grow: 3;
     border: gainsboro 3rpx solid;
     display: inline-block;
-    border-radius: 0.3rem;
-    box-shadow: 0 0 0.15rem #aaa;
+    border-radius: 15rpx;
     padding: 0.3rem;
     width: 50%;
     text-align: center
@@ -72,14 +72,14 @@ time-picker{
     padding: 0 2rem;
 }
 picker{
-    width: 76%;
+    width: 100%;
     height: 80rpx;
     border: gainsboro 3rpx solid;
     border-radius: 15rpx;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40rpx;
+    font-size: 35rpx;
     font-weight: bold;
     text-align: center;
 }

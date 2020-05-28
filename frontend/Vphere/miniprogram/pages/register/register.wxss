@@ -58,5 +58,6 @@ button{
   box-shadow: rgba(220, 220, 220, 0.582) 0px 2px 5px 2px;
   border-radius: 15rpx;
   margin-bottom: 40rpx;
-  text-align: center
+  text-align: center;
+  line-height: 80rpx;
 }
