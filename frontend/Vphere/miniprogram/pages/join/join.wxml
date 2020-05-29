@@ -1,22 +1,12 @@
-<!-- <view class="title">系统内已有集体(点击进行选择)</view>
-<scroll-view class="classes" scroll-y="true">
-	<view wx:for="{{list}}" wx:key="index" class="weui-cell weui-cell_access scroll-view-item">
-  <navigator url="/pages/username/username?groupid={{item.group_id}}">
-		<view class="weui-cell__bd" id="{{item.group_id}}">{{item.group_name}}</view>
-  </navigator>
-	</view>
-</scroll-view> -->
-
 <view class="title">系统内已有集体(点击进行选择)</view>
 <scroll-view class="classes" scroll-y="true">
-<view class='distance footer weui-cells weui-cells_after-title'>
+  <view class='distance footer weui-cells weui-cells_after-title'>
+    <navigator url="/pages/username/username?groupid={{item.group_id}}" class="weui-cell weui-cell_access items" hover-class="weui-cell_active" wx:for="{{list}}" wx:key="index">
+      <view class="weui-cell__hd">
+      </view>
+      <view class="weui-cell__bd" id="{{item.group_id}}">{{item.group_name}}</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
 
-			<navigator url="/pages/username/username?groupid={{item.group_id}}" class="weui-cell weui-cell_access items" hover-class="weui-cell_active"  wx:for="{{list}}" wx:key="index">
-				<view class="weui-cell__hd">
-				</view>
-				<view class="weui-cell__bd"  id="{{item.group_id}}">{{item.group_name}}</view>
-				<view class="weui-cell__ft weui-cell__ft_in-access"></view>
-			</navigator>
-      
-	</view>
-  </scroll-view>
+  </view>
+</scroll-view>

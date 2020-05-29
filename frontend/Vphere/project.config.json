@@ -180,6 +180,21 @@
 					"id": -1,
 					"name": "pages/check/check",
 					"pathName": "pages/check/check",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "版本更新01",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "版本更新02",
+					"pathName": "pages/index/index",
+					"query": "",
 					"scene": null
 				}
 			]

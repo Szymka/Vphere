@@ -1,4 +1,4 @@
-<view class="create-form">
+<view class="create-form" style="background-color: rgb(238, 238, 238)">
   <view class="title">请填写创建集体表格信息</view>
   <view class="content">若所创建集体无所属集体，则所属大集体请选无</view>
   <form bindsubmit='test'>

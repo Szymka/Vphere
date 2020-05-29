@@ -2,10 +2,21 @@
 .items{
   height: 10vw;
 }
-.title{
+/* .title{
   text-align: center;
   padding: 15rpx 0rpx;
-}
+} */
 .weui-cell{
   font-size: 32rpx;
+}
+.title{
+  display: flex;
+  padding: 1.5vw;
+  font-size: 4.3vw;
+  font-weight: bold;
+  justify-content: center;
+  box-shadow: gainsboro 0px 3px 3px 0px;
+  z-index: 1;
+  background-color: rgb(245, 245, 245);
+  text-align: center
 }

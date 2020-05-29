@@ -6,16 +6,15 @@
 
 <view class="show-virifycode">
 		<view  class="box01">{{ msg }}</view>
-  <!-- <button class="get-code" bindtap="clickMe" type="primary">获取随机数</button> -->
 </view>
 
 <view class="sound-recording">
 	<view class="time">{{status==0?'录音时长':(status==3?'录音已完成':'正在录音中')}}：{{time}} 秒</view>
-	<view class="btn">
+	<!-- <view class="btn">
 		<view class="{{status==3?'show':'hide'}}" catchtap="reset" hover-class="jump-hover">重新录制</view>
 		<view class="{{status==3 && playStatus==0?'show':'hide'}}" catchtap="play" hover-class="jump-hover">{{playStatus==1?'录音播放中':'播放录音'}}</view>
 		
-	</view>
+	</view> -->
 	<view class="progress">
 		<text class="txt">最大录音时长为{{duration/1000}}秒，最小录音时长2秒</text>
 		<progress percent="{{time*(100/(duration/1000))}}" border-radius="10" color="green" stroke-width="10" backgroundColor="#fff" />

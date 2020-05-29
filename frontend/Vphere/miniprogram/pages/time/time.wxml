@@ -1,12 +1,16 @@
-
-<view class="weui-cells__title">签到事项</view>
-  <view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell time-cell"  wx:for="{{itemdata}}" wx:key="index">
-    <view class="weui-cell__bd time-title">{{item.group_name}}<view class="time-status">—{{item.status}}</view></view>
+<view class="weui-cells__title">
+  签到事项</view>
+<view class="weui-cells weui-cells_after-title" style="background-color: rgb(244, 244, 244)">
+  <view class="weui-cell time-cell" wx:for="{{itemdata}}" wx:key="index">
+    <view class="weui-cell__bd time-title">{{item.group_name}}
+      <view class="time-status">
+        <text space="emsp">  {{item.status}}</text>
+      </view>
+    </view>
     <view class="weui-cell__ft time-border" style="text-align:center">
       <view class="time-inner">起始时间：{{item.start_time}}</view>
       <view class="time-inner">截止时间：{{item.end_time}}</view>
-      <view class="time-inner">地点：{{item.location}}</view>  
+      <view class="time-inner">地点：{{item.location}}</view>
     </view>
   </view>
 </view>

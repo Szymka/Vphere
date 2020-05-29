@@ -7,7 +7,8 @@
   justify-content: center;
   box-shadow: gainsboro 0px 3px 3px 0px;
   z-index: 1;
-  background-color: white;
+  background-color: rgb(245, 245, 245);
+  text-align: center
 }
 .classes{
   border-top: 1rpx gainsboro solid;

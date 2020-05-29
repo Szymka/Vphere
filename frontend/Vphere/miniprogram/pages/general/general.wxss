@@ -10,11 +10,11 @@
   justify-content: space-around
 }
 .tr>.td:nth-child(2){
-  box-shadow: rgba(0, 0, 0, 0.253) 0px 5px 5px 0px;
+  box-shadow: rgba(0, 0, 0, 0.253) 1px 1px 1px 1px;
   z-index: 1;
 }
 .tr>.th:nth-child(2){
-  box-shadow: rgba(0, 0, 0, 0.226) 0px 1px 5px 0px;
+  box-shadow: rgba(0, 0, 0, 0.226) 0px 1px 1px 0px;
   z-index: 1;
 }
 .td {

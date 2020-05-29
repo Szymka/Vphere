@@ -1,5 +1,5 @@
 const app = getApp();
-const templateId = 'MQJIS_Fcpz7-nCyJ5QjRpoaP0F9cw5Yvq2rPCM4Ad9c';
+const templateId = 'MQJIS_Fcpz7-nCyJ5QjRpmhxr1wYFIteH5wRpHOJ5L8';
 Page({
   data: {
     nickName: '点击进行登录',
@@ -55,8 +55,7 @@ Page({
       }
     })
   },
-  onShow: function() {
-    
+  onShow: function() {    
     var that = this
     wx.checkSession({
       success: function() {       
@@ -71,8 +70,7 @@ Page({
           }
         })
       },
-      fail: function() {
-      }
+      fail: function() {}
     })
   }
 })

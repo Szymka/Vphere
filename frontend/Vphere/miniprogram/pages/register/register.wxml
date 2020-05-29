@@ -10,19 +10,4 @@
     
       
 	  </view>
-</view> 
-<!-- <view class="container">
-  <view wx:for="{{list}}" wx:key="list">
-    <view class="top">
-		<view class="top-status">您当前的声纹注册状态为</view>
-		<view>{{item.status}}</view>
-		<button size="mini " type="primary">立即注册</button>
-	</view>
-
-	<view class="second">
-		<view class="second-status">当前剩余修改次数为</view>
-		<view>{{item.data}}</view>
-		<button size="mini " type="primary">修改</button>
-	</view>
-  </view>
-</view>  -->
+</view>

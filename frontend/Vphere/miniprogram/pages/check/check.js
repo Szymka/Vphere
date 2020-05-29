@@ -27,32 +27,52 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(app.globalData.URL)
-    var that = this
-    wx.request({
-      url: app.globalData.URL + '/sign/record',
-      header: {
-        'contenr-type': 'application/json',
-        'cookie': wx.getStorageSync("sessionid")
-      },
-      success: function (res) {
-        console.log(res.data);
-        if (res.statusCode == 403) {
-          wx.showModal({
-            title: '温馨提示',
-            content: '没有事项需要打卡噢',
-          })
-        } else {
-          var items = [];
-          for (var i in res.data.data) {
-            items.push(res.data.data[i]);
+    wx.checkSession({
+      success: function () {
+        console.log(app.globalData.URL)
+        var that = this
+        wx.request({
+          url: app.globalData.URL + '/sign/record',
+          header: {
+            'contenr-type': 'application/json',
+            'cookie': wx.getStorageSync("sessionid")
+          },
+          success: function (res) {
+            console.log(res.data);
+            if (res.statusCode == 403) {
+              wx.showModal({
+                title: '温馨提示',
+                content: '没有事项需要打卡噢',
+              })
+            } else {
+              var items = [];
+              for (var i in res.data.data) {
+                items.push(res.data.data[i]);
+              }
+              console.log(items)
+              that.setData({
+                list: items,
+              })
+              console.log(that.data.list)
+            }
           }
-          console.log(items)
-          that.setData({
-            list: items,
-          })
-          console.log(that.data.list)
-        }
+        })
+      },
+      fail: function () {
+        wx.showModal({
+          title: '温馨提示',
+          content: '现未登录，是否通过微信账号登录',
+          success: function (e) {
+            if (e.cancel) {
+              console.log("点击了取消")
+            } else if (e.confirm) {
+              console.log("确定")
+              wx.navigateTo({
+                url: "/pages/login/login"
+              })
+            }
+          }
+        })
       }
     })
   },

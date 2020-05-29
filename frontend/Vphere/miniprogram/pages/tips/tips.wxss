@@ -17,17 +17,17 @@ page{
   font-size: 40rpx;
 }
 .tips{
-  height: 400rpx;
+  height: 500rpx;
   margin-top: 100rpx;
-  width: 400rpx;
+  width: 470rpx;
   padding: 50rpx;
-  background-color: rgb(253, 253, 253);
   border: gainsboro 1rpx solid;
   border-radius: 15rpx;
   box-shadow: rgba(220, 220, 220, 0.486) 0px 2rpx 3rpx 1rpx;
+  background-color: rgb(238, 238, 238);
 }
 .feedback-button{
-  margin-top: 100rpx;
+  margin-top: 90rpx;
 }
 .feedback-button>button{
   box-shadow: rgba(0, 146, 44, 0.486) 0px 2rpx 3rpx 1rpx;

@@ -1,4 +1,4 @@
-<view>
+<view class="container">
   <view class="tr bg-w">
     <view class="th">编号</view>
     <view class="th">集体名称</view>
@@ -7,34 +7,34 @@
   <scroll-view class="table" scroll-y="true">
     <block wx:for="{{listData01}}" wx:key="index" class="scroll-view-item">
       <view wx:if="{{item.group_status==0}}">
-        <view class="tr bg-g" wx:if="{{index % 2 != 0}}">
+        <view class="tr" wx:if="{{index % 2 != 0}}">
           <view class="td">{{index+1}}</view>
           <view class="td">{{item.group_name}}</view>
           <view class="td">
-            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}">查看</view>
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}" hover-class="click_hover">查看</view>
           </view>
         </view>
-        <view class="tr" wx:else>
+        <view class="tr bg-g" wx:else>
           <view class="td">{{index+1}}</view>
           <view class="td">{{item.group_name}}</view>
           <view class="td">
-            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}">查看</view>
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/small/situation?groupid={{item.group_id}}" id="{{item.group_id}}" hover-class="click_hover">查看</view>
           </view>
         </view>
       </view>
       <view wx:else>
-        <view class="tr bg-g" wx:if="{{index % 2 != 0}}">
+        <view class="tr" wx:if="{{index % 2 != 0}}">
           <view class="td">{{index+1}}</view>
           <view class="td">{{item.group_name}}</view>
           <view class="td">
-            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}">查看</view>
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}" hover-class="click_hover">查看</view>
           </view>
         </view>
-        <view class="tr" wx:else>
+        <view class="tr bg-g" wx:else>
           <view class="td">{{index+1}}</view>
           <view class="td">{{item.group_name}}</view>
           <view class="td">
-            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}">查看</view>
+            <view catchtap='download' data-type="excel" data-url="https://vphere.yanmy.top/api/group/large/situation?groupid={{item.group_id}}" id="{{item.group_id}}" hover-class="click_hover">查看</view>
           </view>
         </view>
       </view>

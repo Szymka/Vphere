@@ -1,30 +1,35 @@
 <view class="container">
-	<form bindsubmit="formSubmit">
-		<view class="section row">
-			<view class="section__title">点击选择考勤起始时间：</view>
-	<time-picker mode="{{mode}}" class="picker" placeholder="请选择时间" bind:onPickerChange="bindStartTimeChange" name="starttime"></time-picker>
-		</view>
-		<view class="section row">
-			<view class="section__title">点击选择考勤终止时间：</view>
-			<time-picker mode="{{mode}}" class="picker" bind:onPickerChange="bindEndTimeChange" name="endtime"></time-picker>
-		</view>
-		<view class="section row">
-			<text>所要考勤的集体：</text>
-			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" >
-				<view class="picker">
-          {{array[index]?array[index]:'请选择'}}					
-				</view>
-			</picker>
-		</view>
-		<view class="section row">
-    <text>考勤地点：</text>
-			<view class="box2">
-				<input type="text" class="box2_right" placeholder="请选择考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}' name="location"></input>
-			</view>
-		</view>
-		<view class="row">
-			<button type="primary" form-type="submit">确定</button>
-		</view>
+<view class="form_title">请完善以下信息</view>
+  <form bindsubmit="formSubmit">
+    <view>
+      <view class="section__title" style="margin-top:50rpx;margin-bottom:20rpx">点击选择起始时间：</view>
+      <time-picker mode="{{mode}}" class="picker" placeholder="请选择时间" bind:onPickerChange="bindStartTimeChange" name="starttime"></time-picker>
+    </view>
+    <view style="margin-top:30rpx;margin-bottom:20rpx">
+      <view class="section__title" style="margin-top:15rpx;margin-bottom:15rpx">点击选择终止时间：</view>
+      <time-picker mode="{{mode}}" class="picker" bind:onPickerChange="bindEndTimeChange" name="endtime"></time-picker>
+    </view>
+    <view style="margin-top:30rpx;margin-bottom:20rpx">
+      <view style="margin-top:15rpx;margin-bottom:15rpx">
+        <text>考勤集体：</text>
+      </view>
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker">
+          {{array[index]?array[index]:'请选择'}}
+        </view>
+      </picker>
+    </view>
+    <view style="margin-top:30rpx;margin-bottom:20rpx">
+      <view style="margin-top:15rpx;margin-bottom:15rpx">
+        <text>考勤地点：</text>
+      </view>
+      <view class="box2">
+        <input type="text" class="box2_right" placeholder="请选择考勤地点" bindtap="onChangeAddress" value='{{chooseAddress}}' name="location"></input>
+      </view>
+    </view>
+    <view class="row" style="margin-top:45rpx">
+      <button type="primary" form-type="submit">确定</button>
+    </view>
 
-	</form>
+  </form>
 </view>

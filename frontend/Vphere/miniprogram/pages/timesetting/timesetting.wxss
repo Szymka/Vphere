@@ -6,13 +6,13 @@ page{
 }
 .container{
     height: min-content;
-    margin-top: 30rpx;
+    margin-top: 13%;
     width: 96%;
     padding: 10rpx;
     font-size: 30rpx;
     box-shadow: rgba(220, 220, 220, 0.692) 0px 2px 3px 1px;
     border-radius: 15rpx;
-    background-color: white;
+    background-color: rgb(236, 236, 236);
 }
 .box2{
  width: 100%;
@@ -21,27 +21,12 @@ page{
  flex-direction: row;
  align-items: center;
  font-weight: bold;
- /* border-bottom: solid 2rpx #D7D7D7; */
+ background-color: white
 }
 .box2_left{
  width: 180rpx;
  font-size: 15px;
  color: #000000;
-}
-/* .box2_right{
- width: 76%;
- min-height: 90rpx;
- display: flex;
- align-items: center;
- font-size: 14px;
-} */
-.fuhao{
- width: 70rpx;
- height:90rpx;
- font-size: 25px;
- display: flex;
- flex-direction: row-reverse;
- align-items: center;
 }
 .row{
     display: flex;
@@ -72,8 +57,8 @@ page{
     padding: 0 2rem;
 }
 picker{
-    width: 100%;
-    height: 80rpx;
+    width: 600rpx;
+    height: 100rpx;
     border: gainsboro 3rpx solid;
     border-radius: 15rpx;
     display: flex;
@@ -82,4 +67,10 @@ picker{
     font-size: 35rpx;
     font-weight: bold;
     text-align: center;
+    background-color: white
+}
+.form_title{
+  font-weight: bold;
+  font-size: 45rpx;
+  margin-top: 25rpx;
 }

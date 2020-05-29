@@ -16,12 +16,13 @@ view{
 }
 .top{
   width: 90%;
-  margin-top: 50rpx;
-  /* border-bottom: gainsboro 1rpx solid; */
+  margin-top: 25%;
   padding-bottom: 50rpx;
   margin-bottom: 50rpx;
   box-shadow: rgba(220, 220, 220, 0.582) 0px 2px 5px 2px;
   border-radius: 15rpx;
+  background-color: rgb(238, 238, 238);
+  border: gainsboro 1rpx solid;
 }
 .top-status{
   position: relative;
@@ -60,4 +61,5 @@ button{
   margin-bottom: 40rpx;
   text-align: center;
   line-height: 80rpx;
+  background-color: rgb(247, 243, 243)
 }

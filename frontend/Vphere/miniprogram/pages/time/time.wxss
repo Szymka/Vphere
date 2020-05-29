@@ -1,25 +1,6 @@
 /* pages/subject/subject.wxss */
-.week{
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  background-color: #eef58e;
-  color: #bebc44;
-  height: 50rpx;
-  font-size: 26rpx;
-  text-shadow: #fffd8c86 2rpx 2rpx 1rpx;
-}
-.top {
-  display: flex;
-  flex-direction: row;
-  height: 50rpx;
-  padding-left: 45rpx;
-  padding-right: 10rpx;
-  background-color: #d2e6b3;
-  color: #7cba23;
-  justify-content: space-around;
-  text-shadow: #cfff8c86 2rpx 2rpx 1rpx;
-}
+
+
 
 .top-text {
   font-size: 26rpx;
@@ -34,14 +15,6 @@
   display: flex;
 } */
 
-.time-line {
-  background-color: #d2e6b3;
-  color: #7cba23;
-  display: flex;
-  flex-direction: column;
-  float: left;
-  height: 100%;
-}
 
 .left-time {
   width: 36rpx;
@@ -106,11 +79,7 @@
   font-size: 34rpx;
 }
 
-.dateOn {
-  border-radius: 50%;
-  background-color: hotpink;
-  color: #fff;
-}
+
 
 .ball {
   box-shadow: 2px 2px 10px #AAA;
@@ -146,6 +115,8 @@
 }
 .time-status{
   font-weight: bold;
+  color:rgb(108, 110, 114);
+  font-size: 35rpx;
   /* margin-left: 5%; */
 }
 .time-inner{

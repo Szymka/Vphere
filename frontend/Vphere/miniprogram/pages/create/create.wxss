@@ -6,7 +6,7 @@ page{
 }
 .create-form{
   width: 70%;
-  margin-top: 10%;
+  margin-top: 20%;
   padding: 10% 8%;
   border: 1rpx solid gainsboro;
   border-radius: 10rpx;
@@ -14,7 +14,6 @@ page{
   flex-direction: column;
   align-items: center;
   box-shadow: rgba(220, 220, 220, 0.486) 0px 2px 3px 1px;
-  background-color: white;
 }
 form{
   height: 100%;
@@ -24,6 +23,7 @@ form{
 .title{
   font-weight: bold;
   font-size: 45rpx;
+  margin-bottom: 10rpx
 }
 .content{
   font-size: 25rpx;
@@ -37,6 +37,7 @@ form{
   border-radius: 12rpx;
   text-align: center;
   line-height: 120rpx;
+  background-color: white
 }
 .father{
   margin-bottom: 50%;
