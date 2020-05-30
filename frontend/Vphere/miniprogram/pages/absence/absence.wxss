@@ -24,7 +24,7 @@ page{
     display: flex;
     justify-content: center;
     text-align: center;
-    font-size: 40rpx
+    font-size: 35rpx
 }
 .td:nth-child(2){
   width:50%;

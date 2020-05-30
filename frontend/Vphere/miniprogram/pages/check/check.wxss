@@ -20,3 +20,27 @@
   background-color: rgb(245, 245, 245);
   text-align: center
 }
+.time-border{
+  width: 100%;
+  border-top: 1rpx rgb(235, 235, 235) solid;
+  margin-bottom: 2%;
+  padding-top: 2%;
+}
+.time-title{
+  
+  font-size: 37rpx;
+  margin-bottom: 1%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.time-inner{
+  font-size: 30rpx;
+  box-shadow: rgba(219, 219, 219, 0.411) 0px 4px 4px 1px;
+  margin-bottom: 5rpx
+}
+.time-cell{
+  flex-direction: column;
+  padding: 2% 0% 0% 0%;
+  
+}

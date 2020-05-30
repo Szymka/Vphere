@@ -5,22 +5,23 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   onLoad: function () {
-    var that = this;
-    // 查看是否授权
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {              
-              //用户已经授权过
-              wx.switchTab({
-                url: "/pages/index/index"
-              })
-            }
-          });
-        }
-      }
-    })
+    // var that = this;
+    // // 查看是否授权
+    // wx.getSetting({
+    //   success: function (res) {
+    //     console.log(res)
+    //     if (res.authSetting['scope.userInfo']) {
+    //       wx.getUserInfo({
+    //         success: function (res) {              
+    //           //用户已经授权过
+    //           wx.switchTab({
+    //             url: "/pages/index/index"
+    //           })
+    //         }
+    //       });
+    //     }
+    //   }
+    // })
   },
   onShow:function(){
     

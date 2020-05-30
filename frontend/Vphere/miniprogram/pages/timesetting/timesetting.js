@@ -53,7 +53,7 @@ Page({
     console.log(app.globalData.URL)
     var that = this
     wx.request({
-      url: app.globalData.URL + '/group/manage',
+      url: app.globalData.URL + '/user/manage',
       header: {
         'contenr-type': 'application/json',
         'cookie': wx.getStorageSync("sessionid")
@@ -66,7 +66,7 @@ Page({
         }
         var items01=[];
         for(var i in res.data.data){
-          items01.push(res.data.data[i].group_id)
+          items01.push(res.data.data[i].id)
         }
         console.log(items01)
         console.log(items)
@@ -134,11 +134,15 @@ Page({
         success: function (res) {
           console.log(res.data);
           if (res.statusCode == 403) {
-            wx.showToast({
-              title: '提交失败',
-              icon: '/images/fail.png',
-              duration: 1500
+            wx.showModal({
+              title: '温馨提示',
+              content: res.data.data,
             })
+            // wx.showToast({
+            //   title: '提交失败',
+            //   icon: '/images/fail.png',
+            //   duration: 1500
+            // })
           } else {
             wx.showToast({
               title: '提交成功',

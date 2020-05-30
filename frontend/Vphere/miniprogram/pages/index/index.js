@@ -61,6 +61,22 @@ Page({
       success: function() {       
         wx.getUserInfo({
           success: res => {
+            if (res.statusCode == 401) {
+              wx.showModal({
+                title: '温馨提示',
+                content: '现未登录，是否通过微信账号登录',
+                success: function (e) {
+                  if (e.cancel) {
+                    console.log("点击了取消")
+                  } else if (e.confirm) {
+                    console.log("确定")
+                    wx.navigateTo({
+                      url: "/pages/login/login"
+                    })
+                  }
+                }
+              })
+            }
             console.log(res.userInfo)
             that.setData({
               nickName: res.userInfo.nickName,

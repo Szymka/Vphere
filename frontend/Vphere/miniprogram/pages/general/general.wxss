@@ -7,7 +7,7 @@
 .tr{
   width: 100%;
   display: flex;
-  justify-content: space-around
+  justify-content: space-around;
 }
 .tr>.td:nth-child(2){
   box-shadow: rgba(0, 0, 0, 0.253) 1px 1px 1px 1px;
