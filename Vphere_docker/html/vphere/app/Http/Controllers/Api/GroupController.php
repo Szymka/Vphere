@@ -416,6 +416,7 @@ class GroupController extends Controller {
             return error_msg(403,19);
         }
         $large_group->delete();
+        $this->user_join_largegroup($this->data['groupid'],$this->data['user_id']);
         $sg_id = SG_LG_estb::query()->where('lg_id',$this->data['groupid']);
         if ($sg_id->pluck('sg_id')->isEmpty()){
             return msg(200,1);
@@ -445,16 +446,39 @@ class GroupController extends Controller {
         $join_group = array();
         $num = 1;
         foreach ($user_group as $group){
-            if($group['group_id']!=$groupid && $group['group_status'] != 3){
-                $join_group += [
-                    "group" . $num++ => [
-                        "status" => $group['status'],
-                        "group_id" => $group["group_id"],
-                        "group_name" => $group["group_name"],
-                        "group_status" => $group['group_status'],
-                    ]
-                ];
+            if($group['group_id']==$groupid && $group['group_status'] != 1){
+                continue;
             }
+            $join_group += [
+                "group" . $num++ => [
+                    "status" => $group['status'],
+                    "group_id" => $group["group_id"],
+                    "group_name" => $group["group_name"],
+                    "group_status" => $group['group_status'],
+                ]
+            ];
+        }
+        $join_group = json_encode($join_group);
+        $user->join_group = $join_group;
+        $user->save();
+    }
+    protected function user_join_largegroup($groupid,$user_id){
+        $user = User::query()->where('id',$user_id)->first();
+        $user_group = json_decode($user->join_group, true);
+        $join_group = array();
+        $num = 1;
+        foreach ($user_group as $group){
+            if($group['group_id']==$groupid && $group['group_status'] == 1){
+                continue;
+            }
+            $join_group += [
+                "group" . $num++ => [
+                    "status" => $group['status'],
+                    "group_id" => $group["group_id"],
+                    "group_name" => $group["group_name"],
+                    "group_status" => $group['group_status'],
+                ]
+            ];
         }
         $join_group = json_encode($join_group);
         $user->join_group = $join_group;
