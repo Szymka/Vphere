@@ -1,8 +1,8 @@
-<view class="title">已加入及已创建的集体</view>
+<view class="title">请点击选择所要退出的集体</view>
 <view>
 <scroll-view class="classes" scroll-y="true">
 	<view wx:for="{{list}}" wx:key="index" class="weui-cell weui-cell_access scroll-view-item">
-		<view class="weui-cell__bd" style="font-size:35rpx">{{item.group_name}}</view>
+		<view class="weui-cell__bd" style="font-size:35rpx" bindtap="quit" id="{{item.group_id}}">{{item.group_name}}</view>
 	</view>
 </scroll-view>
 </view>

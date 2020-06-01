@@ -1,0 +1,15 @@
+<view class="title">请点击选择所要解散的集体</view>
+<view>
+<scroll-view class="classes" scroll-y="true">
+	<view wx:for="{{list01}}" wx:key="index" class="weui-cell weui-cell_access scroll-view-item">
+  <view wx:if="{{item.group_status==0}}">
+		<view class="weui-cell__bd" style="font-size:35rpx" id="{{item.group_id}}" bindtap="sdelete">{{item.group_name}}</view>
+    </view>
+  <view wx:else>
+    <view class="weui-cell__bd" style="font-size:35rpx" id="{{item.group_id}}" bindtap="bdelete">{{item.group_name}}</view>
+  </view>
+	</view>
+</scroll-view>
+</view>
+<view>
+</view>

@@ -196,6 +196,12 @@
 					"pathName": "pages/index/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "delete",
+					"pathName": "pages/delete/delete",
+					"scene": null
 				}
 			]
 		}

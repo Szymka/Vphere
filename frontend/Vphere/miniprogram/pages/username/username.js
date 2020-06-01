@@ -1,4 +1,5 @@
 const app = getApp();
+const pages = getCurrentPages()
 Page({
 
   /**
@@ -45,9 +46,8 @@ Page({
             if (res.statusCode == 200) {
               console.log(res.data)
               wx.showToast({
-                title: '成功加入',
+                title: '已加入',
                 icon: 'success',
-                duration: 2000,
               })
             } else {
               console.log(res.data)
@@ -56,7 +56,9 @@ Page({
                 content: res.data.error,
               })
             }
-
+            // wx.navigateBack({
+            //     delta:1
+            //   })
           },
         })
       }

@@ -85,39 +85,6 @@ Page({
     console.log(that.data.time)
     console.log(that.data.endTime)
     console.log(JSON.stringify(that.data.location))
-    // if (e.detail.value.group.length == 0) {
-    //   wx.showToast({
-    //     title: '考勤集体不能为空',
-    //     image: '/images/fail.png',
-    //     duration: 1500
-    //   })
-    //   setTimeout(function () {
-    //     wx.hideToast()
-    //   }, 2000)
-    //   }else if(e.detail.value.starttime.length==0){
-    //   wx.showToast({
-    //     title: '起始时间不能为空',
-    //     image: '/images/fail.png',
-    //     duration: 1500
-    //   })
-    //   setTimeout(function () {
-    //     wx.hideToast()
-    //   }, 2000)
-    // } else if (e.detail.value.endtime.length == 0) {
-    //   wx.showToast({
-    //     title: '终止时间不能为空',
-    //     image: '/images/fail.png',
-    //     duration: 1500
-    //   })
-    //   setTimeout(function () {
-    //     wx.hideToast()
-    //   }, 2000)
-    // }
-    //   else{
-    //     // var timestamp = Date.parse(new Date());
-    //     // timestamp = timestamp / 1000;
-        
-        // console.log("时间戳为：" + timestamp);
         wx.request({
         url: app.globalData.URL + '/sign/create',
         data: {
@@ -134,16 +101,33 @@ Page({
         success: function (res) {
           console.log(res.data);
           if (res.statusCode == 403) {
+            if (that.data.time==''){
+              wx.showModal({
+                title: '温馨提示',
+                content: '起始时间未设置',
+              })
+            } else if (that.data.endTime==''){
+              wx.showModal({
+                title: '温馨提示',
+                content: '终止时间未设置',
+              })
+            } else if (JSON.stringify(that.data.location).length==2){
+              wx.showModal({
+                title: '温馨提示',
+                content: '考勤地点未设置',
+              })
+            } else if (that.data.group_id01==''){
+              wx.showModal({
+                title: '温馨提示',
+                content: '未选择考勤集体',
+              })
+            }else{
             wx.showModal({
               title: '温馨提示',
               content: res.data.data,
             })
-            // wx.showToast({
-            //   title: '提交失败',
-            //   icon: '/images/fail.png',
-            //   duration: 1500
-            // })
-          } else {
+            }
+          } else if(res.statusCode==200){
             wx.showToast({
               title: '提交成功',
               icon: 'success',

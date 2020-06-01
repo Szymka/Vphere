@@ -1,11 +1,6 @@
-/* pages/manage/manage.wxss */
-.items{
+/* .items{
   height: 10vw;
 }
-/* .title{
-  text-align: center;
-  padding: 15rpx 0rpx;
-} */
 .weui-cell{
   font-size: 32rpx;
 }
@@ -42,5 +37,137 @@
 .time-cell{
   flex-direction: column;
   padding: 2% 0% 0% 0%;
-  
+  width: 94%;
+  margin-left: 3%
+} */
+/* pages/subject/subject.wxss */
+
+
+
+.top-text {
+  font-size: 26rpx;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+/* .timetable-inner {
+  height: 100%;
+  width: 900rpx;
+  display: flex;
+} */
+
+
+.left-time {
+  width: 36rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 112.5rpx;
+}
+
+.timetable-item{
+  float: left;
+  overflow: hidden;
+  position: absolute;
+}
+
+.flex-item {
+  width: 95rpx;
+  /* height: 100rpx; */
+}
+
+.kcb-item {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 15rpx;
+}
+
+.smalltext {
+  font-size: 25rpx;
+  color: #fff;
+  padding-left: 2rpx;
+  text-shadow: #4e4e4e86 1.5rpx 1.5rpx 1rpx;
+  /* text-align: center; */
+}
+
+.scroll {
+  height: 100%;
+  z-index: 101;
+  /* position: fixed; */
+}
+
+.box1 .dateBox {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 40rpx;
+}
+
+.box1 {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.box1>view {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 34rpx;
+}
+.title{
+  display: flex;
+  padding: 1.5vw;
+  font-size: 4.3vw;
+  font-weight: bold;
+  justify-content: center;
+  box-shadow: gainsboro 0px 3px 3px 0px;
+  z-index: 1;
+  background-color: rgb(245, 245, 245);
+  text-align: center
+}
+.ball {
+  box-shadow: 2px 2px 10px #AAA;
+  border-radius: 20px;
+  position: absolute;
+}
+
+.font-color {
+  color: #a9a9a9;
+}
+.end-blank{
+  position: absolute;
+  height: auto;
+}
+.time-cell{
+  flex-direction: column;
+  padding: 2% 0% 0% 0%;
+  box-shadow: rgba(219, 219, 219, 0.411) 0px 3px 3px 1px;
+}
+.time-border{
+  width: 100%;
+  border-top: 1rpx rgb(235, 235, 235) solid;
+  margin-bottom: 2%;
+  padding-top: 2%;
+}
+.time-title{
+  font-size: 37rpx;
+  margin-bottom: 1%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.time-status{
+  font-weight: bold;
+  color:rgb(108, 110, 114);
+  font-size: 35rpx;
+  /* margin-left: 5%; */
+}
+.time-inner{
+  font-size: 30rpx;
 }

@@ -1,6 +1,7 @@
 const app = getApp()
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext()
+const pages = getCurrentPages()
 var init
 
 Page({
@@ -189,9 +190,12 @@ Page({
               content: JSON.parse(res.data)['data'] ,
             })
           }
-          wx.navigateTo({
-            url: '/pages/register01/register01',
-          })
+          if (getCurrentPages().length != 0) {
+            getCurrentPages()[getCurrentPages().length - 1].onLoad()
+          }
+          // wx.navigateTo({
+          //   url: '/pages/register01/register01',
+          // })
           innerAudioContext.stop()
         },
         fail: function(res) {
