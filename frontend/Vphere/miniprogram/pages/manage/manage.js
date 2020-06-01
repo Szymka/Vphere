@@ -6,16 +6,20 @@ Page({
    */
   data: {
     list: [{
-      urlpath: "/pages/join/join",
-      text_feature:"加入集体"
-    },
-    {
       urlpath: "/pages/create/create",
       text_feature: "创建集体"
     },
     {
+      urlpath: "/pages/delete/delete",
+      text_feature: "解散已创建集体"
+    },
+    {
+      urlpath: "/pages/join/join",
+      text_feature:"加入集体"
+    },
+    {
       urlpath: "/pages/teams/teams",
-      text_feature: "已创建及已加入集体"
+      text_feature: "退出已加入集体"
     },
     {
       urlpath: "/pages/absence/absence",
@@ -23,7 +27,7 @@ Page({
     },
     {
       urlpath: "/pages/timesetting/timesetting",
-      text_feature: "设置考勤时间"
+      text_feature: "设置考勤事项"
     }
     ]
   },

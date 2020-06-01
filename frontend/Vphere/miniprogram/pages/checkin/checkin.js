@@ -40,7 +40,6 @@ Page({
     })
     wx.getLocation({
       altitude: true,
-
       type: 'gcj02',
       success(res) {
         console.log(res.latitude);
