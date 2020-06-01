@@ -14,6 +14,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.stopPullDownRefresh()
     console.log(app.globalData.URL)
     var that = this
     wx.request({
@@ -71,7 +72,12 @@ Page({
                 }
               }
             })
-          }else if(res.statusCode==200){
+          } else if (res.tempFilePath == undefined || res.statusCode == 403){
+            wx.showModal({
+              title: '温馨提示',
+              content: '该集体内现无成员，无考勤统计情况',
+            })
+            }else if(res.statusCode==200){
             that.setData({
               filePath:res.tempFilePath
             })
@@ -117,7 +123,27 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    wx.checkSession({
+      success: function () {
+        return;
+      },
+      fail: function () {
+        wx.showModal({
+          title: '温馨提示',
+          content: '现未登录，是否通过微信账号登录',
+          success: function (e) {
+            if (e.cancel) {
+              console.log("点击了取消")
+            } else if (e.confirm) {
+              console.log("确定")
+              wx.navigateTo({
+                url: "/pages/login/login"
+              })
+            }
+          }
+        })
+      }
+    })
   },
 
   /**
@@ -138,7 +164,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    
+    this.onLoad()
   },
 
   /**

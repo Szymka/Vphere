@@ -55,7 +55,8 @@ Page({
       }
     })
   },
-  onShow: function() {    
+  onShow: function() {
+    wx.stopPullDownRefresh()
     var that = this
     wx.checkSession({
       success: function() {       
@@ -88,5 +89,8 @@ Page({
       },
       fail: function() {}
     })
+  },
+  onPullDownRefresh:function(){
+    this.onShow()
   }
 })

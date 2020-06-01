@@ -14,3 +14,6 @@
   height: 88.5%;
   position: absolute;
 }
+.touch_{
+  color: rgb(233, 232, 232)
+}

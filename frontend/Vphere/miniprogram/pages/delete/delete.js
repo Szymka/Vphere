@@ -28,8 +28,10 @@ Page({
    */
   onShow: function () {
     wx.stopPullDownRefresh()
-    var that=this
-    wx.request({
+    var that = this
+    wx.checkSession({
+      success: function () {
+        wx.request({
           url: app.globalData.URL + '/group/manage',
           header: {
             'contenr-type': 'application/json',
@@ -46,8 +48,26 @@ Page({
               list01: items,
             })
             console.log(that.data.list01)
-            }
+          }
         })
+      },
+      fail: function () {
+        wx.showModal({
+          title: '温馨提示',
+          content: '现未登录，是否通过微信账号登录',
+          success: function (e) {
+            if (e.cancel) {
+              console.log("点击了取消")
+            } else if (e.confirm) {
+              console.log("确定")
+              wx.navigateTo({
+                url: "/pages/login/login"
+              })
+            }
+          }
+        })
+      }
+    })
   },
 
   /**

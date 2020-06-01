@@ -50,6 +50,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.stopPullDownRefresh()
     console.log(app.globalData.URL)
     var that = this
     wx.request({
@@ -164,7 +165,27 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    wx.checkSession({
+      success: function () {
+        return;
+      },
+      fail: function () {
+        wx.showModal({
+          title: '温馨提示',
+          content: '现未登录，是否通过微信账号登录',
+          success: function (e) {
+            if (e.cancel) {
+              console.log("点击了取消")
+            } else if (e.confirm) {
+              console.log("确定")
+              wx.navigateTo({
+                url: "/pages/login/login"
+              })
+            }
+          }
+        })
+      }
+    })
   },
 
   /**
@@ -185,7 +206,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.onLoad()
   },
 
   /**
@@ -215,7 +236,53 @@ Page({
         console.log(that.data.location)
       },
       fail: function (err) {
-        console.log(err)
+        wx.getSetting({
+          success: function (res) {
+            var statu = res.authSetting;
+            if (!statu['scope.userLocation']) {
+              wx.showModal({
+                title: '是否授权当前位置',
+                content: '请确认授权，否则地图功能将无法使用',
+                success: function (tip) {
+                  if (tip.confirm) {
+                    wx.openSetting({
+                      success: function (data) {
+                        if (data.authSetting["scope.userLocation"] === true) {
+                          wx.showToast({
+                            title: '授权成功',
+                            icon: 'success',
+                            duration: 2000
+                          })
+                          //授权成功之后，再调用chooseLocation选择地方
+                          wx.chooseLocation({
+                            success: function (res) {
+                              obj.setData({
+                                addr: res.address
+                              })
+                            },
+                          })
+                        } else {
+                          wx.showToast({
+                            title: '授权失败',
+                            image: '/images/fail.png',
+                            duration: 2000
+                          })
+                        }
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          },
+          fail: function (res) {
+            wx.showToast({
+              title: '调用授权窗口失败',
+              image:'/images/fail.png',
+              duration: 2000
+            })
+          }
+        })
       }
     });
   }

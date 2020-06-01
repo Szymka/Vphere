@@ -2,7 +2,7 @@
   <view class="tr bg-w">
     <view class="th">编号</view>
     <view class="th">集体名称</view>
-    <view class="th ">查看考勤信息</view>
+    <view class="th ">查看考勤情况</view>
   </view>
   <scroll-view class="table" scroll-y="true">
     <block wx:for="{{listData01}}" wx:key="index" class="scroll-view-item">
