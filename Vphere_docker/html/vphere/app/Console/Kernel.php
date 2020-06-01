@@ -49,10 +49,11 @@ class Kernel extends ConsoleKernel {
                 $sign->save();
                 $openids = U_SG_estb::query()
                     ->join('users', 'users.id', '=', 'u_sg_estb.user_id')
+                    ->where('u_sg_estb.sg_id',$sign['group_id'])
                     ->pluck('users.open_id');
                 foreach ($openids as $openid) {
                     $res=$this->sendMsg($openid, $groupname, $start_time, $end_time, $address);
-                    dump($res);
+//                    dump($res);
                 }
             }
         }
@@ -94,10 +95,7 @@ class Kernel extends ConsoleKernel {
             "thing1" => [
                 'value' => $groupname,
             ],
-            "date4" => [
-                'value' => date('Y-m-d H:i:s', time())
-            ],
-            "time5" => [
+            "time15" => [
                 'value' => $start_time
             ],
             'time13' => [
@@ -128,8 +126,10 @@ class Kernel extends ConsoleKernel {
         $before_time = $now_time - $timeout;
         $before_time = date("Y-m-d H:i:s",$before_time);
         //未查找到就为过期
+
         $access_token = access::query()->where([['id', 1], ['updated_at', '>', $before_time]])->first();
         //如果过期
+
         if (!$access_token) {
             //获取新的access_token
             $appid = config('vphere.appid');

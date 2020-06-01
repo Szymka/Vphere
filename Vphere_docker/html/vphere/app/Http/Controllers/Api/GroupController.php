@@ -174,13 +174,14 @@ class GroupController extends Controller {
             $result = array();
             $num = 1;
             foreach ($user_group as $group) {
-                $result += [
-                    "group" . $num++ => [
-                        "group_id" => $group["group_id"],
-                        "group_name" => $group["group_name"],
-                    ]
-                ];
-
+                if($group['status']<2){
+                    $result += [
+                        "group" . $num++ => [
+                            "group_id" => $group["group_id"],
+                            "group_name" => $group["group_name"],
+                        ]
+                    ];
+                }
             }
         }
         return msg(200, $result);
@@ -350,5 +351,113 @@ class GroupController extends Controller {
         $export = new SheetsExport($sheets);
         $file = md5(time() . "vphere") . ".xlsx";
         return Excel::download($export, $file);
+    }
+    public function quit(Request $request){
+        $mod = array(
+            'groupid' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+        );
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $u_sg_estb = U_SG_estb::query()->where([['user_id',$this->data['user_id']],['sg_id',$this->data['groupid']]])->first();
+        if (!$u_sg_estb){
+            return error_msg(403,13);
+        }
+        if ($u_sg_estb->status === 2){
+            return error_msg(403,28);
+        }
+        $u_sg_estb->delete();
+        $this->user_join_group($this->data['groupid'],$this->data['user_id']);
+        return msg(200,1);
+    }
+
+    public function small_dissolve(Request $request){
+        $mod = array(
+            'groupid' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+        );
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $small_group = small_group::query()->where([['id',$this->data['groupid']],['create_user',$this->data['user_id']]])->first();
+        if (!$small_group){
+            return error_msg(403,19);
+        }
+        $small_group->delete();
+        $u_sg_estb = U_SG_estb::query()->where('sg_id',$this->data['groupid']);
+        $user_ids = $u_sg_estb->pluck('user_id');
+        $u_sg_estb->delete();
+        foreach ($user_ids as $user_id){
+            $this->user_join_group($this->data['groupid'],$user_id);
+        }
+        return msg(200,1);
+    }
+
+    public function large_dissolve(Request $request){
+        $mod = array(
+            'groupid' => [
+                'required',
+                'regex:/^\d+$/',
+            ],
+        );
+        $this->set_data($mod, $request);
+        if ($this->data === null) {
+            return $this->msg;
+        }
+        $large_group = large_group::query()->where([['id',$this->data['groupid']],['create_user',$this->data['user_id']]])->first();
+        if (!$large_group){
+            return error_msg(403,19);
+        }
+        $large_group->delete();
+        $sg_id = SG_LG_estb::query()->where('lg_id',$this->data['groupid']);
+        if ($sg_id->pluck('sg_id')->isEmpty()){
+            return msg(200,1);
+        }
+        $sg_ids = $sg_id->pluck('sg_id')->toArray();
+        $sg_id->delete();
+        foreach ($sg_ids as $group){
+            $this->sm_dissolve($group);
+        }
+        return msg(200,1);
+    }
+
+    protected function sm_dissolve($groupid){
+        $small_group = small_group::query()->where('id',$groupid);
+        $small_group->delete();
+        $u_sg_estb = U_SG_estb::query()->where('sg_id',$groupid);
+        $user_ids = $u_sg_estb->pluck('user_id');
+        $u_sg_estb->delete();
+        foreach ($user_ids as $user_id){
+            $this->user_join_group($groupid,$user_id);
+        }
+    }
+
+    protected function user_join_group($groupid,$user_id){
+        $user = User::query()->where('id',$user_id)->first();
+        $user_group = json_decode($user->join_group, true);
+        $join_group = array();
+        $num = 1;
+        foreach ($user_group as $group){
+            if($group['group_id']!=$groupid && $group['group_status'] != 3){
+                $join_group += [
+                    "group" . $num++ => [
+                        "status" => $group['status'],
+                        "group_id" => $group["group_id"],
+                        "group_name" => $group["group_name"],
+                        "group_status" => $group['group_status'],
+                    ]
+                ];
+            }
+        }
+        $join_group = json_encode($join_group);
+        $user->join_group = $join_group;
+        $user->save();
     }
 }
