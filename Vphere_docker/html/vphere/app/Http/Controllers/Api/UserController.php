@@ -40,17 +40,17 @@ class UserController extends Controller {
         if ($this->data === null) {
             return $this->msg;
         }
-//        try {
-//            $this->wechat_api_status = $this->get_openid_sessionkey($this->data['code']);
-//        } catch (Exception $wechat_error) {
-//            return error_msg($wechat_error->getCode(), $wechat_error->getMessage());
-//        }
+        try {
+            $this->wechat_api_status = $this->get_openid_sessionkey($this->data['code']);
+        } catch (Exception $wechat_error) {
+            return error_msg($wechat_error->getCode(), $wechat_error->getMessage());
+        }
 //        dump($this->data);
         $user = new User();
         //"oZ_AN5ISqFZoLFDVhP9DU4TqK-F0" $this->openid_session_key['openid']
-        $user = $user->firstOrCreate(['open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0"], [
+        $user = $user->firstOrCreate(['open_id' => $this->openid_session_key['openid']], [
             'username' => $this->data['nick_name'],
-            'open_id' => "oZ_AN5ISqFZoLFDVhP9DU4TqK-F0",//"oZ_AN5ISqFZoLFDVhP9DU4TqK-F0",$this->openid_session_key['openid']
+            'open_id' => $this->openid_session_key['openid'],//"oZ_AN5ISqFZoLFDVhP9DU4TqK-F0",$this->openid_session_key['openid']
             'avatarUrl' => $this->data['avatarUrl'],
             'vpr_num'=>3,
             'vpr_status'=>0
@@ -82,7 +82,7 @@ class UserController extends Controller {
         $num = 1;
         foreach ($u_si_record as $item) {
             $location = json_decode($item['location'], true);
-            $location = $location['address'];
+            $location = $location['name'];
             $status=null;
             switch ($item['status']){
                 case 0:

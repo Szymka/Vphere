@@ -280,7 +280,7 @@ class SignController extends Controller {
         $num = 1;
         foreach ($si_record as $record) {
             $location = json_decode($record['location'], true);
-            $location = $location['address'];
+            $location = $location['name'];
             $result += [
                 "group" . $num++ => [
                     "group_id" => $record['group_id'],
@@ -300,7 +300,7 @@ class SignController extends Controller {
         $latitude = (float)$latitude;
         $longitude = (float)$longitude;
         $distance = $this->getDistance($real_latitude, $real_longitude, $latitude, $longitude);
-        if ($distance > 25) {
+        if ($distance > 50) {
             return false;
         }
         return true;
