@@ -1,4 +1,5 @@
 const app = getApp();
+const pages = getCurrentPages()
 Page({
 
   /**
@@ -47,9 +48,7 @@ Page({
           array: items01,
           groupid:items
         })
-        // that.setData({
-        //   array:that.data.array.concat(0)
-        // })
+        
         console.log(that.data.array)
         console.log(that.data.groupid)
       }
@@ -75,18 +74,35 @@ Page({
         },
         success: function (res) {
           console.log(res.data);
-          if(res.data.status==0){
-            wx.showToast({
-              title: '提交失败',
-              icon:'loading',
-              duration:1500
+          if (res.statusCode == 401) {
+            wx.showModal({
+              title: '温馨提示',
+              content: '现未登录，是否通过微信账号登录',
+              success: function (e) {
+                if (e.cancel) {
+                  console.log("点击了取消")
+                } else if (e.confirm) {
+                  console.log("确定")
+                  wx.navigateTo({
+                    url: "/pages/login/login"
+                  })
+                }
+              }
+            })
+          }else if(res.statusCode==403){
+            wx.showModal({
+              title: '温馨提示',
+              content: res.data.error,
             })
           }else{
             wx.showToast({
               title: '提交成功',
               icon:'success',
-              duration:1000
+              duration:2000
             })
+            if (getCurrentPages().length != 0) {
+              getCurrentPages()[getCurrentPages().length - 1].onLoad()
+            }
           }
         }
       })

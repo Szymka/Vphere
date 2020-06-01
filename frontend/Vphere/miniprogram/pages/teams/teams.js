@@ -1,4 +1,5 @@
 const app = getApp();
+const pages = getCurrentPages()
 Page({
 
   /**
@@ -34,30 +35,72 @@ Page({
           list: items,
         })
         console.log(that.data.list)
-        wx.request({
-          url: app.globalData.URL + '/group/manage',
-          header: {
-            'contenr-type': 'application/json',
-            'cookie': wx.getStorageSync("sessionid")
-          },
-          success: function (res) {
-            console.log(res.data.data);
-            var items = [];
-            for (var i in res.data.data) {
-              items.push(res.data.data[i]);
-            }
-            console.log(items)
-            that.setData({
-
-              list01: items,
-            })
-            console.log(that.data.list01)
-            }
-        })
       }
     })
   },
-
+  quit:function(res){
+    console.log(res.target.id)
+    wx.showModal({
+      title: '温馨提示',
+      content: '是否确定退出该集体',
+      success: function (e) {
+        if (e.cancel) {
+          console.log("点击了取消")
+        } else if (e.confirm) {
+          console.log("确定")
+          wx.request({
+            url: app.globalData.URL + '/group/quit',
+            header: {
+              'contenr-type': 'application/json',
+              'cookie': wx.getStorageSync("sessionid")
+            },
+            data:{
+              groupid: res.target.id
+            },
+            success: function (res) {
+              console.log(res)
+              if (res.statusCode == 401) {
+                wx.showModal({
+                  title: '温馨提示',
+                  content: '现未登录，是否通过微信账号登录',
+                  success: function (e) {
+                    if (e.cancel) {
+                      console.log("点击了取消")
+                    } else if (e.confirm) {
+                      console.log("确定")
+                      wx.navigateTo({
+                        url: "/pages/login/login"
+                      })
+                    }
+                  }
+                })
+              }else if (res.statusCode == 200) {
+                wx.showToast({
+                  title: '已退出',
+                  icon: 'success'
+                })
+                if (getCurrentPages().length != 0) {
+                  getCurrentPages()[getCurrentPages().length - 1].onLoad()
+                }
+              } else {
+                wx.showToast({
+                  title: '操作失败',
+                  image: '/images/fail.png'
+                })
+              }
+            },
+            fail: function (res) {
+              console.log(res)
+              wx.showToast({
+                title: '操作失败',
+                icon: 'success'
+              })
+            }
+          })
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

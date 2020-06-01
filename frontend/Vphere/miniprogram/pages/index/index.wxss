@@ -2,6 +2,7 @@ button{
   margin-top: 35rpx;
   width: 40%;
   font-size: 38rpx;
+  color: rgb(219, 218, 218)
 }  
 .header {
     margin: 90rpx 0 90rpx 50rpx;
