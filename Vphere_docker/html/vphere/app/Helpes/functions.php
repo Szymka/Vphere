@@ -58,6 +58,7 @@ function message_arr ($msg_code) {
         25 => "声纹信息修改成功",
         26 => "不在签到范围内",
         27 => "没有未签到记录",
+        28 => "您是集体创建者,不可退出,请尝试解散",
     );
     return $message_arr[$msg_code];
 }
